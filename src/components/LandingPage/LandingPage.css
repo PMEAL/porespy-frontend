@@ -1,0 +1,13 @@
+.title {
+    align-items: center;
+    display: flex;
+    font-size: 40px;
+    justify-content: center;
+}
+
+.description {
+    align-items: center;
+    display: flex;
+    font-size: 20px;
+    justify-content: center;
+}
