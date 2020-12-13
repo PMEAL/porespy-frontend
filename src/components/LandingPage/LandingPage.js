@@ -6,6 +6,10 @@ import './LandingPage.css';
 const LandingPage = () => {
     const [pythonResponse, setPythonResponse] = useState({});
 
+    useEffect(() => {
+        // run function onload
+    }, []);
+
     const testBackend = () => {
         axios({
             method: 'get',
@@ -17,7 +21,7 @@ const LandingPage = () => {
         }).then((response) => {
             console.log("users have been fetched!");
             console.log(response);
-            setPythonResponse(response);
+            // setPythonResponse(data);
         }).catch((error) => {
             console.log(error);
         })
