@@ -8,12 +8,12 @@ const LandingPage = () => {
     const [generator, setGenerator] = useState('');
 
     useEffect(() => {
-        // run function onload
+        // run function onload?
     }, []);
 
     const testBackend = () => {
         axios.put('http://localhost:8000/porespytutorial/9/', {
-                porosity: 0.96,
+                porosity: 0.6,
                 blobiness: 2,
                 dimension_x: 800,
                 dimension_y: 800
@@ -41,7 +41,7 @@ const LandingPage = () => {
                 Tutorial test
             </Button>
             
-            {generator !== '' && <img src={`data:image/png;base64,${generator}`} style={{ width: 200, height: 200 }} />}
+            {generator !== '' && <img className="tutorialImage" src={`data:image/png;base64,${generator}`} />}
 
         </div>
     )

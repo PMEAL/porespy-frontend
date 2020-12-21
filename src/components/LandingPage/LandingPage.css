@@ -11,3 +11,8 @@
     font-size: 20px;
     justify-content: center;
 }
+
+.tutorialImage {
+    height: 200px;
+    width: 200px;
+}
