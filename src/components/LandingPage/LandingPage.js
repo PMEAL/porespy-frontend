@@ -5,26 +5,27 @@ import './LandingPage.css';
 
 const LandingPage = () => {
     const [pythonResponse, setPythonResponse] = useState({});
+    const [generator, setGenerator] = useState('');
 
     useEffect(() => {
         // run function onload
     }, []);
 
     const testBackend = () => {
-        axios({
-            method: 'get',
-            url: 'http://localhost:8000/users/',
-            auth: {
-                username: 'admin',
-                password: 'porespyBackend'
+        axios.put('http://localhost:8000/porespytutorial/9/', {
+                porosity: 0.96,
+                blobiness: 2,
+                dimension_x: 800,
+                dimension_y: 800
             }
-        }).then((response) => {
-            console.log("users have been fetched!");
-            console.log(response);
-            // setPythonResponse(data);
-        }).catch((error) => {
-            console.log(error);
+        )
+        .then(({ data }) => {
+            const generatorImage = data.generated_image;
+            setGenerator(generatorImage);
         })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     return (
@@ -35,10 +36,13 @@ const LandingPage = () => {
             <div className="description">
                 (Insert description here)
             </div>
+            
             <Button variant="contained" color="primary" onClick={() => testBackend()}>
-                Primary
+                Tutorial test
             </Button>
-            <p>{JSON.stringify(pythonResponse)}</p>       
+            
+            {generator !== '' && <img src={`data:image/png;base64,${generator}`} style={{ width: 200, height: 200 }} />}
+
         </div>
     )
 }
