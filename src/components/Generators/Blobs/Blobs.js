@@ -7,6 +7,7 @@ import axios from 'axios';
 import './Blobs.css';
 
 const Blobs = () => {
+    const [generatorParamsComplete, setGeneratorParamsComplete] = useState(false);
     const [xDimension, setXDimension] = useState(500);
     const [yDimension, setYDimension] = useState(500);
     const [porosity, setPorosity] = useState(0.5);
@@ -14,10 +15,23 @@ const Blobs = () => {
     const [generator, setGenerator] = useState('');
     const [generatorTime, setGeneratorTime] = useState('');
 
-    // TODO: populate fields before able to click.
+    // TODO: validate porosity entry for a value between 0 and 1
+    // TODO: add CSS stylings to this component.
+
+
+
+
+
+
+
+
+
+
+
 
     const generateBlob = () => {
         const startTime = moment();
+
         axios.put('http://localhost:8000/porespygenerator/1/', {
                 porosity,
                 blobiness,
@@ -37,10 +51,30 @@ const Blobs = () => {
         });
     }
 
+    const validateParams = () => {
+        const blobParameters = [xDimension, yDimension, porosity, blobiness];
+
+        if (blobParameters.includes("") || generatorParamsComplete) {
+            return true;
+        } else if (
+            !isInt(xDimension)
+            || !isInt(yDimension)
+            || !isInt(blobiness)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    const isInt = (val) => {
+        return !isNaN(val) && parseInt(Number(val)) == val && !isNaN(parseInt(val, 10))
+    }
+
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={() => generateBlob()}>
-                Tutorial test
+            <Button variant="contained" color="primary" onClick={() => generateBlob()} disabled={validateParams()}>
+                Generate Image
             </Button>
 
             <div>
