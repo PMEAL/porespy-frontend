@@ -14,10 +14,7 @@ const Blobs = () => {
     const [generator, setGenerator] = useState('');
     const [generatorTime, setGeneratorTime] = useState('');
 
-    // TODO: validate porosity entry for a value between 0 and 1
     // TODO: add CSS stylings to this component.
-
-
 
 
 
@@ -55,20 +52,42 @@ const Blobs = () => {
     }
 
     const integerOnlyField = (e) => {
-        const onlyNumbers = e.target.value.replace(/[^0-9]/g, '');
-        e.target.value = onlyNumbers;
-        return onlyNumbers;
+        const regExp = /[^0-9]/g;
+        const onlyIntegers = e.target.value.replace(regExp, '');
+        e.target.value = onlyIntegers;
+        return onlyIntegers;
     }
 
-    const floatOnlyField = (e, minValue = null, maxValue = null) => {
+    const floatOnlyField = (e) => {
+        const regExpFullDecimal = /^(?:[0](?:\.\d+)?|1(?:\.0+)?)$/g;
+        const regExpZeroOrOne = /^[0]\.$/g;
+        const regExpDefault = /[^0-1]/g;
 
+        let onlyFloats = "";
+        if (regExpFullDecimal.test(e.target.value)) {
+            onlyFloats = e.target.value;
+        } else if (regExpZeroOrOne.test(e.target.value)) {
+            onlyFloats = e.target.value;
+        } else if (regExpDefault.test(e.target.value)) {
+            onlyFloats = e.target.value.slice(0, -1);
+        }
+
+        e.target.value = onlyFloats;
+        return onlyFloats;
     }
 
     return (
         <div>
-            <Button variant="contained" color="primary" onClick={() => generateBlob()} disabled={validateParams()}>
-                Generate Image
-            </Button>
+            <div className="blobButton">
+                    <Button 
+                    variant="contained" 
+                    color="primary"
+                    onClick={() => generateBlob()} 
+                    disabled={validateParams()}
+                >
+                    Generate Image
+                </Button>
+            </div>
 
             <div>
                 <TextField
@@ -79,8 +98,8 @@ const Blobs = () => {
                     helperText="Integer values only"
                     variant="outlined"
                     onInput={(e) => {
-                        const onlyNumbers = integerOnlyField(e);
-                        setXDimension(onlyNumbers);
+                        const onlyIntegers = integerOnlyField(e);
+                        setXDimension(onlyIntegers);
                     }}
                 />
                 <TextField
@@ -91,8 +110,8 @@ const Blobs = () => {
                     helperText="Integer values only"
                     variant="outlined"
                     onInput={(e) => {
-                        const onlyNumbers = integerOnlyField(e);
-                        setYDimension(onlyNumbers);
+                        const onlyIntegers = integerOnlyField(e);
+                        setYDimension(onlyIntegers);
                     }}
                 />
                 <TextField
@@ -102,7 +121,10 @@ const Blobs = () => {
                     defaultValue="0.5"
                     helperText="Decimal value betweeen 0 and 1."
                     variant="outlined"
-                    onInput={(e) => setPorosity(e.target.value)}
+                    onInput={(e) => {
+                        const onlyFloats = floatOnlyField(e);
+                        setPorosity(onlyFloats);
+                    }}
                 />
                 <TextField
                     required
@@ -112,8 +134,8 @@ const Blobs = () => {
                     helperText="Integer values only"
                     variant="outlined"
                     onInput={(e) => {
-                        const onlyNumbers = integerOnlyField(e);
-                        setBlobiness(onlyNumbers);
+                        const onlyIntegers = integerOnlyField(e);
+                        setBlobiness(onlyIntegers);
                     }}
                 />
             </div>
