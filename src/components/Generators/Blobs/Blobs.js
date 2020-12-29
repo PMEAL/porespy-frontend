@@ -7,7 +7,6 @@ import axios from 'axios';
 import './Blobs.css';
 
 const Blobs = () => {
-    const [generatorParamsComplete, setGeneratorParamsComplete] = useState(false);
     const [xDimension, setXDimension] = useState(500);
     const [yDimension, setYDimension] = useState(500);
     const [porosity, setPorosity] = useState(0.5);
@@ -17,12 +16,6 @@ const Blobs = () => {
 
     // TODO: validate porosity entry for a value between 0 and 1
     // TODO: add CSS stylings to this component.
-
-
-
-
-
-
 
 
 
@@ -54,21 +47,21 @@ const Blobs = () => {
     const validateParams = () => {
         const blobParameters = [xDimension, yDimension, porosity, blobiness];
 
-        if (blobParameters.includes("") || generatorParamsComplete) {
-            return true;
-        } else if (
-            !isInt(xDimension)
-            || !isInt(yDimension)
-            || !isInt(blobiness)
-        ) {
+        if (blobParameters.includes("")) {
             return true;
         } else {
             return false;
         }
     }
 
-    const isInt = (val) => {
-        return !isNaN(val) && parseInt(Number(val)) == val && !isNaN(parseInt(val, 10))
+    const integerOnlyField = (e) => {
+        const onlyNumbers = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = onlyNumbers;
+        return onlyNumbers;
+    }
+
+    const floatOnlyField = (e, minValue = null, maxValue = null) => {
+
     }
 
     return (
@@ -85,7 +78,10 @@ const Blobs = () => {
                     defaultValue="500"
                     helperText="Integer values only"
                     variant="outlined"
-                    onInput={(e) => setXDimension(e.target.value)}
+                    onInput={(e) => {
+                        const onlyNumbers = integerOnlyField(e);
+                        setXDimension(onlyNumbers);
+                    }}
                 />
                 <TextField
                     required
@@ -94,7 +90,10 @@ const Blobs = () => {
                     defaultValue="500"
                     helperText="Integer values only"
                     variant="outlined"
-                    onInput={(e) => setYDimension(e.target.value)}
+                    onInput={(e) => {
+                        const onlyNumbers = integerOnlyField(e);
+                        setYDimension(onlyNumbers);
+                    }}
                 />
                 <TextField
                     required
@@ -112,7 +111,10 @@ const Blobs = () => {
                     defaultValue="1"
                     helperText="Integer values only"
                     variant="outlined"
-                    onInput={(e) => setBlobiness(e.target.value)}
+                    onInput={(e) => {
+                        const onlyNumbers = integerOnlyField(e);
+                        setBlobiness(onlyNumbers);
+                    }}
                 />
             </div>
             
