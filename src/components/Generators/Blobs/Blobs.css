@@ -4,5 +4,18 @@
 }
 
 .blobButton {
-    padding: 30px 20px 30px 20px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
+}
+
+.blobTextFields {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.blobTextField {
+    padding: 20px 12px;
 }

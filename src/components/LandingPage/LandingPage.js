@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Blobs from '../Generators/Blobs/Blobs';
+import LocalThickness from '../Filters/LocalThickness/LocalThickness';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -8,16 +9,17 @@ const LandingPage = () => {
             <div className="title">
                 PoreSpy
             </div>
-            <div className="description">
-                (Insert description here)
-            </div>
             
             <div className="description">
-                (Temporary description): A python library of image analysis tools used to extract information from 3D images of porous materials
+                A python library of image analysis tools used to extract information from 3D images of porous materials
             </div>
 
-
-            <Blobs />
+            <div>
+                <Blobs />
+                <br />
+                <LocalThickness />
+                <br />
+            </div>
         </div>
     )
 }

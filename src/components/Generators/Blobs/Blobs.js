@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import './Blobs.css';
 
@@ -13,11 +12,6 @@ const Blobs = () => {
     const [blobiness, setBlobiness] = useState(1);
     const [generator, setGenerator] = useState('');
     const [generatorTime, setGeneratorTime] = useState('');
-
-    // TODO: add CSS stylings to this component.
-
-
-
 
     const generateBlob = () => {
         const startTime = moment();
@@ -89,57 +83,65 @@ const Blobs = () => {
                 </Button>
             </div>
 
-            <div>
-                <TextField
-                    required
-                    id="xDimensionInput"
-                    label="Voxels in x-direction"
-                    defaultValue="500"
-                    helperText="Integer values only"
-                    variant="outlined"
-                    onInput={(e) => {
-                        const onlyIntegers = integerOnlyField(e);
-                        setXDimension(onlyIntegers);
-                    }}
-                />
-                <TextField
-                    required
-                    id="yDimensionInput"
-                    label="Voxels in y-direction"
-                    defaultValue="500"
-                    helperText="Integer values only"
-                    variant="outlined"
-                    onInput={(e) => {
-                        const onlyIntegers = integerOnlyField(e);
-                        setYDimension(onlyIntegers);
-                    }}
-                />
-                <TextField
-                    required
-                    id="porosityInput"
-                    label="Porosity"
-                    defaultValue="0.5"
-                    helperText="Decimal value betweeen 0 and 1."
-                    variant="outlined"
-                    onInput={(e) => {
-                        const onlyFloats = floatOnlyField(e);
-                        setPorosity(onlyFloats);
-                    }}
-                />
-                <TextField
-                    required
-                    id="blobinessInput"
-                    label="Blobiness"
-                    defaultValue="1"
-                    helperText="Integer values only"
-                    variant="outlined"
-                    onInput={(e) => {
-                        const onlyIntegers = integerOnlyField(e);
-                        setBlobiness(onlyIntegers);
-                    }}
-                />
+            <div className="blobTextFields">
+                <div className="blobTextField">
+                    <TextField
+                        required
+                        id="xDimensionInput"
+                        label="Voxels in x-direction"
+                        defaultValue="500"
+                        helperText="Integer values only"
+                        variant="outlined"
+                        onInput={(e) => {
+                            const onlyIntegers = integerOnlyField(e);
+                            setXDimension(onlyIntegers);
+                        }}
+                    />
+                </div>
+                <div className="blobTextField">
+                    <TextField
+                        required
+                        id="yDimensionInput"
+                        label="Voxels in y-direction"
+                        defaultValue="500"
+                        helperText="Integer values only"
+                        variant="outlined"
+                        onInput={(e) => {
+                            const onlyIntegers = integerOnlyField(e);
+                            setYDimension(onlyIntegers);
+                        }}
+                    />
+                </div>
+                <div className="blobTextField">
+                    <TextField
+                        required
+                        id="porosityInput"
+                        label="Porosity"
+                        defaultValue="0.5"
+                        helperText="Decimal value betweeen 0 and 1."
+                        variant="outlined"
+                        onInput={(e) => {
+                            const onlyFloats = floatOnlyField(e);
+                            setPorosity(onlyFloats);
+                        }}
+                    />
+                </div>
+                <div className="blobTextField">
+                    <TextField
+                        required
+                        id="blobinessInput"
+                        label="Blobiness"
+                        defaultValue="1"
+                        helperText="Integer values only"
+                        variant="outlined"
+                        onInput={(e) => {
+                            const onlyIntegers = integerOnlyField(e);
+                            setBlobiness(onlyIntegers);
+                        }}
+                    />
+                </div>
             </div>
-            
+
             {
                 generator !== '' 
                 &&
