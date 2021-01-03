@@ -22,14 +22,12 @@ const Blobs = () => {
                 dimension_x: xDimension,
                 dimension_y: yDimension
             }
-        )
-        .then(({ data: { generated_image } }) => {
+        ).then(({ data: { generated_image } }) => {
             setGenerator(generated_image);
             const timeElapsed = ((moment() - startTime) / 1000).toString();
             const timeElapsedFormatted = `Time taken to generate blob: ${timeElapsed} seconds.`;
             setGeneratorTime(timeElapsedFormatted);
-        })
-        .catch((e) => {
+        }).catch((e) => {
             console.log(e);
             setGeneratorTime("Looks like an error has occurred...");
         });
@@ -37,19 +35,14 @@ const Blobs = () => {
 
     const validateParams = () => {
         const blobParameters = [xDimension, yDimension, porosity, blobiness];
-
-        if (blobParameters.includes("")) {
-            return true;
-        } else {
-            return false;
-        }
+        return blobParameters.includes("") ? true : false;
     }
 
     const integerOnlyField = (e) => {
         const regExp = /[^0-9]/g;
-        const onlyIntegers = e.target.value.replace(regExp, '');
-        e.target.value = onlyIntegers;
-        return onlyIntegers;
+        const integersOnly = e.target.value.replace(regExp, '');
+        e.target.value = integersOnly;
+        return integersOnly;
     }
 
     const floatOnlyField = (e) => {
@@ -57,23 +50,21 @@ const Blobs = () => {
         const regExpZeroOrOne = /^[0]\.$/g;
         const regExpDefault = /[^0-1]/g;
 
-        let onlyFloats = "";
-        if (regExpFullDecimal.test(e.target.value)) {
-            onlyFloats = e.target.value;
-        } else if (regExpZeroOrOne.test(e.target.value)) {
-            onlyFloats = e.target.value;
+        let floatsOnly = "";
+        if (regExpFullDecimal.test(e.target.value) || regExpZeroOrOne.test(e.target.value)) {
+            floatsOnly = e.target.value;
         } else if (regExpDefault.test(e.target.value)) {
-            onlyFloats = e.target.value.slice(0, -1);
+            floatsOnly = e.target.value.slice(0, -1);
         }
 
-        e.target.value = onlyFloats;
-        return onlyFloats;
+        e.target.value = floatsOnly;
+        return floatsOnly;
     }
 
     return (
         <div>
             <div className="blobButton">
-                    <Button 
+                <Button 
                     variant="contained" 
                     color="primary"
                     onClick={() => generateBlob()} 
@@ -145,10 +136,9 @@ const Blobs = () => {
             {
                 generator !== '' 
                 &&
-                <div>
-                    <div></div>
+                <div className="blobImageWrapper">
                     <img 
-                        className="tutorialImage" 
+                        className="blobImage" 
                         src={`data:image/png;base64,${generator}`} 
                     />
                     <div>{generatorTime}</div>

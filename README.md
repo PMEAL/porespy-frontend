@@ -7,7 +7,6 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO:
 
-- Hook up porespy actions to front end.
 - Ask how the GUI should look like?
 - Ask what routes are needed? (About Page, Contact Page, things like that)
 - Get a Favicon.ico
