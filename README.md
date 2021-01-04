@@ -7,7 +7,7 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO:
 
-- Ask how the GUI should look like?
+- Change GUI to make it look like mock gui design?
 - Ask what routes are needed? (About Page, Contact Page, things like that)
 - Get a Favicon.ico
 - CSS Stylings
