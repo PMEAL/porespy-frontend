@@ -7,7 +7,8 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO:
 
-- Change GUI to make it look like mock gui design?
+- Change GUI to make it look like mock gui design.
+- add submodules to the menu bar, make components for each.
 - Ask what routes are needed? (About Page, Contact Page, things like that)
 - Get a Favicon.ico
 - CSS Stylings
