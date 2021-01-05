@@ -9,12 +9,19 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
+// import ListSubheader from '@material-ui/core/ListSubheader';
 import Collapse from '@material-ui/core/Collapse';
+
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 import Blobs from '../Generators/Blobs/Blobs';
 import LocalThickness from '../Filters/LocalThickness/LocalThickness';
 import AboutPage from '../AboutPage/AboutPage';
+import ContactPage from '../ContactPage/ContactPage';
+
+import { generatorsNames } from '../../utils/generatorsNames';
+import { filtersNames } from '../../utils/filtersNames';
+
 import './LandingPage.css';
 
 const drawerWidth = 240;
@@ -49,39 +56,49 @@ const useStyles = makeStyles((theme) => ({
     },
     nested: {
         paddingLeft: theme.spacing(4),
+        // color: 'darkGrey',
+        // fontSize: '10',
     },
+    collapseMenu: {
+        display: 'flex',
+        flexDirection: 'column'
+    }
 }));
 
 // import this and submodules names from a utils file to clean it up?
-const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact', 'test'];
+const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
 
-const LandingPage = (props) => {
-    const [openGenerators, setOpenGenerators] = useState(true);
-    const [openFilters, setOpenFilters] = useState(true);
-    const [openMetrics, setOpenMetrics] = useState(true);
-    // const [openAbout, setOpenAbout] = useState(true);
-    // const [openContact, setOpenContact] = useState(true);
+const LandingPage = () => {
+    // useEffect(() => {
+    //     console.log(generatorsNames);
+    // })
 
-    const [open, setOpen] = useState(true);
+    const [openGenerators, setOpenGenerators] = useState(false);
+    const [openFilters, setOpenFilters] = useState(false);
+    const [openMetrics, setOpenMetrics] = useState(false);
+
+    const [open, setOpen] = useState(false);
     const [chosenModule, setChosenModule] = useState("Generators");
 
     const handleClick = (text) => {
+
+        console.log(openGenerators, openFilters, openMetrics);
         // chosenModule state records which module (generators, filters, etc.) is chosen by the user.
-        setChosenModule(text);
+        // setChosenModule(text);
 
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component.
         switch (text) {
             case "Generators":
                 setOpenGenerators(!openGenerators);
-                setOpen(true);
+                setOpen(!open);
                 break;
             case "Filters":
                 setOpenFilters(!openFilters);
-                setOpen(true);
+                setOpen(!open);
                 break; 
             case "Metrics":
                 setOpenMetrics(!openMetrics);
-                setOpen(true);
+                setOpen(!open);
                 break;        
             case "About":
                 setOpen(false);
@@ -92,14 +109,14 @@ const LandingPage = (props) => {
             default:
                 break;
         }
+
+        setChosenModule(text);
     };
 
     const classes = useStyles();
     
     return (
         <div>
-            {/* https://material-ui.com/components/drawers/ */}
-
             <div>
                 {/*
                     <Blobs />
@@ -126,34 +143,66 @@ const LandingPage = (props) => {
                             <List
                                 component="nav"
                                 aria-labelledby="nested-list-subheader"
-                                subheader={
-                                    <ListSubheader component="div" id="modules-header">
-                                        Modules
-                                    </ListSubheader>
-                                }
                                 className={classes.root}
                             >
                                 {
-                                    porespyModules.map((text, index) => (
-                                        // text gives name, index gives index of element in porespyModules array
-                                        
+                                    porespyModules.map((text, index) => (                                        
                                         <div>
                                             <ListItem button onClick={() => handleClick(text)}>
                                                 <ListItemText primary={text} />
-                                                {/*
-                                                    open 
-                                                    ? 
-                                                    <div>&#9660;</div> 
-                                                    : 
-                                                    <div>&#9650;</div>
-                                                */}
+                                                {(text !== "About" && text !== "Contact") && <KeyboardArrowDownIcon />}
                                             </ListItem>
-                                            <Collapse in={open && chosenModule === text} timeout="auto" unmountOnExit>
+                                            <Collapse in={(open || openGenerators || openFilters || openMetrics) && chosenModule === text} timeout="auto" unmountOnExit>
                                                 <List component="div" disablePadding>
+                                                    {
+                                                        (text === "Generators") && generatorsNames.map((g) => (
+                                                            <ListItem button className={classes.nested}>
+                                                                <ListItemText primary={`${g.name}`} />
+                                                                <KeyboardArrowDownIcon />
+                                                            </ListItem>
+                                                        ))
+                                                    }
+                                                    {
+                                                        (text === "Filters") && filtersNames.map((g) => (
+                                                            <ListItem button className={classes.nested}>
+                                                                <ListItemText primary={`${g.name}`} />
+                                                                <KeyboardArrowDownIcon />
+                                                            </ListItem>
+                                                        ))
+                                                    }
+                                                    {/*
                                                     <ListItem button className={classes.nested}>
                                                         <ListItemText primary={`${index} -_- ${text}`} />
                                                     </ListItem>
+                                                    <ListItem button className={classes.nested}>
+                                                        <ListItemText primary={`pitubll`} />
+                                                    </ListItem>
+                                                    <ListItem button className={classes.nested}>
+                                                        <ListItemText primary={`pinkfloyd`} />
+                                                    </ListItem>
+                                                    */}
+
                                                 </List>
+
+                                                {/*
+                                                <List component="div" disablePadding>
+                                                    <ListItem button className="collapseMenu">
+                                                        (text === "Generators") && generatorsNames.map((g) => (
+                                                            <div>
+                                                                <List component="nav" disablePadding className="collapseMenuItem">
+                                                                    <ListItem button>
+                                                                        <ListItemText primary={`${g.name}`} />
+                                                                        <KeyboardArrowDownIcon />
+                                                                    </ListItem>
+                                                                </List>
+                                                            </div>
+                                                        ))
+                                                    {<ListItemText primary={`${index} -_- ${text}`} />}
+                                                    </ListItem>
+                                                </List>
+                                                
+                                                */}
+
                                             </Collapse>
                                         </div>
                                     ))
@@ -167,12 +216,10 @@ const LandingPage = (props) => {
                         <Toolbar />
                         <div className="title">
                             PoreSpy
-                        </div>
-                        
+                        </div>                        
                         <div className="description">
                             A python library of image analysis tools used to extract information from 3D images of porous materials
                         </div>
-
                         <div className="description">
                             Upon landing, here goes a generic landing page message
                         </div>
@@ -191,7 +238,7 @@ const LandingPage = (props) => {
                             chosenModule === "About" && <AboutPage />
                         }
                         {
-                            // chosenModule === "Contact" && <ContactPage />
+                            chosenModule === "Contact" && <ContactPage />
                         }
 
                     </main>
