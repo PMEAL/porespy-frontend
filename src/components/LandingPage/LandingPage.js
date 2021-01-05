@@ -69,28 +69,29 @@ const useStyles = makeStyles((theme) => ({
 const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
 
 const LandingPage = () => {
-    // useEffect(() => {
-    //     console.log(generatorsNames);
-    // })
-
     const [openGenerators, setOpenGenerators] = useState(false);
     const [openFilters, setOpenFilters] = useState(false);
     const [openMetrics, setOpenMetrics] = useState(false);
 
     const [open, setOpen] = useState(false);
     const [chosenModule, setChosenModule] = useState("Generators");
+    const [chosenGenerator, setChosenGenerator] = useState("Blobs");
 
-    const handleClick = (text) => {
+    
+    // useEffect(() => {
+    //     console.log(chosenModule);
+    //     console.log(chosenGenerator);
+    // })
 
-        console.log(openGenerators, openFilters, openMetrics);
-        // chosenModule state records which module (generators, filters, etc.) is chosen by the user.
-        // setChosenModule(text);
-
+    const handleClick = (text, pythonFunc) => {
+        console.log(text, pythonFunc);
+        
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component.
         switch (text) {
             case "Generators":
                 setOpenGenerators(!openGenerators);
                 setOpen(!open);
+                setChosenGenerator(pythonFunc);
                 break;
             case "Filters":
                 setOpenFilters(!openFilters);
@@ -109,8 +110,12 @@ const LandingPage = () => {
             default:
                 break;
         }
-
-        setChosenModule(text);
+        
+        // chosenModule state records which module (generators, filters, etc.) is chosen by the user.
+        // setChosenModule(text);
+        if (text) {
+            setChosenModule(text);
+        }
     };
 
     const classes = useStyles();
@@ -148,15 +153,25 @@ const LandingPage = () => {
                                 {
                                     porespyModules.map((text, index) => (                                        
                                         <div>
-                                            <ListItem button onClick={() => handleClick(text)}>
+                                            <ListItem button onClick={() => handleClick(text, null)}>
                                                 <ListItemText primary={text} />
                                                 {(text !== "About" && text !== "Contact") && <KeyboardArrowDownIcon />}
                                             </ListItem>
-                                            <Collapse in={(open || openGenerators || openFilters || openMetrics) && chosenModule === text} timeout="auto" unmountOnExit>
+                                            <Collapse 
+                                                in={(
+                                                    (text === "Generators" && openGenerators)
+                                                    || (text === "Filters" && openFilters)
+                                                    || (text === "Metrics" && openMetrics)
+                                                )} 
+                                                timeout="auto" 
+                                                unmountOnExit
+                                            >
                                                 <List component="div" disablePadding>
+
+                                                    {/* Can probably change this to a standalone component with a prop passing in the text variable. */}
                                                     {
                                                         (text === "Generators") && generatorsNames.map((g) => (
-                                                            <ListItem button className={classes.nested}>
+                                                            <ListItem button className={classes.nested} onClick={() => handleClick(null, g.name)}>
                                                                 <ListItemText primary={`${g.name}`} />
                                                                 <KeyboardArrowDownIcon />
                                                             </ListItem>
@@ -170,39 +185,7 @@ const LandingPage = () => {
                                                             </ListItem>
                                                         ))
                                                     }
-                                                    {/*
-                                                    <ListItem button className={classes.nested}>
-                                                        <ListItemText primary={`${index} -_- ${text}`} />
-                                                    </ListItem>
-                                                    <ListItem button className={classes.nested}>
-                                                        <ListItemText primary={`pitubll`} />
-                                                    </ListItem>
-                                                    <ListItem button className={classes.nested}>
-                                                        <ListItemText primary={`pinkfloyd`} />
-                                                    </ListItem>
-                                                    */}
-
                                                 </List>
-
-                                                {/*
-                                                <List component="div" disablePadding>
-                                                    <ListItem button className="collapseMenu">
-                                                        (text === "Generators") && generatorsNames.map((g) => (
-                                                            <div>
-                                                                <List component="nav" disablePadding className="collapseMenuItem">
-                                                                    <ListItem button>
-                                                                        <ListItemText primary={`${g.name}`} />
-                                                                        <KeyboardArrowDownIcon />
-                                                                    </ListItem>
-                                                                </List>
-                                                            </div>
-                                                        ))
-                                                    {<ListItemText primary={`${index} -_- ${text}`} />}
-                                                    </ListItem>
-                                                </List>
-                                                
-                                                */}
-
                                             </Collapse>
                                         </div>
                                     ))
@@ -227,7 +210,6 @@ const LandingPage = () => {
                         {/*
                             <Blobs />
                         */}
-
                         {
                             chosenModule === "Generators" && <Blobs />
                         }
@@ -240,7 +222,6 @@ const LandingPage = () => {
                         {
                             chosenModule === "Contact" && <ContactPage />
                         }
-
                     </main>
                 </div>
 
