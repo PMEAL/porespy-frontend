@@ -26,6 +26,7 @@ import ContactPage from '../ContactPage/ContactPage';
 
 import { generatorsNames } from '../../utils/generatorsNames';
 import { filtersNames } from '../../utils/filtersNames';
+import { metricsNames } from '../../utils/metricsNames';
 
 import './LandingPage.css';
 
@@ -90,6 +91,7 @@ const LandingPage = () => {
     const handleClick = (text, pythonFunc) => {
         console.log(text, pythonFunc);
         // console.log(generatorsNames);
+        console.log(filtersNames);
         
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component.
         switch (text) {
@@ -176,21 +178,25 @@ const LandingPage = () => {
                                                 unmountOnExit
                                             >
                                                 <List component="div" disablePadding>
-
                                                     {/* Can probably change this to a standalone component with a prop passing in the text variable. */}
                                                     {
                                                         (text === "Generators") && generatorsNames.map((g) => (
                                                             <ListItem button className={classes.nested} onClick={() => handleClick(null, g.name)}>
                                                                 <ListItemText primary={`${g.name}`} />
-                                                                <KeyboardArrowDownIcon />
                                                             </ListItem>
                                                         ))
                                                     }
                                                     {
                                                         (text === "Filters") && filtersNames.map((g) => (
-                                                            <ListItem button className={classes.nested}>
+                                                            <ListItem button className={classes.nested} onClick={() => handleClick(null, g.name)}>
                                                                 <ListItemText primary={`${g.name}`} />
-                                                                <KeyboardArrowDownIcon />
+                                                            </ListItem>
+                                                        ))
+                                                    }
+                                                    {
+                                                        (text === "Metrics") && metricsNames.map((g) => (
+                                                            <ListItem button className={classes.nested} onClick={() => handleClick(null, g.name)}>
+                                                                <ListItemText primary={`${g.name}`} />
                                                             </ListItem>
                                                         ))
                                                     }
