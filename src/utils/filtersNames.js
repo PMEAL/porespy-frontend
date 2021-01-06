@@ -5,7 +5,7 @@
 
 // filtersNames is an array of objects. Each object is has 2 attributes, name and entries.
 // Name is a string with the name of the filter function (ex: "Local Thickness")
-// Entries is an array with the parameters to that generator function (ex: ["im", "sizes", "mode"])
+// Entries is an array with the parameters to that filter function (ex: ["im", "sizes", "mode"])
 
 const filtersNames = [{
         name: "Apply Chords",

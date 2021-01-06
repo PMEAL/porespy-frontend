@@ -4,16 +4,16 @@
 //
 
 // networksNames is an array of objects. Each object is has 2 attributes, name and entries.
-// Name is a string with the name of the generator function (ex: "Blobs")
-// Entries is an array with the parameters to that generator function (ex: ["shape", "porosity", "blobiness"])
+// Name is a string with the name of the network function (ex: "")
+// Entries is an array with the parameters to that network function (ex: [""])
 
-const metricsNames = [
+const networksNames = [
     {
-        name: "metric1",
+        name: "network1",
         entries: [
-            "metricEntry1"
+            "networkEntry1"
         ]
     }
 ];
 
-export { metricsNames };
+export { networksNames };
