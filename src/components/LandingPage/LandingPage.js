@@ -91,8 +91,8 @@ const LandingPage = () => {
     const handleClick = (text, pythonFunc) => {
         console.log(text, pythonFunc);
         // console.log(generatorsNames);
-        // console.log(filtersNames);
-        console.log(metricsNames);
+        console.log(filtersNames);
+        // console.log(metricsNames);
         
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component.
         switch (text) {

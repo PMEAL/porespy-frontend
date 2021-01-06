@@ -10,142 +10,205 @@
 const filtersNames = [{
         name: "Apply Chords",
         entries: [
-            "shape",
+            "im",
+            "spacing",
+            "axis",
+            "trim_edges",
+            "label"
         ]
     }, {
         name: "Apply Chords 3D",
         entries: [
-            "hehe"
+            "im",
+            "spacing",
+            "trim_edges"
         ]
     }, {
         name: "Apply Padded",
         entries: [
-            "hehe"
+            "im",
+            "pad_width",
+            "func",
+            "pad_val"
         ]
     }, {
         name: "Chunked Func",
         entries: [
-            "hehe"
+            "func",
+            "overlap",
+            "divs",
+            "cores",
+            "im_arg",
+            "strel_arg"
         ]
     }, {
         name: "Distance Transform Lin",
         entries: [
-            "hehe"
-        ]
-    }, {
-        name: "fftmorphology",
-        entries: [
-            "hehe"
+            "im",
+            "axis",
+            "both"
         ]
     }, {
         name: "Fill Blind Pores",
         entries: [
-            "hehe"
+            "im",
+            "conn"
         ]
     }, {
-        name: "Find Disconnected Voxels ",
+        name: "Find Disconnected Voxels",
         entries: [
-            "hehe"
+            "im",
+            "conn"
         ]
     }, {
         name: "Find Dt Artifacts",
         entries: [
-            "hehe"
+            "dt"
         ]
     }, {
         name: "Find Peaks",
         entries: [
-            "hehe"
+            "dt",
+            "r_max",
+            "footprint"
         ]
     }, {
         name: "Flood",
         entries: [
-            "hehe"
+            "im",
+            "regions",
+            "mode"
         ]
     }, {
         name: "Hold Peaks",
         entries: [
-            "hehe"
+            "im",
+            "axis"
         ]
     }, {
         name: "Local Thickness",
         entries: [
-            "hehe"
+            "im",
+            "sizes",
+            "mode"
         ]
     }, {
         name: "NPhase Border",
         entries: [
-            "hehe"
+            "im",
+            "include_diagonals"
         ]
     }, {
         name: "Porosimetry",
         entries: [
-            "hehe"
+            "im",
+            "sizes",
+            "inlets",
+            "access_limited",
+            "mode",
+            "fft"
         ]
     }, {
         name: "Prune Branches",
         entries: [
-            "hehe"
+            "skel",
+            "branch_points",
+            "iterations"
         ]
     }, {
         name: "Reduce Peaks",
         entries: [
-            "hehe"
+            "peaks"
         ]
     }, {
         name: "Region Size",
         entries: [
-            "hehe"
+            "im"
         ]
     }, {
         name: "Snow Partitioning",
         entries: [
-            "hehe"
+            "im",
+            "dt",
+            "r_max",
+            "sigma",
+            "return_all",
+            "mask",
+            "randomize"
         ]
     }, {
         name: "Snow Partitioning N",
         entries: [
-            "hehe"
+            "im",
+            "r_max",
+            "sigma",
+            "return_all",
+            "mask",
+            "randomize",
+            "alias"
         ]
     }, {
         name: "Snow Partitioning Parallel",
         entries: [
-            "hehe"
+            "im",
+            "overlap",
+            "divs",
+            "mode",
+            "num_workers",
+            "crop",
+            "zoom_factor",
+            "r_max",
+            "sigma",
+            "return_all"
         ]
     }, {
         name: "Trim Disconnected Blobs",
         entries: [
-            "hehe"
+            "im",
+            "inlets",
+            "strel"
         ]
     }, {
         name: "Trim Extrema",
         entries: [
-            "hehe"
+            "im",
+            "h",
+            "mode"
         ]
     }, {
         name: "Trim Floating Solid",
         entries: [
-            "hehe"
+            "im",
+            "conn"
         ]
     }, {
         name: "Trim Nonpercolating Paths",
         entries: [
-            "hehe"
+            "im",
+            "inlet_axis",
+            "outlet_axis",
+            "inlets",
+            "outlets"
         ]
     }, {
         name: "Trim Nearby Peaks",
         entries: [
-            "hehe"
+            "peaks",
+            "dt"
         ]
     }, {
         name: "Trim Saddle Points",
         entries: [
-            "hehe"
+            "peaks",
+            "dt",
+            "max_iters",
+            "verbose"
         ]
     }, {
         name: "Trim Small Clusters",
         entries: [
-            "hehe"
+            "im",
+            "size"
         ]
     }
 ];
