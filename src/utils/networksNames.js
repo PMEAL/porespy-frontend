@@ -1,0 +1,6 @@
+//
+//  networksNames.js
+//  porespy-frontend
+//
+
+

@@ -1,6 +1,9 @@
+//
+//  filtersNames.js
+//  porespy-frontend
+//
 
-
-// generatorsNames is an array of objects. Each object is has 2 attributes, name and entries.
+// filtersNames is an array of objects. Each object is has 2 attributes, name and entries.
 // Name is a string with the name of the generator function (ex: "Blobs")
 // Entries is an array with the parameters to that generator function (ex: ["shape", "porosity", "blobiness"])
 

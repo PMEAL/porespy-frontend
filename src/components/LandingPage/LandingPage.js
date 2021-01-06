@@ -1,3 +1,8 @@
+//
+//  LandingPage.js
+//  porespy-frontend
+//
+
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -77,7 +82,6 @@ const LandingPage = () => {
     const [chosenModule, setChosenModule] = useState("Generators");
     const [chosenGenerator, setChosenGenerator] = useState("Blobs");
 
-    
     // useEffect(() => {
     //     console.log(chosenModule);
     //     console.log(chosenGenerator);
@@ -85,6 +89,7 @@ const LandingPage = () => {
 
     const handleClick = (text, pythonFunc) => {
         console.log(text, pythonFunc);
+        // console.log(generatorsNames);
         
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component.
         switch (text) {
@@ -117,6 +122,10 @@ const LandingPage = () => {
             setChosenModule(text);
         }
     };
+
+    const handleFunctionClick = () => {
+
+    }
 
     const classes = useStyles();
     

@@ -1,4 +1,7 @@
-
+//
+//  generatorsNames.js
+//  porespy-frontend
+//
 
 // generatorsNames is an array of objects. Each object is has 2 attributes, name and entries.
 // Name is a string with the name of the generator function (ex: "Blobs")
@@ -15,71 +18,87 @@ const generatorsNames = [{
         name: "Bundle of Tubes",
         entries: [
             "shape",
-            "porosity",
-            "blobiness"
+            "spacing"
         ]
     }, {
         name: "Cylinders",
         entries: [
             "shape",
+            "radius",
+            "ncylinders",
             "porosity",
-            "blobiness"
+            "phi_max",
+            "theta_max",
+            "length",
+            "max_iter"
         ]
     }, {
         name: "Insert Shape",
         entries: [
-            "shape",
-            "porosity",
-            "blobiness"
+            "im",
+            "element",
+            "center",
+            "corner",
+            "value",
+            "mode"
         ]
     }, {
         name: "Lattice Spheres",
         entries: [
             "shape",
-            "porosity",
-            "blobiness"
+            "radius",
+            "offset",
+            "lattice"
         ]
     }, {
         name: "Line Segment",
         entries: [
-            "shape",
-            "porosity",
-            "blobiness"
+            "X0",
+            "X1"
         ]
     }, {
         name: "Overlapping Spheres",
         entries: [
             "shape",
+            "radius",
             "porosity",
-            "blobiness"
+            "iter_max",
+            "tol"
         ]
     }, {
         name: "Perlin Noise",
         entries: [
             "shape",
             "porosity",
-            "blobiness"
+            "octaves",
+            "frequency",
+            "persistence"
         ]
     }, {
         name: "Polydisperse Spheres",
         entries: [
             "shape",
             "porosity",
-            "blobiness"
+            "dist",
+            "nbins",
+            "r_min"
         ]
     }, {
         name: "RSA",
         entries: [
-            "shape",
-            "porosity",
-            "blobiness"
+            "im",
+            "radius",
+            "volume_fraction",
+            "n_max",
+            "mode"
         ]
     }, {
         name: "Voronoi Edges",
         entries: [
             "shape",
-            "porosity",
-            "blobiness"
+            "radius",
+            "ncells",
+            "flat_faces"
         ]
     }
 ];

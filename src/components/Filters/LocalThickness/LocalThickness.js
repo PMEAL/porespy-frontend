@@ -1,3 +1,8 @@
+//
+//  LocalThickness.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
