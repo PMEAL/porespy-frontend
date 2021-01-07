@@ -4,13 +4,6 @@
 //
 
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
 import './LocalThickness.css';
 
@@ -50,20 +43,12 @@ const LocalThickness = () => {
         console.log(e.target.name);
     }
 
-    // const useStyles = makeStyles((theme) => ({
-    //     root: {
-    //       display: 'flex',
-    //       flexDirection: 'row'
-    //     },
-    //     formControl: {
-    //       margin: theme.spacing(3),
-    //     },
-    // }));
-
-    // const classes = useStyles();
-
     return (
         <div>
+            <h1>
+                Hello from Local Thickness Component
+            </h1>
+            {/*
             <div className="filters">
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Filters</FormLabel>
@@ -83,6 +68,8 @@ const LocalThickness = () => {
                         </FormGroup>
                 </FormControl>
             </div>
+        */  }
+
         </div>
     )
 }

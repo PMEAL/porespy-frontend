@@ -9,74 +9,77 @@
 
 const metricsNames = [
     {
-        name: "RegionProps 3D",
-        entries: [
-            "metricEntry1"
-        ]
-    }, {
-        name: "Props To DataFrame",
-        entries: [
-            "metricEntry1"
-        ]
-    }, {
-        name: "Props To Image",
-        entries: [
-            "metricEntry1"
-        ]
-    }, {
         name: "Chord Counts",
         entries: [
-            "metricEntry1"
+            "im"
         ]
     }, {
         name: "Chord Length Distribution",
         entries: [
-            "metricEntry1"
+            "im",
+            "bins",
+            "log",
+            "voxel_size",
+            "normalization"
         ]
     }, {
         name: "Linear Density",
         entries: [
-            "metricEntry1"
+            "im",
+            "bins",
+            "voxel_size",
+            "log"
         ]
     }, {
         name: "Pore Size Distribution",
         entries: [
-            "metricEntry1"
+            "im",
+            "bins",
+            "log",
+            "voxel_size"
         ]
     }, {
         name: "Radial Density",
         entries: [
-            "metricEntry1"
+            "im",
+            "bins",
+            "voxel_size"
         ]
     }, {
         name: "Porosity",
         entries: [
-            "metricEntry1"
+            "im"
         ]
     }, {
         name: "Porosity Profile",
         entries: [
-            "metricEntry1"
+            "im",
+            "axis"
         ]
     }, {
         name: "Representative Elementary Volume",
         entries: [
-            "metricEntry1"
+            "im",
+            "npoints"
         ]
     }, {
-        name: "Two Point Correlation Bf",
+        name: "Two Point Correlation Brute Force",
         entries: [
-            "metricEntry1"
+            "im",
+            "spacing"
         ]
     }, {
-        name: "Two Point Correlation Fft",
+        name: "Two Point Correlation Fourier Transform",
         entries: [
-            "metricEntry1"
+            "im"
         ]
     }, {
         name: "Region Surface Areas",
         entries: [
-            "metricEntry1"
+            "regions",
+            "area",
+            "voxel_size",
+            "strel"
         ]
     }, {
         name: "Region Interface Areas",
@@ -86,12 +89,15 @@ const metricsNames = [
     }, {
         name: "Mesh Surface Area",
         entries: [
-            "metricEntry1"
+            "mesh",
+            "verts",
+            "faces"
         ]
     }, {
         name: "Phase Fraction",
         entries: [
-            "metricEntry1"
+            "im",
+            "normed"
         ]
     }
 ];

@@ -83,7 +83,7 @@ const LandingPage = () => {
     const [chosenModule, setChosenModule] = useState("Generators");
     const [chosenGenerator, setChosenGenerator] = useState("Blobs");
     const [chosenFilter, setChosenFilter] = useState("Apply Chords");
-    const [chosenMetric, setChosenMetric] = useState("");
+    const [chosenMetric, setChosenMetric] = useState("Chord Counts");
     // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
 
     const handleClick = (text) => {        
@@ -222,7 +222,6 @@ const LandingPage = () => {
                         Upon landing, here goes a generic landing page message
                     </div>
 
-                    <div>here</div>
                     <div>{chosenGenerator}</div>
                     <div>{chosenFilter}</div>
                     <div>{chosenMetric}</div>
