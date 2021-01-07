@@ -79,7 +79,6 @@ const LandingPage = () => {
     const [openFilters, setOpenFilters] = useState(false);
     const [openMetrics, setOpenMetrics] = useState(false);
 
-    const [open, setOpen] = useState(false);
     const [chosenModule, setChosenModule] = useState("Generators");
     const [chosenGenerator, setChosenGenerator] = useState("Blobs");
     const [chosenFilter, setChosenFilter] = useState("Apply Chords");
@@ -91,22 +90,13 @@ const LandingPage = () => {
         switch (text) {
             case "Generators":
                 setOpenGenerators(!openGenerators);
-                setOpen(!open);
                 break;
             case "Filters":
                 setOpenFilters(!openFilters);
-                setOpen(!open);
                 break; 
             case "Metrics":
                 setOpenMetrics(!openMetrics);
-                setOpen(!open);
-                break;        
-            case "About":
-                setOpen(false);
-                break; 
-            case "Contact":
-                setOpen(false);
-                break; 
+                break;
             default:
                 break;
         }
@@ -131,7 +121,19 @@ const LandingPage = () => {
             default:
                 break;
         }
+
+        if (text) {
+            setChosenModule(text);
+        }
     }
+
+    const renderSubMenus = (text, modules) => (
+        modules.map((g) => (
+            <ListItem button className={classes.nested} onClick={() => handleFunctionClick(text, g.name)}>
+                <ListItemText primary={`${g.name}`} />
+            </ListItem>
+        ))
+    )
 
     const classes = useStyles();
     
@@ -161,7 +163,7 @@ const LandingPage = () => {
                             className={classes.root}
                         >
                             {
-                                porespyModules.map((text, index) => (                                        
+                                porespyModules.map((text) => (                                        
                                     <div>
                                         <ListItem button onClick={() => handleClick(text)}>
                                             <ListItemText primary={text} />
@@ -177,29 +179,9 @@ const LandingPage = () => {
                                             unmountOnExit
                                         >
                                             <List component="div" disablePadding>
-                                                {/* Can probably change this to a standalone component with a prop passing in the text variable. */}
-
-                                                {
-                                                    (text === "Generators") && generatorsNames.map((g) => (
-                                                        <ListItem button className={classes.nested} onClick={() => handleFunctionClick(text, g.name)}>
-                                                            <ListItemText primary={`${g.name}`} />
-                                                        </ListItem>
-                                                    ))
-                                                }
-                                                {
-                                                    (text === "Filters") && filtersNames.map((g) => (
-                                                        <ListItem button className={classes.nested} onClick={() => handleFunctionClick(text, g.name)}>
-                                                            <ListItemText primary={`${g.name}`} />
-                                                        </ListItem>
-                                                    ))
-                                                }
-                                                {
-                                                    (text === "Metrics") && metricsNames.map((g) => (
-                                                        <ListItem button className={classes.nested} onClick={() => handleFunctionClick(text, g.name)}>
-                                                            <ListItemText primary={`${g.name}`} />
-                                                        </ListItem>
-                                                    ))
-                                                }
+                                                {(text === "Generators") && renderSubMenus(text, generatorsNames)}
+                                                {(text === "Filters") && renderSubMenus(text, filtersNames)}
+                                                {(text === "Metrics") && renderSubMenus(text, metricsNames)}
                                             </List>
                                         </Collapse>
                                     </div>
@@ -216,10 +198,7 @@ const LandingPage = () => {
                         PoreSpy
                     </div>                        
                     <div className="description">
-                        A python library of image analysis tools used to extract information from 3D images of porous materials
-                    </div>
-                    <div className="description">
-                        Upon landing, here goes a generic landing page message
+                        A python library of image analysis tools used to extract information from 3D images of porous materials. (Maybe change the landing message?)
                     </div>
 
                     <div>{chosenGenerator}</div>
@@ -230,9 +209,11 @@ const LandingPage = () => {
                         // TODO: these will probably follow a certain pattern, so make these into a component with 2 props (chosenModule, chosenFunction), then render the component?
                         // Can section these descoupled components by module (ex: Generators, Filters, Metrics)
                         chosenModule === "Generators" && chosenGenerator === "Blobs" && <Blobs />
+                        // Ex: <RenderModule chosenModule={Generators} chosenFunction={Blobs}/>
                     }
                     {
                         chosenModule === "Filters" && chosenFilter === "Local Thickness" && <LocalThickness />
+                        // Ex: <RenderModule chosenModule={Filters} chosenFunction={chosenFilter}/>
                     }
                     {
                         chosenModule === "About" && <AboutPage />
