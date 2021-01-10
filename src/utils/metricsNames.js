@@ -6,6 +6,7 @@
 // metricsNames is an array of objects. Each object is has 2 attributes, name and entries.
 // Name is a string with the name of the metric function (ex: "Two Point Correlation Fft")
 // Entries is an array with the parameters to that metric function (ex: ["im"])
+// To convert name in object to python function name, apply this function: .replace(/\s/g, '_').toLowerCase() 
 
 const metricsNames = [
     {

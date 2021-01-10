@@ -22,6 +22,9 @@ import Blobs from '../Generators/Blobs/Blobs';
 import LocalThickness from '../Filters/LocalThickness/LocalThickness';
 import AboutPage from '../AboutPage/AboutPage';
 import ContactPage from '../ContactPage/ContactPage';
+import RenderGenerator from '../RenderGenerator/RenderGenerator';
+import RenderFilter from '../RenderFilter/RenderFilter';
+import RenderMetric from '../RenderMetric/RenderMetric';
 
 import { generatorsNames } from '../../utils/generatorsNames';
 import { filtersNames } from '../../utils/filtersNames';
@@ -170,11 +173,9 @@ const LandingPage = () => {
                                             {(text !== "About" && text !== "Contact") && <KeyboardArrowDownIcon />}
                                         </ListItem>
                                         <Collapse 
-                                            in={(
-                                                (text === "Generators" && openGenerators)
+                                            in={((text === "Generators" && openGenerators)
                                                 || (text === "Filters" && openFilters)
-                                                || (text === "Metrics" && openMetrics)
-                                            )} 
+                                                || (text === "Metrics" && openMetrics))} 
                                             timeout="auto" 
                                             unmountOnExit
                                         >
@@ -200,20 +201,16 @@ const LandingPage = () => {
                     <div className="description">
                         A python library of image analysis tools used to extract information from 3D images of porous materials. (Maybe change the landing message?)
                     </div>
-
-                    <div>{chosenGenerator}</div>
-                    <div>{chosenFilter}</div>
-                    <div>{chosenMetric}</div>
-                    
                     {
                         // TODO: these will probably follow a certain pattern, so make these into a component with 2 props (chosenModule, chosenFunction), then render the component?
-                        // Can section these descoupled components by module (ex: Generators, Filters, Metrics)
-                        chosenModule === "Generators" && chosenGenerator === "Blobs" && <Blobs />
-                        // Ex: <RenderModule chosenModule={Generators} chosenFunction={Blobs}/>
+                        // chosenModule === "Generators" && chosenGenerator === "Blobs" && <Blobs />
+                        chosenModule === "Generators" && <RenderGenerator chosenFunction={chosenGenerator} />
                     }
                     {
-                        chosenModule === "Filters" && chosenFilter === "Local Thickness" && <LocalThickness />
-                        // Ex: <RenderModule chosenModule={Filters} chosenFunction={chosenFilter}/>
+                        chosenModule === "Filters" && <RenderFilter chosenFunction={chosenFilter} />
+                    }
+                    {
+                        chosenModule === "Metrics" && <RenderMetric chosenFunction={chosenMetric} />
                     }
                     {
                         chosenModule === "About" && <AboutPage />

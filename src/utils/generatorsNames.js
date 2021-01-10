@@ -6,6 +6,7 @@
 // generatorsNames is an array of objects. Each object is has 2 attributes, name and entries.
 // Name is a string with the name of the generator function (ex: "Blobs")
 // Entries is an array with the parameters to that generator function (ex: ["shape", "porosity", "blobiness"])
+// To convert name in object to python function name, apply this function: .replace(/\s/g, '_').toLowerCase() 
 
 const generatorsNames = [{
         name: "Blobs",
