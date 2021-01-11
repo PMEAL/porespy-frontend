@@ -21,7 +21,7 @@ const Blobs = () => {
     const generateBlob = () => {
         const startTime = moment();
 
-        axios.put('http://localhost:8000/porespygenerator/1/', {
+        axios.put('http://localhost:8000/generators/blobs/1/', {
                 porosity,
                 blobiness,
                 dimension_x: xDimension,
@@ -38,11 +38,13 @@ const Blobs = () => {
         });
     }
 
+    // Rename to validateBlobsParams?
     const validateParams = () => {
         const blobParameters = [xDimension, yDimension, porosity, blobiness];
         return blobParameters.includes("") ? true : false;
     }
 
+    // might be able to move this to another file in the ./utils directory
     const integerOnlyField = (e) => {
         const regExp = /[^0-9]/g;
         const integersOnly = e.target.value.replace(regExp, '');
@@ -50,6 +52,7 @@ const Blobs = () => {
         return integersOnly;
     }
 
+    // might be able to move this to another file in the ./utils directory
     const floatOnlyField = (e) => {
         const regExpFullDecimal = /^(?:[0](?:\.\d+)?|1(?:\.0+)?)$/g;
         const regExpZeroOrOne = /^[0]\.$/g;

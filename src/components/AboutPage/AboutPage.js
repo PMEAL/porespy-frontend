@@ -9,7 +9,15 @@ import './AboutPage.css';
 const AboutPage = () => {
     return (
         <div>
-            Hello from AboutPage component
+            <div>
+                The About page is currently under construction...
+            </div>
+            <div>
+                The About page is currently under construction...
+            </div>
+            <div>
+                The About page is currently under construction...
+            </div>
         </div>
     )
 }

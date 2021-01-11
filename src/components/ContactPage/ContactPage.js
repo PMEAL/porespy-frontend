@@ -9,7 +9,15 @@ import './ContactPage.css';
 const ContactPage = () => {
     return (
         <div>
-            Hello from ContactPage component
+            <div>
+                The contact page is currently under construction...
+            </div>
+            <div>
+                The contact page is currently under construction...
+            </div>
+            <div>
+                The contact page is currently under construction...
+            </div>
         </div>
     )
 }

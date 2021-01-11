@@ -17,9 +17,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
-// Will probably move these into the abstracted component that renders the component based on the user's selection
-import Blobs from '../Generators/Blobs/Blobs';
-import LocalThickness from '../Filters/LocalThickness/LocalThickness';
 import AboutPage from '../AboutPage/AboutPage';
 import ContactPage from '../ContactPage/ContactPage';
 import RenderGenerator from '../RenderGenerator/RenderGenerator';
@@ -197,13 +194,11 @@ const LandingPage = () => {
                     <Toolbar />
                     <div className="title">
                         PoreSpy
-                    </div>                        
+                    </div>
                     <div className="description">
                         A python library of image analysis tools used to extract information from 3D images of porous materials. (Maybe change the landing message?)
                     </div>
                     {
-                        // TODO: these will probably follow a certain pattern, so make these into a component with 2 props (chosenModule, chosenFunction), then render the component?
-                        // chosenModule === "Generators" && chosenGenerator === "Blobs" && <Blobs />
                         chosenModule === "Generators" && <RenderGenerator chosenFunction={chosenGenerator} />
                     }
                     {
