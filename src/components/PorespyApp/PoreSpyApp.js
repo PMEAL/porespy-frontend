@@ -14,9 +14,11 @@ const PoreSpyApp = () => {
             <Route path="/" exact render={() => (
                 <LandingPage />
             )}/>
-            <Route path="/about" exact render={() => (
-                <AboutPage />
-            )}/>
+            <Route path="*" exact render={() => (
+                <div>
+                    error 404: not found
+                </div>
+            )} />
         </Router>
     )
 }

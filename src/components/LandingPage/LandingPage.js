@@ -30,6 +30,7 @@ import { metricsNames } from '../../utils/metricsNames';
 
 import './LandingPage.css';
 
+// Width of menu in pixels
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -207,6 +208,9 @@ const LandingPage = () => {
                     {
                         chosenModule === "Metrics" && <RenderMetric chosenFunction={chosenMetric} />
                     }
+
+
+                    {/* For routing, might need to separate this into and make the drawer material ui component in AboutPage and ContactPage components instead */}
                     {
                         chosenModule === "About" && <AboutPage />
                     }

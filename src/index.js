@@ -8,6 +8,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import PoreSpyApp from './components/PorespyApp/PoreSpyApp';
 
+// (Program entry point)
+
 ReactDOM.render(
   <React.StrictMode>
     <PoreSpyApp />
