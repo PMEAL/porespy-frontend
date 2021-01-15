@@ -8,7 +8,7 @@ For more information on PoreSpy, please visit the following repo: https://github
 ## TODO:
 
 - Change GUI to make it look like mock gui design. (in progress)
-- Add React Redux
+- Create store component, start with react redux
 - Add routing to About and Contact Page
 - Apply SOC to module functions names in ./src/utils folder, it will clean up the code.
 - add submodules to the menu bar, make components for each. (in progress)
