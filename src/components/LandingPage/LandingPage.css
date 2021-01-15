@@ -1,13 +1,14 @@
 .title {
     align-items: center;
     display: flex;
-    font-size: 40px;
+    font-size: 48px;
+    font-weight: 700;
     justify-content: center;
 }
 
 .description {
     align-items: center;
     display: flex;
-    font-size: 20px;
+    font-size: 24px;
     justify-content: center;
 }

@@ -196,7 +196,7 @@ const LandingPage = () => {
                         PoreSpy
                     </div>
                     <div className="description">
-                        A python library of image analysis tools used to extract information from 3D images of porous materials. (Maybe change the landing message?)
+                        Porous Media Image Analysis in Python
                     </div>
                     {
                         chosenModule === "Generators" && <RenderGenerator chosenFunction={chosenGenerator} />

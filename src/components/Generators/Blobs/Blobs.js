@@ -8,65 +8,47 @@ import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { integerOnlyField, floatOnlyBetweenOneAndZeroField } from '../../../utils/inputFieldValidators';
 import './Blobs.css';
+
+// If one were to do SoC on generators components, following values will be passed into props:
+// api endpoint
+// Textfields and other UI components
 
 const Blobs = () => {
     const [xDimension, setXDimension] = useState(500);
     const [yDimension, setYDimension] = useState(500);
     const [porosity, setPorosity] = useState(0.5);
     const [blobiness, setBlobiness] = useState(1);
-    const [generator, setGenerator] = useState('');
-    const [generatorTime, setGeneratorTime] = useState('');
+    const [blob, setBlob] = useState('');
+    const [blobGenerationTime, setBlobGenerationTime] = useState('');
+
+    // backendRootEndpoint should be part of store in Redux (globalized state between components)
+    const backendRootEndpoint = 'http://localhost:8000/';
 
     const generateBlob = () => {
         const startTime = moment();
 
-        axios.put('http://localhost:8000/generators/blobs/1/', {
+        axios.put(`${backendRootEndpoint}generators/blobs/1/`, {
                 porosity,
                 blobiness,
                 dimension_x: xDimension,
                 dimension_y: yDimension
             }
         ).then(({ data: { generated_image } }) => {
-            setGenerator(generated_image);
+            setBlob(generated_image);
             const timeElapsed = ((moment() - startTime) / 1000).toString();
             const timeElapsedFormatted = `Time taken to generate blob: ${timeElapsed} seconds.`;
-            setGeneratorTime(timeElapsedFormatted);
+            setBlobGenerationTime(timeElapsedFormatted);
         }).catch((e) => {
             console.log(e);
-            setGeneratorTime("Looks like an error has occurred...");
+            setBlobGenerationTime("Looks like an error has occurred...");
         });
     }
 
-    // Rename to validateBlobsParams?
     const validateParams = () => {
         const blobParameters = [xDimension, yDimension, porosity, blobiness];
         return blobParameters.includes("") ? true : false;
-    }
-
-    // might be able to move this to another file in the ./utils directory
-    const integerOnlyField = (e) => {
-        const regExp = /[^0-9]/g;
-        const integersOnly = e.target.value.replace(regExp, '');
-        e.target.value = integersOnly;
-        return integersOnly;
-    }
-
-    // might be able to move this to another file in the ./utils directory
-    const floatOnlyField = (e) => {
-        const regExpFullDecimal = /^(?:[0](?:\.\d+)?|1(?:\.0+)?)$/g;
-        const regExpZeroOrOne = /^[0]\.$/g;
-        const regExpDefault = /[^0-1]/g;
-
-        let floatsOnly = "";
-        if (regExpFullDecimal.test(e.target.value) || regExpZeroOrOne.test(e.target.value)) {
-            floatsOnly = e.target.value;
-        } else if (regExpDefault.test(e.target.value)) {
-            floatsOnly = e.target.value.slice(0, -1);
-        }
-
-        e.target.value = floatsOnly;
-        return floatsOnly;
     }
 
     return (
@@ -120,7 +102,7 @@ const Blobs = () => {
                         helperText="Decimal value betweeen 0 and 1."
                         variant="outlined"
                         onInput={(e) => {
-                            const onlyFloats = floatOnlyField(e);
+                            const onlyFloats = floatOnlyBetweenOneAndZeroField(e);
                             setPorosity(onlyFloats);
                         }}
                     />
@@ -142,14 +124,14 @@ const Blobs = () => {
             </div>
 
             {
-                generator !== '' 
+                blob !== '' 
                 &&
                 <div className="blobImageWrapper">
                     <img 
                         className="blobImage" 
-                        src={`data:image/png;base64,${generator}`} 
+                        src={`data:image/png;base64,${blob}`} 
                     />
-                    <div>{generatorTime}</div>
+                    <div>{blobGenerationTime}</div>
                 </div> 
             }
         </div>
