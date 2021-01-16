@@ -1,3 +1,8 @@
+//
+//  VoronoiEdges.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import './VoronoiEdges.css';
 

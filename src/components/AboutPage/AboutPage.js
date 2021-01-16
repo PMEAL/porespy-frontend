@@ -5,24 +5,7 @@
 
 import React from 'react';
 import Link from '@material-ui/core/Link';
-
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-
-import { generatorsNames } from '../../utils/generatorsNames';
-import { filtersNames } from '../../utils/filtersNames';
-import { metricsNames } from '../../utils/metricsNames';
-
 import './AboutPage.css';
 
 // Width of menu in pixels
@@ -77,26 +60,23 @@ const AboutPage = () => {
     return (
         <div>
             <br />
-            <br />
 
             <div>
                 Cite as:
             </div>
 
             <br />
-            <br />
 
             <div>
                 Gostick J, Khan ZA, Tranter TG, Kok MDR, Agnaou M, Sadeghi MA, Jervis R. PoreSpy: A Python Toolkit for Quantitative Analysis of Porous Media Images. Journal of Open Source Software, 2019. doi:10.21105/joss.01296
             </div>
-            <br />
+
             <br />
 
             <div>
                 What is PoreSpy?
             </div>
 
-            <br />
             <br />
             
             <div>
@@ -105,7 +85,6 @@ const AboutPage = () => {
                 The aim of PoreSpy is to provide a set of pre-written tools for all the common porous media measurements.
             </div>
 
-            <br />
             <br />
 
             <div>

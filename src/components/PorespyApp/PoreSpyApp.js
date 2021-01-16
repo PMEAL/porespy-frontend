@@ -6,13 +6,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LandingPage from '../LandingPage/LandingPage';
-import AboutPage from '../AboutPage/AboutPage';
-import ContactPage from '../ContactPage/ContactPage';
 
 const PoreSpyApp = () => {
     return (
         <div>
             <Router basename="">
+                {/* Render LandingPage component with page prop passed in. */}
+                {/* page prop will depend on how the user reaches the site (ex: localhost:3000/about vs localhost:3000/conact vs localhost:3000/) */}
                 <Route path="/" exact render={() => (
                     <LandingPage page="" />
                 )}/>
@@ -23,18 +23,6 @@ const PoreSpyApp = () => {
                     <LandingPage page="contact" />
                 )}/>
             </Router>
-            {/*
-            <Router basename="">
-                <Route path="/" exact render={() => (
-                    <LandingPage />
-                )}/>
-                <Route path="*" exact render={() => (
-                    <div>
-                        error 404: not found
-                    </div>
-                )} />
-            </Router>
-            */}
         </div>
     )
 }

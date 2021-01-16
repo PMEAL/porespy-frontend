@@ -1,3 +1,8 @@
+//
+//  PolydisperseSpheres.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import './PolydisperseSpheres.css';
 

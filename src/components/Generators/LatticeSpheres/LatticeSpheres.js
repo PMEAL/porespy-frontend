@@ -1,3 +1,8 @@
+//
+//  LatticeSpheres.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import './LatticeSpheres.css';
 

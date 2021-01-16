@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-// import this and submodules names from a utils file to clean it up?
+// porespyModules contains the menu names that are then called with .map() to create on the UI.
 const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
 
 const LandingPage = ({ page }) => {
@@ -89,12 +89,9 @@ const LandingPage = ({ page }) => {
     const [renderPage, setRenderPage] = useState(page);
     // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
 
-    useEffect(() => {
-        console.log(renderPage);
-    }, [])
-
     const handleClick = (text) => {        
-        // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component.
+        // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component by calling setOpenGenerators(), setOpenFilters(), and setOpenMetrics()
+        // This block also calls setRenderPage() to render the correct page from the router ("/", "/about", "/contact")
         switch (text) {
             case "Generators":
                 setOpenGenerators(!openGenerators);
@@ -198,9 +195,7 @@ const LandingPage = ({ page }) => {
                                                 {(text !== "About" && text !== "Contact") && <KeyboardArrowDownIcon />}
                                             </ListItem>
                                             <Collapse 
-                                                in={((text === "Generators" && openGenerators)
-                                                    || (text === "Filters" && openFilters)
-                                                    || (text === "Metrics" && openMetrics))} 
+                                                in={((text === "Generators" && openGenerators) || (text === "Filters" && openFilters) || (text === "Metrics" && openMetrics))} 
                                                 timeout="auto" 
                                                 unmountOnExit
                                             >
@@ -226,10 +221,12 @@ const LandingPage = ({ page }) => {
                         <div className="description">
                             Porous Media Image Analysis in Python
                         </div>
+
+                        {/* The following 3 conditional render statements and the <switch></switch> element display the components based on which boolean is true */}
+                        {/* Rendering the <AboutPage /> and <ContactPage /> is in the <switch></switch> element to preserve the routing ("/about", "/contact") */}
                         { chosenModule === "Generators" && renderPage === "" && <RenderGenerator chosenFunction={chosenGenerator} />}
                         { chosenModule === "Filters" && renderPage === "" && <RenderFilter chosenFunction={chosenFilter} /> }
-                        { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }
-                        
+                        { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }                        
                         <Switch>
                             <Route path="/about" render={() => (chosenModule === "About" || renderPage === "about") && <AboutPage />} />
                             <Route path="/contact" render={() => (chosenModule === "Contact" || renderPage === "contact") && <ContactPage />} />

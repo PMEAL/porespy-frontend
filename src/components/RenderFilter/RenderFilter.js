@@ -1,3 +1,8 @@
+//
+//  RenderFilter.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import './RenderFilter.css';
 import LocalThickness from '../Filters/LocalThickness/LocalThickness';

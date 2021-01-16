@@ -1,3 +1,8 @@
+//
+//  RenderMetric.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import './RenderMetric.css';
 

@@ -1,5 +1,9 @@
+//
+//  RenderGenerator.js
+//  porespy-frontend
+//
+
 import React from 'react';
-import './RenderGenerator.css';
 import Blobs from '../Generators/Blobs/Blobs';
 import BundleOfTubes from '../Generators/BundleOfTubes/BundleOfTubes';
 import Cylinders from '../Generators/Cylinders/Cylinders';
@@ -11,16 +15,12 @@ import PerlinNoise from '../Generators/PerlinNoise/PerlinNoise';
 import PolydisperseSpheres from '../Generators/PolydisperseSpheres/PolydisperseSpheres';
 import RSA from '../Generators/RSA/RSA';
 import VoronoiEdges from '../Generators/VoronoiEdges/VoronoiEdges';
+import './RenderGenerator.css';
 
 const RenderGenerator = ({ chosenFunction }) => {
     return (
         <div>
-            <h1>
-                Hello from RenderGenerator
-            </h1>
-            <div>
-                {chosenFunction}
-            </div>
+            {/* Conditionally renders the Generator chosen by the user.*/}
             {chosenFunction === "Blobs" && <Blobs />}
             {chosenFunction === "Bundle of Tubes" && <BundleOfTubes />}
             {chosenFunction === "Cylinders" && <Cylinders />}

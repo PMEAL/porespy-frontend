@@ -10,6 +10,6 @@ For more information on PoreSpy, please visit the following repo: https://github
 - Change GUI to make it look like mock gui design. (in progress)
 - Create store component, start with react redux
 - Apply SOC to module functions names in ./src/utils folder, it will clean up the code.
-- add submodules to the menu bar, make components for each. (in progress)
+- add submodules to the menu bar, make components for each. (in progress, done for Generators so far. Will populate remaining Generators components)
 - Get a Favicon.ico
-- CSS Stylings
+- CSS Stylings for About Page, LandingPage components

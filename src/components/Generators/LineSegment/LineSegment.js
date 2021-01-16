@@ -1,3 +1,8 @@
+//
+//  LineSegment.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import './LineSegment.css';
 

@@ -1,3 +1,8 @@
+//
+//  PerlinNoise.js
+//  porespy-frontend
+//
+
 import React from 'react';
 import './PerlinNoise.css';
 
