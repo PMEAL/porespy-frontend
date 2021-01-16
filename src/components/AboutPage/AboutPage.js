@@ -5,12 +5,74 @@
 
 import React from 'react';
 import Link from '@material-ui/core/Link';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+
+import { generatorsNames } from '../../utils/generatorsNames';
+import { filtersNames } from '../../utils/filtersNames';
+import { metricsNames } from '../../utils/metricsNames';
+
 import './AboutPage.css';
+
+// Width of menu in pixels
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+    },
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    drawerContainer: {
+        overflow: 'auto',
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        paddingLeft: 240,
+        width: '100%',
+    },
+    root: {
+        width: '100%',
+    },
+    nested: {
+        paddingLeft: theme.spacing(4),
+        // color: 'darkGrey',
+        // fontSize: '10',
+    },
+    collapseMenu: {
+        display: 'flex',
+        flexDirection: 'column'
+    }
+}));
 
 const AboutPage = () => {
     const preventDefault = (e) => {
         e.preventDefault();
     }
+
+    const classes = useStyles();
 
     return (
         <div>

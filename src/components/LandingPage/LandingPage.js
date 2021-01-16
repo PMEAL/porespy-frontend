@@ -17,6 +17,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
+import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
+
 import AboutPage from '../AboutPage/AboutPage';
 import ContactPage from '../ContactPage/ContactPage';
 import RenderGenerator from '../RenderGenerator/RenderGenerator';
@@ -75,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
 // import this and submodules names from a utils file to clean it up?
 const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
 
-const LandingPage = () => {
+const LandingPage = ({ page }) => {
     const [openGenerators, setOpenGenerators] = useState(false);
     const [openFilters, setOpenFilters] = useState(false);
     const [openMetrics, setOpenMetrics] = useState(false);
@@ -84,19 +86,33 @@ const LandingPage = () => {
     const [chosenGenerator, setChosenGenerator] = useState("Blobs");
     const [chosenFilter, setChosenFilter] = useState("Apply Chords");
     const [chosenMetric, setChosenMetric] = useState("Chord Counts");
+    const [renderPage, setRenderPage] = useState(page);
     // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
+
+    useEffect(() => {
+        console.log(renderPage);
+    }, [])
 
     const handleClick = (text) => {        
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component.
         switch (text) {
             case "Generators":
                 setOpenGenerators(!openGenerators);
+                setRenderPage("");
                 break;
             case "Filters":
                 setOpenFilters(!openFilters);
+                setRenderPage("");
                 break; 
             case "Metrics":
                 setOpenMetrics(!openMetrics);
+                setRenderPage("");
+                break;
+            case "About":
+                setRenderPage("about");
+                break;
+            case "Contact":
+                setRenderPage("contact");
                 break;
             default:
                 break;
@@ -149,75 +165,77 @@ const LandingPage = () => {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Drawer
-                    className={classes.drawer}
-                    variant="permanent"
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                >
-                    <Toolbar />
-                    <div className={classes.drawerContainer}>
-                        <List
-                            component="nav"
-                            aria-labelledby="nested-list-subheader"
-                            className={classes.root}
-                        >
-                            {
-                                porespyModules.map((text) => (                                        
-                                    <div>
-                                        <ListItem button onClick={() => handleClick(text)}>
-                                            <ListItemText primary={text} />
-                                            {(text !== "About" && text !== "Contact") && <KeyboardArrowDownIcon />}
-                                        </ListItem>
-                                        <Collapse 
-                                            in={((text === "Generators" && openGenerators)
-                                                || (text === "Filters" && openFilters)
-                                                || (text === "Metrics" && openMetrics))} 
-                                            timeout="auto" 
-                                            unmountOnExit
-                                        >
-                                            <List component="div" disablePadding>
-                                                {(text === "Generators") && renderSubMenus(text, generatorsNames)}
-                                                {(text === "Filters") && renderSubMenus(text, filtersNames)}
-                                                {(text === "Metrics") && renderSubMenus(text, metricsNames)}
-                                            </List>
-                                        </Collapse>
-                                    </div>
-                                ))
-                            }
-                        </List>
-                        <Divider />
-                    </div>
-                </Drawer>
 
-                <main className={classes.content}>
-                    <Toolbar />
-                    <div className="title">
-                        PoreSpy
-                    </div>
-                    <div className="description">
-                        Porous Media Image Analysis in Python
-                    </div>
-                    {
-                        chosenModule === "Generators" && <RenderGenerator chosenFunction={chosenGenerator} />
-                    }
-                    {
-                        chosenModule === "Filters" && <RenderFilter chosenFunction={chosenFilter} />
-                    }
-                    {
-                        chosenModule === "Metrics" && <RenderMetric chosenFunction={chosenMetric} />
-                    }
+                <BrowserRouter>
+                    <Drawer
+                        className={classes.drawer}
+                        variant="permanent"
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        ModalProps={{
+                            keepMounted: true
+                        }}
+                    >
+                        <Toolbar />
+                        <div className={classes.drawerContainer}>
+                            <List
+                                component="nav"
+                                aria-labelledby="nested-list-subheader"
+                                className={classes.root}
+                            >
+                                {
+                                    porespyModules.map((text) => (                                        
+                                        <div>
+                                            <ListItem 
+                                                button 
+                                                key={text} 
+                                                component={Link} 
+                                                to={text === "About" || text === "Contact" ? `/${text.toLowerCase()}` : `/`} 
+                                                onClick={() => handleClick(text)}
+                                            >
+                                                <ListItemText primary={text} />
+                                                {(text !== "About" && text !== "Contact") && <KeyboardArrowDownIcon />}
+                                            </ListItem>
+                                            <Collapse 
+                                                in={((text === "Generators" && openGenerators)
+                                                    || (text === "Filters" && openFilters)
+                                                    || (text === "Metrics" && openMetrics))} 
+                                                timeout="auto" 
+                                                unmountOnExit
+                                            >
+                                                <List component="div" disablePadding>
+                                                    {(text === "Generators") && renderSubMenus(text, generatorsNames)}
+                                                    {(text === "Filters") && renderSubMenus(text, filtersNames)}
+                                                    {(text === "Metrics") && renderSubMenus(text, metricsNames)}
+                                                </List>
+                                            </Collapse>
+                                        </div>
+                                    ))
+                                }
+                            </List>
+                            <Divider />
+                        </div>
+                    </Drawer>
 
-
-                    {/* For routing, might need to separate this into and make the drawer material ui component in AboutPage and ContactPage components instead */}
-                    {
-                        chosenModule === "About" && <AboutPage />
-                    }
-                    {
-                        chosenModule === "Contact" && <ContactPage />
-                    }
-                </main>
+                    <main className={classes.content}>
+                        <Toolbar />
+                        <div className="title">
+                            PoreSpy
+                        </div>
+                        <div className="description">
+                            Porous Media Image Analysis in Python
+                        </div>
+                        { chosenModule === "Generators" && renderPage === "" && <RenderGenerator chosenFunction={chosenGenerator} />}
+                        { chosenModule === "Filters" && renderPage === "" && <RenderFilter chosenFunction={chosenFilter} /> }
+                        { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }
+                        
+                        <Switch>
+                            <Route path="/about" render={() => (chosenModule === "About" || renderPage === "about") && <AboutPage />} />
+                            <Route path="/contact" render={() => (chosenModule === "Contact" || renderPage === "contact") && <ContactPage />} />
+                        </Switch>                        
+                    </main>
+                </BrowserRouter>
             </div>
         </div>
     )
