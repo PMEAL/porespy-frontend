@@ -23,30 +23,35 @@ const Blobs = () => {
     // Data should be entered like this (Object of objects)
     const fieldsInfo = {
         "xDimension": {
+            helperText: "Integer values only.",
             id: "xDimensionInput",
             label: "Voxels in x-direction",
             value: "500",
             type: "int",
             required: true
         }, "yDimension": {
+            helperText: "Integer values only.",
             id: "yDimensionInput",
             label: "Voxels in y-direction",
             value: "500",
             type: "int",
             required: true
         }, "zDimension": {
+            helperText: "Integer values only.",
             id: "zDimensionInput",
             label: "Voxels in z-direction",
             value: "0",
             type: "int",
             required: false
         }, "porosity": {
+            helperText: "Float value between 0 and 1",
             id: "porosityInput",
             label: "Porosity",
             value: "0.5",
             type: "float",
             required: true
         }, "blobiness": {
+            helperText: "Integer values only.",
             id: "blobinessInput",
             label: "Blobiness",
             value: "1",
@@ -130,6 +135,7 @@ const Blobs = () => {
                                 id={params[p].id}
                                 label={params[p].label}
                                 defaultValue={params[p].value}
+                                helperText={params[p].helperText}
                                 variant={"outlined"}
                                 onInput={(e) => parseEnteredValues(e, p)}
                             />
