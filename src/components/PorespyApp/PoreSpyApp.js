@@ -12,7 +12,7 @@ const PoreSpyApp = () => {
         <div>
             <Router basename="">
                 {/* Render LandingPage component with page prop passed in. */}
-                {/* page prop will depend on how the user reaches the site (ex: localhost:3000/about vs localhost:3000/conact vs localhost:3000/) */}
+                {/* page prop will depend on how the user reaches the site (ex: localhost:3000/about vs localhost:3000/contact vs localhost:3000/) */}
                 <Route path="/" exact render={() => (
                     <LandingPage page="" />
                 )}/>

@@ -1,0 +1,23 @@
+.bundleOfTubesDescription {
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    padding: 20px 0px 20px 0px;
+}
+
+.bundleOfTubesTextFields {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bundleOfTubesTextField {
+    padding: 20px 12px 20px 12px;
+}
+
+.bundleOfTubesButton {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px 20px 0px;
+}

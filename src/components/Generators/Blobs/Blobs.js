@@ -15,11 +15,48 @@ import './Blobs.css';
 // api endpoint
 // Textfields and other UI components
 
+// TODO: 3-D image input
+
+
+
 const Blobs = () => {
-    const [xDimension, setXDimension] = useState(500);
-    const [yDimension, setYDimension] = useState(500);
-    const [porosity, setPorosity] = useState(0.5);
-    const [blobiness, setBlobiness] = useState(1);
+    // Data should be entered like this (Object of objects)
+    const fieldsInfo = {
+        "xDimension": {
+            id: "xDimensionInput",
+            label: "Voxels in x-direction",
+            value: "500",
+            type: "int",
+            required: true
+        }, "yDimension": {
+            id: "yDimensionInput",
+            label: "Voxels in y-direction",
+            value: "500",
+            type: "int",
+            required: true
+        }, "zDimension": {
+            id: "zDimensionInput",
+            label: "Voxels in z-direction",
+            value: "0",
+            type: "int",
+            required: false
+        }, "porosity": {
+            id: "porosityInput",
+            label: "Porosity",
+            value: "0.5",
+            type: "float",
+            required: true
+        }, "blobiness": {
+            id: "blobinessInput",
+            label: "Blobiness",
+            value: "1",
+            type: "int",
+            required: true
+        }
+    }
+
+    const [params, setParams] = useState(fieldsInfo);
+    const [validatedParams, setValidatedParams] = useState(false);
     const [blob, setBlob] = useState('');
     const [blobGenerationTime, setBlobGenerationTime] = useState('');
 
@@ -30,10 +67,11 @@ const Blobs = () => {
         const startTime = moment();
 
         axios.put(`${backendRootEndpoint}generators/blobs/1/`, {
-                porosity,
-                blobiness,
-                dimension_x: xDimension,
-                dimension_y: yDimension
+                porosity: params["porosity"].value,
+                blobiness: params["blobiness"].value,
+                dimension_x: params["xDimension"].value,
+                dimension_y: params["yDimension"].value,
+                dimension_z: params["zDimension"].value
             }
         ).then(({ data: { generated_image } }) => {
             setBlob(generated_image);
@@ -47,80 +85,68 @@ const Blobs = () => {
     }
 
     const validateParams = () => {
-        const blobParameters = [xDimension, yDimension, porosity, blobiness];
-        return blobParameters.includes("") ? true : false;
+        const requiredBlobParameters = [];
+
+        for (const p in params) {
+            if (params[p].required) {
+                requiredBlobParameters.push(params[p].value);
+            }
+        }
+
+        return requiredBlobParameters.includes("") ? true : false;
+    }
+
+    const parseEnteredValues = (e, property) => {
+        const tempParams = params;
+
+        switch (tempParams[property].type) {
+            case "int":
+                tempParams[property].value = integerOnlyField(e);
+                break;
+            case "float":
+                tempParams[property].value =  floatOnlyBetweenOneAndZeroField(e);
+                break;
+            default:
+                break;
+        }
+
+        setValidatedParams(validateParams());
+        setParams(tempParams);
     }
 
     return (
         <div>
+            <div className="blobDescription">
+                Generates an image containing amorphous blobs.
+            </div>
+
+            <div className="blobTextFields">
+                {
+                    // Dynamically creates textfields based on entries in the params object.
+                    Object.keys(params).map((p) => (
+                        <div className="blobTextField">
+                            <TextField 
+                                required={params[p].required}
+                                id={params[p].id}
+                                label={params[p].label}
+                                defaultValue={params[p].value}
+                                variant={"outlined"}
+                                onInput={(e) => parseEnteredValues(e, p)}
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+
             <div className="blobButton">
                 <Button 
                     variant="contained" 
                     color="primary"
-                    onClick={() => generateBlob()} 
-                    disabled={validateParams()}
+                    onClick={() => generateBlob()}
+                    disabled={validatedParams}
                 >
                     Generate Image
                 </Button>
-            </div>
-
-            <div className="blobTextFields">
-                <div className="blobTextField">
-                    <TextField
-                        required
-                        id="xDimensionInput"
-                        label="Voxels in x-direction"
-                        defaultValue="500"
-                        helperText="Integer values only"
-                        variant="outlined"
-                        onInput={(e) => {
-                            const onlyIntegers = integerOnlyField(e);
-                            setXDimension(onlyIntegers);
-                        }}
-                    />
-                </div>
-                <div className="blobTextField">
-                    <TextField
-                        required
-                        id="yDimensionInput"
-                        label="Voxels in y-direction"
-                        defaultValue="500"
-                        helperText="Integer values only"
-                        variant="outlined"
-                        onInput={(e) => {
-                            const onlyIntegers = integerOnlyField(e);
-                            setYDimension(onlyIntegers);
-                        }}
-                    />
-                </div>
-                <div className="blobTextField">
-                    <TextField
-                        required
-                        id="porosityInput"
-                        label="Porosity"
-                        defaultValue="0.5"
-                        helperText="Decimal value betweeen 0 and 1."
-                        variant="outlined"
-                        onInput={(e) => {
-                            const onlyFloats = floatOnlyBetweenOneAndZeroField(e);
-                            setPorosity(onlyFloats);
-                        }}
-                    />
-                </div>
-                <div className="blobTextField">
-                    <TextField
-                        required
-                        id="blobinessInput"
-                        label="Blobiness"
-                        defaultValue="1"
-                        helperText="Integer values only"
-                        variant="outlined"
-                        onInput={(e) => {
-                            const onlyIntegers = integerOnlyField(e);
-                            setBlobiness(onlyIntegers);
-                        }}
-                    />
-                </div>
             </div>
 
             {
