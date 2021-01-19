@@ -11,14 +11,6 @@ import axios from 'axios';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField } from '../../../utils/inputFieldValidators';
 import './Blobs.css';
 
-// If one were to do SoC on generators components, following values will be passed into props:
-// api endpoint
-// Textfields and other UI components
-
-// TODO: 3-D image input
-
-
-
 const Blobs = () => {
     // Data should be entered like this (Object of objects)
     const fieldsInfo = {
@@ -58,19 +50,16 @@ const Blobs = () => {
             type: "int",
             required: true
         }
-    }
+    };
 
     const [params, setParams] = useState(fieldsInfo);
     const [validatedParams, setValidatedParams] = useState(false);
     const [blob, setBlob] = useState('');
-    const [blobGenerationTime, setBlobGenerationTime] = useState('');
 
     // backendRootEndpoint should be part of store in Redux (globalized state between components)
     const backendRootEndpoint = 'http://localhost:8000/';
 
     const generateBlob = () => {
-        const startTime = moment();
-
         axios.put(`${backendRootEndpoint}generators/blobs/1/`, {
                 porosity: params["porosity"].value,
                 blobiness: params["blobiness"].value,
@@ -80,12 +69,9 @@ const Blobs = () => {
             }
         ).then(({ data: { generated_image } }) => {
             setBlob(generated_image);
-            const timeElapsed = ((moment() - startTime) / 1000).toString();
-            const timeElapsedFormatted = `Time taken to generate blob: ${timeElapsed} seconds.`;
-            setBlobGenerationTime(timeElapsedFormatted);
         }).catch((e) => {
+            // TODO: better error catching method?
             console.log(e);
-            setBlobGenerationTime("Looks like an error has occurred...");
         });
     }
 
@@ -127,7 +113,7 @@ const Blobs = () => {
 
             <div className="blobTextFields">
                 {
-                    // Dynamically creates textfields based on entries in the params object.
+                    // Dynamically creates <TextFields /> based on entries in the params object.
                     Object.keys(params).map((p) => (
                         <div className="blobTextField">
                             <TextField 
@@ -163,7 +149,6 @@ const Blobs = () => {
                         className="blobImage" 
                         src={`data:image/png;base64,${blob}`} 
                     />
-                    <div>{blobGenerationTime}</div>
                 </div> 
             }
         </div>
