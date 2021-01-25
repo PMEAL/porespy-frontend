@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import axios from 'axios';
 
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 
@@ -31,6 +32,69 @@ import { metricsNames } from '../../utils/metricsNames';
 // import { networksNames } from '../../utils/networksNames';
 
 import './LandingPage.css';
+
+
+// How inputs to each generator should look like. Must do shape manually (split into 3: x,y, z.).
+
+/*
+
+'array' = np.array
+
+{'RSA': {'im': {'default': '', 'type': 'array'},
+'mode': {'default': '"contained"', 'type': 'str'},
+'n_max': {'default': 'null', 'type': 'int'},
+'radius': {'default': 'null', 'type': 'int'},
+'volume_fraction': {'default': '1', 'type': 'int'}},
+'blobs': {'blobiness': {'default': '1', 'type': 'int'},
+  'kwargs': {'default': 'null', 'type': 'null'},
+  'porosity': {'default': '0.5', 'type': 'float'},
+  'shape': {'default': 'null', 'type': 'typing.List[int]'}},
+'bundle_of_tubes': {'shape': {'default': 'null', 'type': 'typing.List[int]'},
+            'spacing': {'default': 'null', 'type': 'int'}},
+'cylinders': {'length': {'default': 'null', 'type': 'float'},
+      'max_iter': {'default': '3', 'type': 'int'},
+      'ncylinders': {'default': 'null', 'type': 'int'},
+      'phi_max': {'default': '0', 'type': 'float'},
+      'porosity': {'default': 'null', 'type': 'float'},
+      'radius': {'default': 'null', 'type': 'int'},
+      'shape': {'default': 'null', 'type': 'typing.List[int]'},
+      'theta_max': {'default': '90', 'type': 'float'}},
+'insert_shape': {'center': {'default': 'null', 'type': 'null'},
+         'corner': {'default': 'null', 'type': 'null'},
+         'element': {'default': 'null', 'type': 'null'},
+         'im': {'default': 'null', 'type': 'null'},
+         'mode': {'default': '"overwrite"', 'type': 'null'},
+         'value': {'default': '1', 'type': 'null'}},
+'lattice_spheres': {'lattice': {'default': '"sc"', 'type': 'str'},
+            'offset': {'default': '0', 'type': 'int'},
+            'radius': {'default': 'null', 'type': 'int'},
+            'shape': {'default': 'null', 'type': 'typing.List[int]'}},
+'line_segment': {'X0': {'default': 'null', 'type': 'null'},
+         'X1': {'default': 'null', 'type': 'null'}},
+'overlapping_spheres': {'iter_max': {'default': '10', 'type': 'int'},
+                'porosity': {'default': 'null', 'type': 'float'},
+                'radius': {'default': 'null', 'type': 'int'},
+                'shape': {'default': 'null',
+                          'type': 'typing.List[int]'},
+                'tol': {'default': '0.01', 'type': 'float'}},
+'perlin_noise': {'frequency': {'default': '2', 'type': 'typing.List[int]'},
+         'octaves': {'default': '3', 'type': 'int'},
+         'persistence': {'default': '0.5', 'type': 'float'},
+         'porosity': {'default': 'null', 'type': 'null'},
+         'shape': {'default': 'null', 'type': 'typing.List[int]'}},
+'polydisperse_spheres': {'dist': {'default': 'null', 'type': 'null'},
+                 'nbins': {'default': '5', 'type': 'int'},
+                 'porosity': {'default': 'null', 'type': 'float'},
+                 'r_min': {'default': '5', 'type': 'int'},
+                 'shape': {'default': 'null',
+                           'type': 'typing.List[int]'}},
+'voronoi_edges': {'flat_faces': {'default': 'true', 'type': 'bool'},
+          'ncells': {'default': 'null', 'type': 'int'},
+          'radius': {'default': 'null', 'type': 'int'},
+          'shape': {'default': 'null', 'type': 'typing.List[int]'}}} 
+*/
+
+
 
 // Width of menu in pixels
 const drawerWidth = 240;
@@ -88,6 +152,21 @@ const LandingPage = ({ page }) => {
     const [chosenMetric, setChosenMetric] = useState("Chord Counts");
     const [renderPage, setRenderPage] = useState(page);
     // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
+
+    const backendRootEndpoint = "http://localhost:8000/";
+
+    useEffect(() => {
+        axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
+        .then(({ data: { porespy_funcs } }) => {
+            //porespy_funcs will return all of the libraries needed for each generator/filter/metrics.
+            // TODO: must add backendRootEndpoint to redux
+            console.log(porespy_funcs);
+        }).catch((e) => {
+            // TODO: better error catching method.
+            console.log(e);
+        });
+
+    }, []);
 
     const handleClick = (text) => {        
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component by calling setOpenGenerators(), setOpenFilters(), and setOpenMetrics()

@@ -4,7 +4,6 @@
 //
 
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -18,6 +17,7 @@ const Blobs = () => {
             helperText: "Integer values only.",
             id: "xDimensionInput",
             label: "Voxels in x-direction",
+
             value: "500",
             type: "int",
             required: true
@@ -57,7 +57,7 @@ const Blobs = () => {
     const [blob, setBlob] = useState('');
 
     // backendRootEndpoint should be part of store in Redux (globalized state between components)
-    const backendRootEndpoint = 'http://localhost:8000/';
+    const backendRootEndpoint = "http://localhost:8000/";
 
     const generateBlob = () => {
         axios.put(`${backendRootEndpoint}generators/blobs/1/`, {
@@ -70,7 +70,7 @@ const Blobs = () => {
         ).then(({ data: { generated_image } }) => {
             setBlob(generated_image);
         }).catch((e) => {
-            // TODO: better error catching method?
+            // TODO: find a better error catching method?
             console.log(e);
         });
     }
