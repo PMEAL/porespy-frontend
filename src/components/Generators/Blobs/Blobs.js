@@ -4,6 +4,7 @@
 //
 
 import React, { useState, useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
@@ -51,6 +52,11 @@ const Blobs = () => {
             required: true
         }
     };
+
+    const porespyFuncs = useSelector((state) => state);
+
+    // console.log("blobs.js");
+    // console.log(porespyFuncs);
 
     const [params, setParams] = useState(fieldsInfo);
     const [validatedParams, setValidatedParams] = useState(false);
@@ -141,6 +147,10 @@ const Blobs = () => {
                 </Button>
             </div>
 
+            <div>
+                {JSON.stringify(porespyFuncs)}
+            </div>
+
             {
                 blob !== '' 
                 &&
@@ -155,4 +165,5 @@ const Blobs = () => {
     )
 }
 
-export default Blobs;
+// export default Blobs;
+export default connect(undefined, undefined)(Blobs);

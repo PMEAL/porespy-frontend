@@ -4,6 +4,7 @@
 //
 
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -30,6 +31,8 @@ import { generatorsNames } from '../../utils/generatorsNames';
 import { filtersNames } from '../../utils/filtersNames';
 import { metricsNames } from '../../utils/metricsNames';
 // import { networksNames } from '../../utils/networksNames';
+
+import { startSetPorespyFuncs } from '../../actions/porespyfuncs';
 
 import './LandingPage.css';
 
@@ -140,8 +143,11 @@ const useStyles = makeStyles((theme) => ({
 
 // porespyModules contains the menu names that are then called with .map() to create on the UI.
 const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
+// const [porespyFuncs, setPorespyFuncs] = useState({});
+let porespyFuncs = {};
 
-const LandingPage = ({ page }) => {
+const LandingPage = (props/*{ page }*/) => {
+    // const [porespyFuncs1, setPorespyFuncs] = useState({});
     const [openGenerators, setOpenGenerators] = useState(false);
     const [openFilters, setOpenFilters] = useState(false);
     const [openMetrics, setOpenMetrics] = useState(false);
@@ -150,23 +156,25 @@ const LandingPage = ({ page }) => {
     const [chosenGenerator, setChosenGenerator] = useState("Blobs");
     const [chosenFilter, setChosenFilter] = useState("Apply Chords");
     const [chosenMetric, setChosenMetric] = useState("Chord Counts");
-    const [renderPage, setRenderPage] = useState(page);
+    const [renderPage, setRenderPage] = useState(props.page);
     // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
 
-    const backendRootEndpoint = "http://localhost:8000/";
+    // const backendRootEndpoint = "http://localhost:8000/";
 
-    useEffect(() => {
-        axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
-        .then(({ data: { porespy_funcs } }) => {
-            //porespy_funcs will return all of the libraries needed for each generator/filter/metrics.
-            // TODO: must add backendRootEndpoint to redux
-            console.log(porespy_funcs);
-        }).catch((e) => {
-            // TODO: better error catching method.
-            console.log(e);
-        });
+    // useEffect(() => {
+    //     axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
+    //     .then(({ data: { porespy_funcs } }) => {
+    //         //porespy_funcs will return all of the libraries needed for each generator/filter/metrics.
+    //         // TODO: must add backendRootEndpoint to redux
+    //         // console.log(porespy_funcs);
+    //         // setPorespyFuncs(porespy_funcs);
+    //         porespyFuncs = porespy_funcs;
+    //     }).catch((e) => {
+    //         // TODO: find a better error catching method?
+    //         console.log(e);
+    //     });
 
-    }, []);
+    // }, []);
 
     const handleClick = (text) => {        
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component by calling setOpenGenerators(), setOpenFilters(), and setOpenMetrics()
@@ -229,6 +237,8 @@ const LandingPage = ({ page }) => {
     )
 
     const classes = useStyles();
+
+    props.startSetPorespyFuncs(props.porespyFuncs);
     
     return (
         <div>
@@ -317,4 +327,16 @@ const LandingPage = ({ page }) => {
     )
 }
 
-export default LandingPage;
+// export default LandingPage;
+
+// props.startSetPorespyFuncs(porespyFuncs);
+
+const mapDispatchToProps = (dispatch) => ({
+    startSetPorespyFuncs: (porespyFuncs) => dispatch(startSetPorespyFuncs(porespyFuncs))
+})
+
+// const mapDispatchToProps = (dispatch) => ({
+// 	startSetToken: (token) => dispatch(startSetToken(token))
+// })
+
+export default connect(undefined, mapDispatchToProps)(LandingPage);
