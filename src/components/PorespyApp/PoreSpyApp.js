@@ -5,11 +5,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { connect, useSelector } from 'react-redux';
 import axios from 'axios';
+import { startSetPorespyFuncs } from '../../actions/porespyfuncs';
 import LandingPage from '../LandingPage/LandingPage';
 
-const PoreSpyApp = () => {
-    const [porespyFuncs, setPorespyFuncs] = useState({});
+let porespyFuncs = {};
+
+const PoreSpyApp = (props) => {
     const backendRootEndpoint = "http://localhost:8000/";
 
     // this only checks for generators... how to do for filters, metrics, networks, and so on?
@@ -17,15 +20,13 @@ const PoreSpyApp = () => {
     useEffect(() => {
         axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
         .then(({ data: { porespy_funcs } }) => {
-            console.log(porespy_funcs);
-            setPorespyFuncs(porespy_funcs);
+            porespyFuncs = porespy_funcs;
+            props.startSetPorespyFuncs(porespy_funcs);
         }).catch((e) => {
             // TODO: find a better error catching method?
             console.log(e);
         });
-
     }, []);
-
 
     return (
         <div>
@@ -46,4 +47,8 @@ const PoreSpyApp = () => {
     )
 }
 
-export default PoreSpyApp;
+const mapDispatchToProps = (dispatch) => ({
+    startSetPorespyFuncs: () => dispatch(startSetPorespyFuncs(porespyFuncs))
+})
+
+export default connect(undefined, mapDispatchToProps)(PoreSpyApp);

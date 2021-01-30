@@ -4,6 +4,7 @@
 //
 
 import React from 'react';
+import { connect, useSelector } from 'react-redux';
 import Blobs from '../Generators/Blobs/Blobs';
 import BundleOfTubes from '../Generators/BundleOfTubes/BundleOfTubes';
 import Cylinders from '../Generators/Cylinders/Cylinders';
@@ -32,8 +33,9 @@ const RenderGenerator = ({ chosenFunction }) => {
             {chosenFunction === "Polydisperse Spheres" && <PolydisperseSpheres />}
             {chosenFunction === "RSA" && <RSA />}
             {chosenFunction === "Voronoi Edges" && <VoronoiEdges />}
+            {chosenFunction === "" && <div>Choose a generator to get started!</div>}
         </div>
     )
 }
 
-export default RenderGenerator;
+export default connect(undefined, undefined)(RenderGenerator);

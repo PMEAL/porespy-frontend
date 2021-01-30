@@ -23,10 +23,3 @@ const jsx = (
 );
 
 ReactDOM.render(jsx, document.getElementById('root'));
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <PoreSpyApp />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );

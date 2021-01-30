@@ -1,10 +1,17 @@
-export const setPorespyFuncs = (porespyFuncs) => ({
+//
+//  porespyfuncs.js
+//  porespy-frontend
+//
+
+const setPorespyFuncs = (porespyFuncs) => ({
     type: 'SET_PORESPY_FUNCS',
     porespyFuncs
 });
 
-export const startSetPorespyFuncs = (porespyFuncs = {}) => {
-    return (dispatch, getState) => {
+const startSetPorespyFuncs = (porespyFuncs = {}) => {
+    return (dispatch) => {
         return dispatch(setPorespyFuncs(porespyFuncs));
     }
 }
+
+export { setPorespyFuncs, startSetPorespyFuncs };
