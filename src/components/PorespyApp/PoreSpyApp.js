@@ -14,9 +14,7 @@ let porespyFuncs = {};
 
 const PoreSpyApp = (props) => {
     const backendRootEndpoint = "http://localhost:8000/";
-
-    // this only checks for generators... how to do for filters, metrics, networks, and so on?
-
+    
     useEffect(() => {
         axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
         .then(({ data: { porespy_funcs } }) => {

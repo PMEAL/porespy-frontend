@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField } from '../../../utils/inputFieldValidators';
 import './Blobs.css';
@@ -57,6 +58,7 @@ const Blobs = () => {
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.blobs : {};
 
     if (fieldsInfo.hasOwnProperty('kwargs')) {
+        // remove kwargs from this function. As a result, no kwargs entry in the component will be generated.
         delete fieldsInfo['kwargs'];
     }
 
@@ -72,31 +74,37 @@ const Blobs = () => {
         fieldsInfo[entry]["id"] = entry + "input";
     }
 
-    console.log(fieldsInfo);
-
     const [params, setParams] = useState(fieldsInfo);
     const [validatedParams, setValidatedParams] = useState(false);
     const [blob, setBlob] = useState('');
+    const [loading, setLoading] = useState(false);
 
     // backendRootEndpoint should be part of store in Redux (globalized state between components)
     const backendRootEndpoint = "http://localhost:8000/";
 
     const generateBlob = () => {
-        console.log(params);
+        setLoading(true);
+        setBlob("");
 
-        axios.put(`${backendRootEndpoint}generators/blobs/1/`, {
-                porosity: params["porosity"].value,
-                blobiness: params["blobiness"].value,
-                dimension_x: params["shape[0]"].value,
-                dimension_y: params["shape[1]"].value,
-                dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
-            }
-        ).then(({ data: { generated_image } }) => {
-            setBlob(generated_image);
-        }).catch((e) => {
-            // TODO: find a better error catching method?
-            console.log(e);
-        });
+        // currently image loading is very quick. setTimeout adds 1 sec of loading to show user that the image is loading.
+        setTimeout(() => {
+            axios.put(`${backendRootEndpoint}generators/blobs/1/`, {
+                    porosity: params["porosity"].value,
+                    blobiness: params["blobiness"].value,
+                    dimension_x: params["shape[0]"].value,
+                    dimension_y: params["shape[1]"].value,
+                    dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
+                }
+            ).then(({ data: { generated_image } }) => {
+                setBlob(generated_image);
+                setLoading(false);
+
+            }).catch((e) => {
+                // TODO: find a better error catching method?
+                console.log(e);
+                setLoading(false);
+            });
+        }, 1000);
     }
 
     const validateParams = () => {
@@ -167,15 +175,27 @@ const Blobs = () => {
             </div>
 
             {
-                // add a spinner component when image is loading?
-                blob !== '' 
-                &&
+                blob !== ""
+                ?
                 <div className="blobImageWrapper">
                     <img 
                         className="blobImage" 
                         src={`data:image/png;base64,${blob}`} 
                     />
-                </div> 
+                </div>
+                :
+                (
+                    loading
+                    && 
+                    <div className="spinner">
+                        <div>
+                            <CircularProgress />
+                        </div>
+                        <div>
+                            Generating your image...
+                        </div>
+                    </div>  
+                )                              
             }
         </div>
     )

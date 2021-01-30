@@ -18,21 +18,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
-
 import AboutPage from '../AboutPage/AboutPage';
 import ContactPage from '../ContactPage/ContactPage';
 import RenderGenerator from '../RenderGenerator/RenderGenerator';
 import RenderFilter from '../RenderFilter/RenderFilter';
 import RenderMetric from '../RenderMetric/RenderMetric';
 
-
-
 // generatorsNames, filtersNames, and so on should pull from the store.
 import { generatorsNames } from '../../utils/generatorsNames';
 import { filtersNames } from '../../utils/filtersNames';
 import { metricsNames } from '../../utils/metricsNames';
 // import { networksNames } from '../../utils/networksNames';
-
 import './LandingPage.css';
 
 // Width of menu in pixels
@@ -91,8 +87,6 @@ const LandingPage = (props) => {
     const [chosenMetric, setChosenMetric] = useState("Chord Counts");
     const [renderPage, setRenderPage] = useState(props.page);
     // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
-
-    // const backendRootEndpoint = "http://localhost:8000/";
 
     const handleClick = (text) => {        
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component by calling setOpenGenerators(), setOpenFilters(), and setOpenMetrics()

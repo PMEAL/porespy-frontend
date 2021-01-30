@@ -4,7 +4,7 @@
 //
 
 import React from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import Blobs from '../Generators/Blobs/Blobs';
 import BundleOfTubes from '../Generators/BundleOfTubes/BundleOfTubes';
 import Cylinders from '../Generators/Cylinders/Cylinders';
@@ -33,6 +33,7 @@ const RenderGenerator = ({ chosenFunction }) => {
             {chosenFunction === "Polydisperse Spheres" && <PolydisperseSpheres />}
             {chosenFunction === "RSA" && <RSA />}
             {chosenFunction === "Voronoi Edges" && <VoronoiEdges />}
+            {/* TODO: add a landing page component when chosenFunction === "", style it. */}
             {chosenFunction === "" && <div>Choose a generator to get started!</div>}
         </div>
     )
