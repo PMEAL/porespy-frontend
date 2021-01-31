@@ -9,7 +9,7 @@ import './NotFoundPage.css';
 const NotFoundPage = () => {
     return (
         <div>
-            Hmm, that page doesn't seem to exist. Redirecting you back to the home page
+            Hmm, that page doesn't seem to exist.
         </div>
     )
 }

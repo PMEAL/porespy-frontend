@@ -4,7 +4,7 @@
 //
 
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { startSetPorespyFuncs } from '../../actions/porespyfuncs';
@@ -31,19 +31,20 @@ const PoreSpyApp = (props) => {
     return (
         <div>
             <Router basename="">
-                {/* Render LandingPage component with page prop passed in. */}
-                {/* page prop will depend on how the user reaches the site (ex: localhost:3000/about vs localhost:3000/contact vs localhost:3000/) */}
-                <Route path="/" exact render={() => (
-                    <LandingPage page="" porespyFuncs={porespyFuncs} />
-                )}/>
-                <Route path="/about" exact render={() => (
-                    <LandingPage page="about" porespyFuncs={porespyFuncs} />
-                )}/>
-                <Route path="/contact" exact render={() => (
-                    <LandingPage page="contact" porespyFuncs={porespyFuncs} />
-                )}/>
-                <Route path="*" exact component={NotFoundPage} />
-                <Redirect from='*' to='/' />
+                <Switch>                
+                    {/* Render LandingPage component with page prop passed in. */}
+                    {/* page prop will depend on how the user reaches the site (ex: localhost:3000/about vs localhost:3000/contact vs localhost:3000/) */}
+                    <Route path="/" exact render={() => (
+                        <LandingPage page="" porespyFuncs={porespyFuncs} />
+                    )}/>
+                    <Route path="/about" render={() => (
+                        <LandingPage page="about" porespyFuncs={porespyFuncs} />
+                    )}/>
+                    <Route path="/contact" render={() => (
+                        <LandingPage page="contact" porespyFuncs={porespyFuncs} />
+                    )}/>
+                    <Route path="*" component={NotFoundPage} />
+                </Switch>
             </Router>
         </div>
     )

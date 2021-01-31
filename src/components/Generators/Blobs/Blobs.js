@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -23,37 +23,10 @@ const Blobs = () => {
     //         default: "500",
     //         type: "int",
     //         required: true
-    //     }, "yDimension": {
-    //         helperText: "Integer values only.",
-    //         id: "yDimensionInput",
-    //         label: "Voxels in y-direction",
-    //         default: "500",
-    //         type: "int",
-    //         required: true
-    //     }, "zDimension": {
-    //         helperText: "Integer values only.",
-    //         id: "zDimensionInput",
-    //         label: "Voxels in z-direction",
-    //         default: "0",
-    //         type: "int",
-    //         required: false
-    //     }, "porosity": {
-    //         helperText: "Float value between 0 and 1",
-    //         id: "porosityInput",
-    //         label: "Porosity",
-    //         default: "0.5",
-    //         type: "float",
-    //         required: true
-    //     }, "blobiness": {
-    //         helperText: "Integer values only.",
-    //         id: "blobinessInput",
-    //         label: "Blobiness",
-    //         default: "1",
-    //         type: "int",
-    //         required: true
     //     }
     // };
 
+    const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.blobs : {};
 
@@ -69,17 +42,35 @@ const Blobs = () => {
             fieldsInfo[entry]["helperText"] = "Float value between 0 and 1";
         }
 
-        fieldsInfo[entry].required = fieldsInfo[entry].value === "" ? false : true;
-        fieldsInfo[entry]["label"] = entry;
         fieldsInfo[entry]["id"] = entry + "input";
+
+        switch (entry) {
+            case "shape[0]":
+                fieldsInfo[entry]["label"] = "Voxels in x Dimension";
+                break;
+            case "shape[1]":
+                fieldsInfo[entry]["label"] = "Voxels in y Dimension";
+                break;
+            case "shape[2]":
+                fieldsInfo[entry]["label"] = "Voxels in z Dimension";
+                break;
+            case "blobiness":
+                fieldsInfo[entry]["label"] = "Blobiness";
+                break;
+            case "porosity":
+                fieldsInfo[entry]["label"] = "Porosity";
+                break;
+            default:
+                break;
+        }
     }
 
     const [params, setParams] = useState(fieldsInfo);
     const [validatedParams, setValidatedParams] = useState(false);
     const [blob, setBlob] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const backendEndpoint = useSelector((state) => state.backend);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const generateBlob = () => {
         setLoading(true);
@@ -97,11 +88,11 @@ const Blobs = () => {
             ).then(({ data: { generated_image } }) => {
                 setBlob(generated_image);
                 setLoading(false);
-
             }).catch((e) => {
-                // TODO: find a better error catching method?
-                console.log(e);
+                setBlob("");
                 setLoading(false);
+                setError(true);
+                setErrorMessage(e.message);
             });
         }, 1000);
     }
@@ -138,6 +129,9 @@ const Blobs = () => {
 
     return (
         <div>
+            <div className="blobTitle">
+                Blobs
+            </div>
             <div className="blobDescription">
                 Generates an image containing amorphous blobs.
             </div>
@@ -174,6 +168,12 @@ const Blobs = () => {
             </div>
 
             {
+                // Conditional rendering:
+                // If blob is not an empty string, the blob has been generated and will be displayed in the <img /> tag.
+                // If blob is an empty string, check whether generateBlob() has been called which will change whether loading is true or false.
+                // If loading, display the spinner to the user. If not and there is an error, display error message to the user.
+                // Upon loading, nothing will appear in this <div></div> as no conditions are satisfied.
+
                 blob !== ""
                 ?
                 <div className="blobImageWrapper">
@@ -185,7 +185,7 @@ const Blobs = () => {
                 :
                 (
                     loading
-                    && 
+                    ?
                     <div className="spinner">
                         <div>
                             <CircularProgress />
@@ -193,7 +193,17 @@ const Blobs = () => {
                         <div>
                             Generating your image...
                         </div>
-                    </div>  
+                    </div>
+                    :
+                    <div>
+                        {
+                            error 
+                            && 
+                            <div className="blobImageWrapper">
+                                {`Something is wrong... ${errorMessage}`}
+                            </div>
+                        }
+                    </div>
                 )                              
             }
         </div>
