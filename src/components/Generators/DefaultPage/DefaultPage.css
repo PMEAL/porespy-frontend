@@ -1,0 +1,21 @@
+.defaultPageWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.defaultPageTitle {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 60px 0px 20px 0px;
+}
+
+.defaultPageDescription {
+    font-size: 16px;
+    margin: 0px auto;
+    max-width: 520px;    
+    text-align: center;
+}

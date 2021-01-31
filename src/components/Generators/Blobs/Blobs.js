@@ -79,8 +79,7 @@ const Blobs = () => {
     const [blob, setBlob] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // backendRootEndpoint should be part of store in Redux (globalized state between components)
-    const backendRootEndpoint = "http://localhost:8000/";
+    const backendEndpoint = useSelector((state) => state.backend);
 
     const generateBlob = () => {
         setLoading(true);
@@ -88,7 +87,7 @@ const Blobs = () => {
 
         // currently image loading is very quick. setTimeout adds 1 sec of loading to show user that the image is loading.
         setTimeout(() => {
-            axios.put(`${backendRootEndpoint}generators/blobs/1/`, {
+            axios.put(`${backendEndpoint}generators/blobs/1/`, {
                     porosity: params["porosity"].value,
                     blobiness: params["blobiness"].value,
                     dimension_x: params["shape[0]"].value,

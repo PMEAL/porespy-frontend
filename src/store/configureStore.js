@@ -6,13 +6,15 @@
 import thunk from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import porespyFuncsReducer from '../reducers/porespyfuncs';
+import backendReducer from '../reducers/backend';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_ETENSION_COMPOSE__ || compose;
 
 const configureStore = () => {
     const store = createStore(
         combineReducers({
-            porespyFuncs: porespyFuncsReducer
+            porespyFuncs: porespyFuncsReducer,
+            backend: backendReducer
         }),
         composeEnhancers(applyMiddleware(thunk))
     );

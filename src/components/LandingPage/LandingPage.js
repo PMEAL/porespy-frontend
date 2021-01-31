@@ -165,7 +165,7 @@ const LandingPage = (props) => {
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
                         <Typography variant="h6" noWrap>
-                            Porespy
+                            PoreSpy
                         </Typography>
                     </Toolbar>
                 </AppBar>

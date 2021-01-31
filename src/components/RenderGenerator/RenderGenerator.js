@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Blobs from '../Generators/Blobs/Blobs';
 import BundleOfTubes from '../Generators/BundleOfTubes/BundleOfTubes';
 import Cylinders from '../Generators/Cylinders/Cylinders';
+import DefaultPage from '../Generators/DefaultPage/DefaultPage';
 import InsertShape from '../Generators/InsertShape/InsertShape';
 import LatticeSpheres from '../Generators/LatticeSpheres/LatticeSpheres';
 import LineSegment from '../Generators/LineSegment/LineSegment';
@@ -22,19 +23,18 @@ const RenderGenerator = ({ chosenFunction }) => {
     return (
         <div>
             {/* Conditionally renders the Generator chosen by the user.*/}
-            {chosenFunction === "Blobs" && <Blobs />}
-            {chosenFunction === "Bundle of Tubes" && <BundleOfTubes />}
-            {chosenFunction === "Cylinders" && <Cylinders />}
-            {chosenFunction === "Insert Shape" && <InsertShape />}
-            {chosenFunction === "Lattice Spheres" && <LatticeSpheres />}
-            {chosenFunction === "Line Segment" && <LineSegment />}
-            {chosenFunction === "Overlapping Spheres" && <OverlappingSpheres />}
-            {chosenFunction === "Perlin Noise" && <PerlinNoise />}
-            {chosenFunction === "Polydisperse Spheres" && <PolydisperseSpheres />}
-            {chosenFunction === "RSA" && <RSA />}
-            {chosenFunction === "Voronoi Edges" && <VoronoiEdges />}
-            {/* TODO: add a landing page component when chosenFunction === "", style it. */}
-            {chosenFunction === "" && <div>Choose a generator to get started!</div>}
+            { chosenFunction === "Blobs" && <Blobs /> }
+            { chosenFunction === "Bundle of Tubes" && <BundleOfTubes /> }
+            { chosenFunction === "Cylinders" && <Cylinders /> }
+            { chosenFunction === "Insert Shape" && <InsertShape /> }
+            { chosenFunction === "Lattice Spheres" && <LatticeSpheres /> }
+            { chosenFunction === "Line Segment" && <LineSegment /> }
+            { chosenFunction === "Overlapping Spheres" && <OverlappingSpheres /> }
+            { chosenFunction === "Perlin Noise" && <PerlinNoise /> }
+            { chosenFunction === "Polydisperse Spheres" && <PolydisperseSpheres /> }
+            { chosenFunction === "RSA" && <RSA /> }
+            { chosenFunction === "Voronoi Edges" && <VoronoiEdges /> }
+            { chosenFunction === "" && <DefaultPage /> }
         </div>
     )
 }

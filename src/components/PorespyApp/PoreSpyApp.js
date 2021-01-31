@@ -5,21 +5,22 @@
 
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { startSetPorespyFuncs } from '../../actions/porespyfuncs';
+import { startSetBackendEndpoint } from '../../actions/backend';
 import LandingPage from '../LandingPage/LandingPage';
 
 let porespyFuncs = {};
+let backendRootEndpoint = "http://localhost:8000/";
 
-const PoreSpyApp = (props) => {
-    const backendRootEndpoint = "http://localhost:8000/";
-    
+const PoreSpyApp = (props) => {    
     useEffect(() => {
         axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
         .then(({ data: { porespy_funcs } }) => {
             porespyFuncs = porespy_funcs;
             props.startSetPorespyFuncs(porespy_funcs);
+            props.startSetBackendEndpoint(backendRootEndpoint);
         }).catch((e) => {
             // TODO: find a better error catching method?
             console.log(e);
@@ -46,7 +47,8 @@ const PoreSpyApp = (props) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    startSetPorespyFuncs: () => dispatch(startSetPorespyFuncs(porespyFuncs))
+    startSetPorespyFuncs: () => dispatch(startSetPorespyFuncs(porespyFuncs)),
+    startSetBackendEndpoint: () => dispatch(startSetBackendEndpoint(backendRootEndpoint))
 })
 
 export default connect(undefined, mapDispatchToProps)(PoreSpyApp);
