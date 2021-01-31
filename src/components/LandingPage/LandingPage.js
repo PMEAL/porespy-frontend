@@ -63,9 +63,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
     nested: {
-        paddingLeft: theme.spacing(4),
-        // color: 'darkGrey',
-        // fontSize: '10',
+        paddingLeft: theme.spacing(4)
     },
     collapseMenu: {
         display: 'flex',
@@ -158,6 +156,7 @@ const LandingPage = (props) => {
     )
 
     const classes = useStyles();
+    
     return (
         <div>
             <div className={classes.root}>

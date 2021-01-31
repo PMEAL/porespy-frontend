@@ -8,7 +8,6 @@ For more information on PoreSpy, please visit the following repo: https://github
 ## TODO:
 
 - Change GUI to make it look like mock gui design. (in progress)
-- Add backend endpoint to the redux store.
-- Create a NotFoundPage component.
+- Continue mapping out remaining generators/filters/metrics
 - Get a Favicon.ico
 - CSS Stylings for About Page, LandingPage components

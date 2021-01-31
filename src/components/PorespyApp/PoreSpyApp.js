@@ -3,13 +3,14 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { startSetPorespyFuncs } from '../../actions/porespyfuncs';
 import { startSetBackendEndpoint } from '../../actions/backend';
 import LandingPage from '../LandingPage/LandingPage';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 let porespyFuncs = {};
 let backendRootEndpoint = "http://localhost:8000/";
@@ -41,6 +42,8 @@ const PoreSpyApp = (props) => {
                 <Route path="/contact" exact render={() => (
                     <LandingPage page="contact" porespyFuncs={porespyFuncs} />
                 )}/>
+                <Route path="*" exact component={NotFoundPage} />
+                <Redirect from='*' to='/' />
             </Router>
         </div>
     )
