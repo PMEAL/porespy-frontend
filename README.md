@@ -7,7 +7,7 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO From Meetings:
 
-- Dowload Image button.
+- Dowload Image button. (Currently it's downloading .tif file. Will need to ask if different file formats options will be given to the user?)
 - Load Image button.
 - Have a panel on the right displaying images.
 - Use altair python package to display images in js.

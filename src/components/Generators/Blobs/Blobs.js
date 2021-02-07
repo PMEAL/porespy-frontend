@@ -3,14 +3,17 @@
 //  porespy-frontend
 //
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
+import moment from 'moment';
+import Dropzone from 'react-dropzone';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField } from '../../../utils/inputFieldValidators';
 import './Blobs.css';
+import { BluetoothDisabled } from '@material-ui/icons';
 
 const Blobs = () => {
     // Data should be entered like this (Object of objects)
@@ -69,13 +72,26 @@ const Blobs = () => {
     const [validatedParams, setValidatedParams] = useState(false);
     const [blob, setBlob] = useState('');
     const [loading, setLoading] = useState(false);
+    const [loadedBlob, setLoadedBlob] = useState();
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        console.log("loadedFile is:");
+        // check somehow if loadedBlob is undefined, then continue on.
+        console.log(loadedBlob);
+    }, [loadedBlob])
+
+    const dropzoneRef = createRef();
+    const loadBlob = () => {
+        if (dropzoneRef.current) {
+            dropzoneRef.current.open();
+        }
+    }
 
     const generateBlob = () => {
         setLoading(true);
         setBlob("");
-
         // currently image loading is very quick. setTimeout adds 1 sec of loading to show user that the image is loading.
         setTimeout(() => {
             axios.put(`${backendEndpoint}generators/blobs/1/`, {
@@ -92,9 +108,36 @@ const Blobs = () => {
                 setBlob("");
                 setLoading(false);
                 setError(true);
-                setErrorMessage(e.message);
+                setErrorMessage(`Something is wrong... ${e.message}`);
             });
         }, 1000);
+    }
+
+    const downloadBlob = () => {
+        if (blob === "") {
+            setError(true);
+            setErrorMessage("You need to generate a Blob before downloading it!");
+            return;
+        }
+
+        // find a way to abstract this part of the function so that 
+        // it is reusable for other components
+
+        const byteCharacters = atob(blob);
+        const byteNumbers = new Array(byteCharacters.length);
+        const currentTime = moment().format("Y-MM-DD_HH-mm-ss");
+
+        for (let i=0; i < blob.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        const url = window.URL.createObjectURL(new Blob([byteArray, { type: 'image/tif' }]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `myBlob_${currentTime}.tif`);
+        document.body.appendChild(link);
+        link.click();
     }
 
     const validateParams = () => {
@@ -140,7 +183,8 @@ const Blobs = () => {
                 {
                     // Dynamically creates <TextFields /> based on entries in the params object.
                     Object.keys(params).map((p) => (
-                        p &&
+                        p
+                        &&
                         <div className="blobTextField">
                             <TextField 
                                 required={params[p].required}
@@ -158,11 +202,38 @@ const Blobs = () => {
 
             <div className="blobButtons">
                 <div className="blobButton">
+                    <Dropzone ref={dropzoneRef} noClick noKeyboard>
+                        {({getRootProps, getInputProps, acceptedFiles}) => {
+                            const selectedFile = acceptedFiles.slice(-1)[0];
+                            if (selectedFile) {
+                                setLoadedBlob(selectedFile);
+                            }
+
+                            return (
+                            <div className="container">
+                                <div {...getRootProps({className: 'dropzone'})}>
+                                    <input {...getInputProps()} />
+                                    <Button
+                                        variant="contained" 
+                                        color="primary"
+                                        style={{ minWidth: '170px', minHeight: '16px'}}
+                                        onClick={() => loadBlob()}
+                                    >
+                                        Load Image
+                                    </Button>
+                                </div>
+                            </div>
+                            );
+                        }}
+                    </Dropzone>
+                </div>
+                <div className="blobButton">
                     <Button 
                         variant="contained" 
                         color="primary"
                         onClick={() => generateBlob()}
-                        disabled={validatedParams}
+                        disabled={validatedParams}                        
+                        style={{ minWidth: '170px', minHeight: '16px'}}
                     >
                         Generate Image
                     </Button>
@@ -171,8 +242,9 @@ const Blobs = () => {
                     <Button 
                         variant="contained" 
                         color="primary"
-                        // onClick={() => generateBlob()}
+                        onClick={() => downloadBlob()}
                         disabled={validatedParams}
+                        style={{ minWidth: '170px', minHeight: '16px'}}
                     >
                         Download Image
                     </Button>
@@ -211,7 +283,7 @@ const Blobs = () => {
                             error 
                             && 
                             <div className="blobImageWrapper">
-                                {`Something is wrong... ${errorMessage}`}
+                                {errorMessage}
                             </div>
                         }
                     </div>
