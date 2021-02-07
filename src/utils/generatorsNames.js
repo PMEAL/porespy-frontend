@@ -34,16 +34,6 @@ const generatorsNames = [{
             "max_iter"
         ]
     }, {
-        name: "Insert Shape",
-        entries: [
-            "im",
-            "element",
-            "center",
-            "corner",
-            "value",
-            "mode"
-        ]
-    }, {
         name: "Lattice Spheres",
         entries: [
             "shape",

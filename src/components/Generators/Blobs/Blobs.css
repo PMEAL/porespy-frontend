@@ -33,11 +33,18 @@
     padding: 20px 12px 20px 12px;
 }
 
+.blobButtons {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .blobButton {
     align-items: center;
     display: flex;
     justify-content: center;
-    padding: 20px 0px 20px 0px;
+    padding: 20px 20px 20px 20px;
 }
 
 .spinner {

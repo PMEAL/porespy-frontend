@@ -156,15 +156,27 @@ const Blobs = () => {
                 }
             </div>
 
-            <div className="blobButton">
-                <Button 
-                    variant="contained" 
-                    color="primary"
-                    onClick={() => generateBlob()}
-                    disabled={validatedParams}
-                >
-                    Generate Image
-                </Button>
+            <div className="blobButtons">
+                <div className="blobButton">
+                    <Button 
+                        variant="contained" 
+                        color="primary"
+                        onClick={() => generateBlob()}
+                        disabled={validatedParams}
+                    >
+                        Generate Image
+                    </Button>
+                </div>
+                <div className="blobButton">
+                    <Button 
+                        variant="contained" 
+                        color="primary"
+                        // onClick={() => generateBlob()}
+                        disabled={validatedParams}
+                    >
+                        Download Image
+                    </Button>
+                </div>
             </div>
 
             {
@@ -173,7 +185,6 @@ const Blobs = () => {
                 // If blob is an empty string, check whether generateBlob() has been called which will change whether loading is true or false.
                 // If loading, display the spinner to the user. If not and there is an error, display error message to the user.
                 // Upon loading, nothing will appear in this <div></div> as no conditions are satisfied.
-
                 blob !== ""
                 ?
                 <div className="blobImageWrapper">
