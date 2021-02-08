@@ -1,5 +1,5 @@
 //
-//  inputFieldValidators.js
+//  fieldValidators.js
 //  porespy-frontend
 //
 
@@ -28,4 +28,17 @@ const floatOnlyBetweenOneAndZeroField = (e) => {
     return floatsOnly;
 }
 
-export { integerOnlyField, floatOnlyBetweenOneAndZeroField };
+// Validates required parameters, determines whether the user is allowed to submit the data.
+const validateParams = (params) => {
+    const requiredParams = [];
+
+    for (const p in params) {
+        if (params[p].required) {
+            requiredParams.push(params[p].value);
+        }
+    }
+
+    return requiredParams.includes("");
+}
+
+export { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams };

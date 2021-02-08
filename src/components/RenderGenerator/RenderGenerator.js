@@ -16,6 +16,7 @@ import OverlappingSpheres from '../Generators/OverlappingSpheres/OverlappingSphe
 import PerlinNoise from '../Generators/PerlinNoise/PerlinNoise';
 import PolydisperseSpheres from '../Generators/PolydisperseSpheres/PolydisperseSpheres';
 import RSA from '../Generators/RSA/RSA';
+import UploadImage from '../Generators/UploadImage/UploadImage';
 import VoronoiEdges from '../Generators/VoronoiEdges/VoronoiEdges';
 import './RenderGenerator.css';
 
@@ -23,8 +24,9 @@ const RenderGenerator = ({ chosenFunction }) => {
     return (
         <div>
             {/* Conditionally renders the Generator chosen by the user.*/}
+            { chosenFunction === "Upload Image" && <UploadImage /> }
             { chosenFunction === "Blobs" && <Blobs /> }
-            { chosenFunction === "Bundle of Tubes" && <BundleOfTubes /> }
+            { chosenFunction === "Bundle Of Tubes" && <BundleOfTubes /> }
             { chosenFunction === "Cylinders" && <Cylinders /> }
             { chosenFunction === "Insert Shape" && <InsertShape /> }
             { chosenFunction === "Lattice Spheres" && <LatticeSpheres /> }

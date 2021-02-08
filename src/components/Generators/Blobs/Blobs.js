@@ -3,17 +3,16 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, createRef, useCallback } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
-import moment from 'moment';
-import Dropzone from 'react-dropzone';
-import { integerOnlyField, floatOnlyBetweenOneAndZeroField } from '../../../utils/inputFieldValidators';
+import Dropzone, { useDropzone } from 'react-dropzone';
+import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
+import { windowDownload } from '../../../utils/fileManipulators';
 import './Blobs.css';
-import { BluetoothDisabled } from '@material-ui/icons';
 
 const Blobs = () => {
     // Data should be entered like this (Object of objects)
@@ -22,12 +21,97 @@ const Blobs = () => {
     //         helperText: "Integer values only.",
     //         id: "xDimensionInput",
     //         label: "Voxels in x-direction",
-
     //         default: "500",
     //         type: "int",
     //         required: true
     //     }
     // };
+
+
+
+
+
+    // TODO: Vertical panel of images Material UI GridList
+
+    // import React from 'react';
+    // import { makeStyles } from '@material-ui/core/styles';
+    // import GridList from '@material-ui/core/GridList';
+    // import GridListTile from '@material-ui/core/GridListTile';
+    // import tileData from './tileData';
+
+    // const useStyles = makeStyles((theme) => ({
+    // root: {
+    //     display: 'flex',
+    //     flexWrap: 'wrap',
+    //     justifyContent: 'space-around',
+    //     overflow: 'hidden',
+    //     backgroundColor: theme.palette.background.paper,
+    // },
+    // gridList: {
+    //     width: 500,
+    //     height: 450,
+    // },
+    // }));
+
+    // /**
+    //  * The example data is structured as follows:
+    //  *
+    //  * import image from 'path/to/image.jpg';
+    //  * [etc...]
+    //  *
+    //  * const tileData = [
+    //  *   {
+    //  *     img: image,
+    //  *     title: 'Image',
+    //  *     author: 'author',
+    //  *     cols: 2,
+    //  *   },
+    //  *   {
+    //  *     [etc...]
+    //  *   },
+    //  * ];
+    //  */
+    // export default function ImageGridList() {
+    // const classes = useStyles();
+
+    // return (
+    //     <div className={classes.root}>
+    //     <GridList cellHeight={160} className={classes.gridList} cols={3}>
+    //         {tileData.map((tile) => (
+    //         <GridListTile key={tile.img} cols={tile.cols || 1}>
+    //             <img src={tile.img} alt={tile.title} />
+
+            // <Button 
+            //     variant="contained" 
+            //     color="primary"
+            //     style={{ minWidth: '170px', minHeight: '16px'}}
+            // >
+            //     Load
+            // </Button>
+
+            // <Button 
+            //     variant="contained" 
+            //     color="primary"
+            //     style={{ minWidth: '170px', minHeight: '16px'}}
+            // >
+            //     Download
+            // </Button>
+
+    //         </GridListTile>
+    //         ))}
+    //     </GridList>
+    //     </div>
+    // );
+    // }
+
+
+
+
+
+
+
+
+
 
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
@@ -72,22 +156,29 @@ const Blobs = () => {
     const [validatedParams, setValidatedParams] = useState(false);
     const [blob, setBlob] = useState('');
     const [loading, setLoading] = useState(false);
-    const [loadedBlob, setLoadedBlob] = useState();
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    useEffect(() => {
-        console.log("loadedFile is:");
-        // check somehow if loadedBlob is undefined, then continue on.
-        console.log(loadedBlob);
-    }, [loadedBlob])
-
-    const dropzoneRef = createRef();
+    const dropzoneRef = createRef();    
     const loadBlob = () => {
         if (dropzoneRef.current) {
             dropzoneRef.current.open();
         }
     }
+
+    const onDrop = useCallback((acceptedFiles) => {
+        acceptedFiles.forEach((file) => {
+            const reader = new FileReader();
+            reader.onabort = () => console.log("File reading was aborted");
+            reader.onerror = () => console.log("File reading has failed");
+            reader.onload = () => {
+                const binaryStr = reader.result;
+                console.log(binaryStr);
+            }
+
+            reader.readAsArrayBuffer(file);
+        })
+    }, []);
 
     const generateBlob = () => {
         setLoading(true);
@@ -95,13 +186,12 @@ const Blobs = () => {
         // currently image loading is very quick. setTimeout adds 1 sec of loading to show user that the image is loading.
         setTimeout(() => {
             axios.put(`${backendEndpoint}generators/blobs/1/`, {
-                    porosity: params["porosity"].value,
-                    blobiness: params["blobiness"].value,
-                    dimension_x: params["shape[0]"].value,
-                    dimension_y: params["shape[1]"].value,
-                    dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
-                }
-            ).then(({ data: { generated_image } }) => {
+                porosity: params["porosity"].value,
+                blobiness: params["blobiness"].value,
+                dimension_x: params["shape[0]"].value,
+                dimension_y: params["shape[1]"].value,
+                dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
+            }).then(({ data: { generated_image } }) => {
                 setBlob(generated_image);
                 setLoading(false);
             }).catch((e) => {
@@ -120,36 +210,7 @@ const Blobs = () => {
             return;
         }
 
-        // find a way to abstract this part of the function so that 
-        // it is reusable for other components
-
-        const byteCharacters = atob(blob);
-        const byteNumbers = new Array(byteCharacters.length);
-        const currentTime = moment().format("Y-MM-DD_HH-mm-ss");
-
-        for (let i=0; i < blob.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-
-        const byteArray = new Uint8Array(byteNumbers);
-        const url = window.URL.createObjectURL(new Blob([byteArray, { type: 'image/tif' }]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `myBlob_${currentTime}.tif`);
-        document.body.appendChild(link);
-        link.click();
-    }
-
-    const validateParams = () => {
-        const requiredBlobParameters = [];
-
-        for (const p in params) {
-            if (params[p].required) {
-                requiredBlobParameters.push(params[p].value);
-            }
-        }
-
-        return requiredBlobParameters.includes("") ? true : false;
+        windowDownload(blob);
     }
 
     const parseEnteredValues = (e, property) => {
@@ -166,9 +227,11 @@ const Blobs = () => {
                 break;
         }
 
-        setValidatedParams(validateParams());
         setParams(tempParams);
+        setValidatedParams(validateParams(params));
     }
+
+    const {getRootProps, getInputProps} = useDropzone({onDrop})
 
     return (
         <div>
@@ -178,53 +241,44 @@ const Blobs = () => {
             <div className="blobDescription">
                 Generates an image containing amorphous blobs.
             </div>
-
             <div className="blobTextFields">
                 {
-                    // Dynamically creates <TextFields /> based on entries in the params object.
                     Object.keys(params).map((p) => (
-                        p
-                        &&
-                        <div className="blobTextField">
-                            <TextField 
-                                required={params[p].required}
-                                id={params[p].id}
-                                label={params[p].label}
-                                defaultValue={params[p].value}
-                                helperText={params[p].helperText}
-                                variant={"outlined"}
-                                onInput={(e) => parseEnteredValues(e, p)}
-                            />
-                        </div>
-                    ))
+                            p
+                            &&
+                            <div className="blobTextField">
+                                <TextField 
+                                    required={params[p].required}
+                                    id={params[p].id}
+                                    label={params[p].label}
+                                    defaultValue={params[p].value}
+                                    helperText={params[p].helperText}
+                                    variant={"outlined"}
+                                    onInput={(e) => parseEnteredValues(e, p)}
+                                />
+                            </div>
+                        )
+                    )
                 }
             </div>
 
             <div className="blobButtons">
                 <div className="blobButton">
                     <Dropzone ref={dropzoneRef} noClick noKeyboard>
-                        {({getRootProps, getInputProps, acceptedFiles}) => {
-                            const selectedFile = acceptedFiles.slice(-1)[0];
-                            if (selectedFile) {
-                                setLoadedBlob(selectedFile);
-                            }
-
-                            return (
-                            <div className="container">
-                                <div {...getRootProps({className: 'dropzone'})}>
-                                    <input {...getInputProps()} />
-                                    <Button
-                                        variant="contained" 
-                                        color="primary"
-                                        style={{ minWidth: '170px', minHeight: '16px'}}
-                                        onClick={() => loadBlob()}
-                                    >
-                                        Load Image
-                                    </Button>
-                                </div>
+                        {() => (
+                            <div {...getRootProps({className: 'dropzone'})}>
+                                <input {...getInputProps()} />
+                                <Button
+                                    variant="contained" 
+                                    color="primary"
+                                    style={{ minWidth: '170px', minHeight: '16px'}}
+                                    onClick={() => loadBlob()}
+                                >
+                                    Load Image
+                                </Button>
                             </div>
-                            );
-                        }}
+                            )
+                        }
                     </Dropzone>
                 </div>
                 <div className="blobButton">

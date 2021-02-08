@@ -4,84 +4,81 @@
 //
 
 import React, { useState, useEffect } from 'react';
+import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
-import { integerOnlyField, floatOnlyBetweenOneAndZeroField } from '../../../utils/inputFieldValidators';
+import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import './BundleOfTubes.css';
 
 const BundleOfTubes = () => {    
-    
-    const fieldsInfo = {
-        "xDimension": {
-            helperText: "Integer values only.",
-            id: "xDimensionInput",
-            label: "Voxels in x-direction",
-            value: "500",
-            type: "int",
-            required: true
-        }, "yDimension": {
-            helperText: "Integer values only.",
-            id: "yDimensionInput",
-            label: "Voxels in y-direction",
-            value: "500",
-            type: "int",
-            required: true
-        }, "zDimension": {
-            helperText: "Integer values only.",
-            id: "zDimensionInput",
-            label: "Voxels in z-direction",
-            value: "0",
-            type: "int",
-            required: false
-        }, "spacing": {
-            helperText: "Integer values only.",
-            id: "spacingInput",
-            label: "Spacing",
-            value: "1",
-            type: "int",
-            required: true
+    const backendEndpoint = useSelector((state) => state.backend);
+    const funcs = useSelector((state) => (state));
+    const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.bundle_of_tubes : {};
+    console.log(fieldsInfo);
+
+    if (fieldsInfo.hasOwnProperty('kwargs')) {
+        // remove kwargs from this function. As a result, no kwargs entry in the component will be generated.
+        delete fieldsInfo['kwargs'];
+    }
+
+    for (const entry in fieldsInfo) {
+        if (fieldsInfo[entry].type === "int") {
+            fieldsInfo[entry]["helperText"] = "Integer Values only";
+        } else if (fieldsInfo[entry].type === "float") {
+            fieldsInfo[entry]["helperText"] = "Float value between 0 and 1";
         }
-    };
 
-    // pieces of state to disregard
-    const [xDimension, setXDimension] = useState();
-    const [yDimension, setYDimension] = useState();
-    const [zDimension, setZDimension] = useState();
-    const [spacing, setSpacing] = useState();
+        fieldsInfo[entry]["id"] = entry + "input";
 
+        switch (entry) {
+            case "shape[0]":
+                fieldsInfo[entry]["label"] = "Voxels in x Dimension";
+                break;
+            case "shape[1]":
+                fieldsInfo[entry]["label"] = "Voxels in y Dimension";
+                break;
+            case "shape[2]":
+                fieldsInfo[entry]["label"] = "Voxels in z Dimension";
+                break;
+            case "spacing":
+                fieldsInfo[entry]["label"] = "Spacing";
+                break;
+            default:
+                break;
+        }
+    }
 
-
-    // pieces of state to actually use:
     const [params, setParams] = useState(fieldsInfo);
     const [validatedParams, setValidatedParams] = useState(false);
     const [bundleOfTubes, setBundleOfTubes] = useState('');
-    const [bundlesOfTubesGenerationTime, setBundlesOfTubesGenerationTime] = useState('');
-
-    const backendRootEndpoint = 'http://localhost:8000/';
 
     const generateBundleOfTubes = () => {
         console.log("hello from generateBundleOfTubes()");
+    }
 
-        // axios.put(`${backendRootEndpoint}generators/bundleOfTubes/1/`, {
-        //     // populate data entered here:
-        // }).then((response) => {
-        //     console.log(response);
-        // }).catch((e) => {
-        //     // TODO: better error catching method?
-        //     console.log(e);
-        // })
-
+    const downloadBundleOfTubes = () => {
+        console.log("hello from downloadBundleOfTubes()");
     }
 
     const validateParams = () => {
-        const bundleOfTubesParameters = [xDimension, yDimension, zDimension, spacing];
-        return bundleOfTubesParameters.includes("");
-    }
+        const requiredBundleOfTubesParameters = [];
 
+        for (const p in params) {
+            if (params[p].required) {
+                requiredBundleOfTubesParameters.push(params[p].value);
+            }
+        }
+
+        return requiredBundleOfTubesParameters.includes("");
+    }
 
     return (
         <div>
+            <div className="bundleOfTubesTitle">
+                Bundle of Tubes
+            </div>
             <div className="bundleOfTubesDescription">
                 Creates a 3D image of a bundle of tubes, in the form of a rectangular plate with randomly sized holes through it.
             </div>
@@ -112,14 +109,11 @@ const BundleOfTubes = () => {
                     color="primary"
                     onClick={() => generateBundleOfTubes()}
                     disabled={validateParams()}
+                    style={{ minWidth: '170px', minHeight: '16px'}}
                 >
                     Generate Image
                 </Button>
             </div>
-
-            {
-                //
-            }
         </div>
     )
 }

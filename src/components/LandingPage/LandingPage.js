@@ -4,7 +4,7 @@
 //
 
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -25,9 +25,9 @@ import RenderFilter from '../RenderFilter/RenderFilter';
 import RenderMetric from '../RenderMetric/RenderMetric';
 
 // generatorsNames, filtersNames, and so on should pull from the store.
-import { generatorsNames } from '../../utils/generatorsNames';
-import { filtersNames } from '../../utils/filtersNames';
-import { metricsNames } from '../../utils/metricsNames';
+// import { generatorsNames } from '../../utils/generatorsNames';
+// import { filtersNames } from '../../utils/filtersNames';
+// import { metricsNames } from '../../utils/metricsNames';
 // import { networksNames } from '../../utils/networksNames';
 import './LandingPage.css';
 
@@ -71,8 +71,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-// porespyModules contains the menu names that are then called with .map() to create on the UI.
-const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
+
+
+
+
 
 const LandingPage = (props) => {
     const [openGenerators, setOpenGenerators] = useState(false);
@@ -83,8 +85,31 @@ const LandingPage = (props) => {
     const [chosenGenerator, setChosenGenerator] = useState("");
     const [chosenFilter, setChosenFilter] = useState("Apply Chords");
     const [chosenMetric, setChosenMetric] = useState("Chord Counts");
-    const [renderPage, setRenderPage] = useState(props.page);
     // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
+    const [renderPage, setRenderPage] = useState(props.page);
+    
+    // porespyModules contains the menu names that are then called with .map() to create on the UI.
+    const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
+    const funcs = useSelector((state) => (state));
+    const generatorsNamesStore = funcs.porespyFuncs.hasOwnProperty('generators') ? Object.keys(funcs.porespyFuncs.generators) : [];
+    const filtersNamesStore = funcs.porespyFuncs.hasOwnProperty('filters') ? Object.keys(funcs.porespyFuncs.filters) : [];
+    const metricsNamesStore = funcs.porespyFuncs.hasOwnProperty('metrics') ? Object.keys(funcs.porespyFuncs.metrics) : [];
+
+    const parseName = (name) => {
+        const nameSplit = name.replace(/_/gm, " ").split(" ");
+
+        for (let i=0; i < nameSplit.length; i++) {
+            nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substring(1);
+        }
+
+        return nameSplit.join(" ").trim();
+    }
+
+    const generatorsNamesParsed = generatorsNamesStore.map((name) => parseName(name)).sort();
+    const filtersNamesParsed = filtersNamesStore.map((name) => parseName(name)).sort();
+    const metricsNamesParsed = metricsNamesStore.map((name) => parseName(name)).sort();
+
+    generatorsNamesParsed.unshift("Upload Image");
 
     const handleClick = (text) => {        
         // Switch/Case block checks to see which module is chosen and opens the <Collapse /> component by calling setOpenGenerators(), setOpenFilters(), and setOpenMetrics()
@@ -146,11 +171,11 @@ const LandingPage = (props) => {
             <ListItem 
                 button
                 className={classes.nested} 
-                onClick={() => handleFunctionClick(text, g.name)} 
+                onClick={() => handleFunctionClick(text, g)} 
                 component={Link}
                 to={`/`}
             >
-                <ListItemText primary={`${g.name}`} />
+                <ListItemText primary={`${g}`} />
             </ListItem>
         ))
     )
@@ -206,9 +231,9 @@ const LandingPage = (props) => {
                                                 unmountOnExit
                                             >
                                                 <List component="div" disablePadding>
-                                                    {(text === "Generators") && renderSubMenus(text, generatorsNames)}
-                                                    {(text === "Filters") && renderSubMenus(text, filtersNames)}
-                                                    {(text === "Metrics") && renderSubMenus(text, metricsNames)}
+                                                    {(text === "Generators") && renderSubMenus(text, generatorsNamesParsed)}
+                                                    {(text === "Filters") && renderSubMenus(text, filtersNamesParsed)}
+                                                    {(text === "Metrics") && renderSubMenus(text, metricsNamesParsed)}
                                                 </List>
                                             </Collapse>
                                         </div>
