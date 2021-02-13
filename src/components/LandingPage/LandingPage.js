@@ -79,10 +79,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column'
     }, 
     gridList: {
-        height: '95%',
-        width: 180,
+        minHeight: '95%',
+        maxWidth: 125,
         position: 'absolute',
-        right: 5
+        right: 3
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
@@ -112,9 +112,6 @@ const LandingPage = (props) => {
     const generatorsNamesStore = funcs.porespyFuncs.hasOwnProperty('generators') ? Object.keys(funcs.porespyFuncs.generators) : [];
     const filtersNamesStore = funcs.porespyFuncs.hasOwnProperty('filters') ? Object.keys(funcs.porespyFuncs.filters) : [];
     const metricsNamesStore = funcs.porespyFuncs.hasOwnProperty('metrics') ? Object.keys(funcs.porespyFuncs.metrics) : [];
-
-    // TODO: Should abstract this function into a helper file in the ./utils folder?
-    
 
     const generatorsNamesParsed = generatorsNamesStore.map((name) => parseName(name)).sort();
     const filtersNamesParsed = filtersNamesStore.map((name) => parseName(name)).sort();
@@ -276,50 +273,48 @@ const LandingPage = (props) => {
                             </Switch>    
                         </div>
 
-                        <div>
-                            <GridList cellHeight={180} className={classes.gridList}>
-                                {
-                                    // instead of hardcoded array of objects, pass in array of objects with img property as the base64 string containing the generator.
-                                    [{
-                                    img: "Asd",
-                                    title: "asdasd",
-                                    author: "author!"
-                                }, {
-                                    img: "Asd",
-                                    title: "asdasd",
-                                    author: "author!"
-                                }, {
-                                    img: "Asd",
-                                    title: "asdasd",
-                                    author: "author!"
-                                }, {
-                                    img: "Asd",
-                                    title: "asdasd",
-                                    author: "author!"
-                                }, {
-                                    img: "Asd",
-                                    title: "asdasd",
-                                    author: "author!"
-                                }, {
-                                    img: "Asd",
-                                    title: "asdasd",
-                                    author: "author!"
-                                }].map((tile) => (
-                                    <GridListTile cols={2} key={tile.img}>
-                                        <img src={tile.img} alt={tile.title} />
-                                        <GridListTileBar
-                                        title={tile.title}
-                                        subtitle={<span>text here!</span>}
-                                        actionIcon={
-                                            <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
-                                            <InfoIcon />
-                                            </IconButton>
-                                        }
-                                        />
-                                    </GridListTile>
-                                ))}
-                            </GridList>
-                        </div>
+                        <GridList cellHeight={180} className={classes.gridList}>
+                            {
+                                // instead of hardcoded array of objects, pass in array of objects with img property as the base64 string containing the generator.
+                                [{
+                                img: "Asd",
+                                title: "asdasd",
+                                author: "author!"
+                            }, {
+                                img: "Asd",
+                                title: "asdasd",
+                                author: "author!"
+                            }, {
+                                img: "Asd",
+                                title: "asdasd",
+                                author: "author!"
+                            }, {
+                                img: "Asd",
+                                title: "asdasd",
+                                author: "author!"
+                            }, {
+                                img: "Asd",
+                                title: "asdasd",
+                                author: "author!"
+                            }, {
+                                img: "Asd",
+                                title: "asdasd",
+                                author: "author!"
+                            }].map((tile) => (
+                                <GridListTile cols={2} key={tile.img}>
+                                    <img src={tile.img} alt={tile.title} />
+                                    <GridListTileBar
+                                    title={tile.title}
+                                    subtitle={<span>text here!</span>}
+                                    actionIcon={
+                                        <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
+                                        <InfoIcon />
+                                        </IconButton>
+                                    }
+                                    />
+                                </GridListTile>
+                            ))}
+                        </GridList>
                     </main>
                 </BrowserRouter>
             </div>
