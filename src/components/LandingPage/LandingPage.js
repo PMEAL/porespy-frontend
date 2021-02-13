@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -37,6 +37,7 @@ import './LandingPage.css';
 // Width of menu in pixels
 const drawerWidth = 240;
 
+// TODO: abstract this object into another file to clean up this component?
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -88,11 +89,6 @@ const useStyles = makeStyles((theme) => ({
         color: 'rgba(255, 255, 255, 0.54)',
     },
 }));
-
-
-
-
-
 
 const LandingPage = (props) => {
     const [openGenerators, setOpenGenerators] = useState(false);
@@ -183,7 +179,7 @@ const LandingPage = (props) => {
                 component={Link}
                 to={`/`}
             >
-                <ListItemText primary={`${g}`} />
+                <ListItemText primary={g} />
             </ListItem>
         ))
     )
@@ -296,21 +292,17 @@ const LandingPage = (props) => {
                                 img: "Asd",
                                 title: "asdasd",
                                 author: "author!"
-                            }, {
-                                img: "Asd",
-                                title: "asdasd",
-                                author: "author!"
                             }].map((tile) => (
                                 <GridListTile cols={2} key={tile.img}>
                                     <img src={tile.img} alt={tile.title} />
                                     <GridListTileBar
-                                    title={tile.title}
-                                    subtitle={<span>text here!</span>}
-                                    actionIcon={
-                                        <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
-                                        <InfoIcon />
-                                        </IconButton>
-                                    }
+                                        title={tile.title}
+                                        subtitle={<span>text here!</span>}
+                                        actionIcon={
+                                            <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
+                                            <InfoIcon />
+                                            </IconButton>
+                                        }
                                     />
                                 </GridListTile>
                             ))}

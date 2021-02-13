@@ -1,4 +1,7 @@
-
+//
+//  parseModuleNames.js
+//  porespy-frontend
+//
 
 const parseName = (name) => {
     const nameSplit = name.replace(/_/gm, " ").split(" ");
