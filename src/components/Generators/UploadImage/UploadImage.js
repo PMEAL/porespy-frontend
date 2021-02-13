@@ -13,7 +13,7 @@ const UploadImage = () => {
                 Upload Image Component
             </div>
             <div>
-                This component will handle uploading of images, and will push them onto the right panel.
+                This component will handle uploading of images, and will push them onto the right panel. In progress for now.
             </div>
         </div>
     )

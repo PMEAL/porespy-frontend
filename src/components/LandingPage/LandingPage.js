@@ -18,17 +18,20 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
+
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+
 import AboutPage from '../AboutPage/AboutPage';
 import ContactPage from '../ContactPage/ContactPage';
 import RenderGenerator from '../RenderGenerator/RenderGenerator';
 import RenderFilter from '../RenderFilter/RenderFilter';
 import RenderMetric from '../RenderMetric/RenderMetric';
+import { parseName } from '../../utils/parseModuleNames';
 
-// generatorsNames, filtersNames, and so on should pull from the store.
-// import { generatorsNames } from '../../utils/generatorsNames';
-// import { filtersNames } from '../../utils/filtersNames';
-// import { metricsNames } from '../../utils/metricsNames';
-// import { networksNames } from '../../utils/networksNames';
 import './LandingPage.css';
 
 // Width of menu in pixels
@@ -55,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         flexGrow: 1,
+        width: '100%',
+    },
+    contentOuter: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexGrow: 1,
         padding: theme.spacing(3),
         paddingLeft: 240,
         width: '100%',
@@ -68,7 +77,16 @@ const useStyles = makeStyles((theme) => ({
     collapseMenu: {
         display: 'flex',
         flexDirection: 'column'
-    }
+    }, 
+    gridList: {
+        height: '95%',
+        width: 180,
+        position: 'absolute',
+        right: 5
+    },
+    icon: {
+        color: 'rgba(255, 255, 255, 0.54)',
+    },
 }));
 
 
@@ -95,15 +113,8 @@ const LandingPage = (props) => {
     const filtersNamesStore = funcs.porespyFuncs.hasOwnProperty('filters') ? Object.keys(funcs.porespyFuncs.filters) : [];
     const metricsNamesStore = funcs.porespyFuncs.hasOwnProperty('metrics') ? Object.keys(funcs.porespyFuncs.metrics) : [];
 
-    const parseName = (name) => {
-        const nameSplit = name.replace(/_/gm, " ").split(" ");
-
-        for (let i=0; i < nameSplit.length; i++) {
-            nameSplit[i] = nameSplit[i][0].toUpperCase() + nameSplit[i].substring(1);
-        }
-
-        return nameSplit.join(" ").trim();
-    }
+    // TODO: Should abstract this function into a helper file in the ./utils folder?
+    
 
     const generatorsNamesParsed = generatorsNamesStore.map((name) => parseName(name)).sort();
     const filtersNamesParsed = filtersNamesStore.map((name) => parseName(name)).sort();
@@ -244,24 +255,71 @@ const LandingPage = (props) => {
                         </div>
                     </Drawer>
 
-                    <main className={classes.content}>
-                        <Toolbar />
-                        <div className="title">
-                            PoreSpy
-                        </div>
-                        <div className="description">
-                            Porous Media Image Analysis in Python
+                    <main className={classes.contentOuter}>
+                        <div className={classes.content}>
+                            <Toolbar />
+                            <div className="title">
+                                PoreSpy
+                            </div>
+                            <div className="description">
+                                Porous Media Image Analysis in Python
+                            </div>
+
+                            {/* The following 3 conditional render statements and the <switch></switch> element display the components based on which boolean is true */}
+                            {/* Rendering of the <AboutPage /> and <ContactPage /> is in the <switch></switch> element to preserve the routing ("/about", "/contact") */}
+                            { chosenModule === "Generators" && renderPage === "" && <RenderGenerator chosenFunction={chosenGenerator} />}
+                            { chosenModule === "Filters" && renderPage === "" && <RenderFilter chosenFunction={chosenFilter} /> }
+                            { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }                        
+                            <Switch>
+                                <Route path="/about" render={() => <AboutPage />} />
+                                <Route path="/contact" render={() => <ContactPage />} />
+                            </Switch>    
                         </div>
 
-                        {/* The following 3 conditional render statements and the <switch></switch> element display the components based on which boolean is true */}
-                        {/* Rendering of the <AboutPage /> and <ContactPage /> is in the <switch></switch> element to preserve the routing ("/about", "/contact") */}
-                        { chosenModule === "Generators" && renderPage === "" && <RenderGenerator chosenFunction={chosenGenerator} />}
-                        { chosenModule === "Filters" && renderPage === "" && <RenderFilter chosenFunction={chosenFilter} /> }
-                        { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }                        
-                        <Switch>
-                            <Route path="/about" render={() => <AboutPage />} />
-                            <Route path="/contact" render={() => <ContactPage />} />
-                        </Switch>                        
+                        <div>
+                            <GridList cellHeight={180} className={classes.gridList}>
+                                {
+                                    // instead of hardcoded array of objects, pass in array of objects with img property as the base64 string containing the generator.
+                                    [{
+                                    img: "Asd",
+                                    title: "asdasd",
+                                    author: "author!"
+                                }, {
+                                    img: "Asd",
+                                    title: "asdasd",
+                                    author: "author!"
+                                }, {
+                                    img: "Asd",
+                                    title: "asdasd",
+                                    author: "author!"
+                                }, {
+                                    img: "Asd",
+                                    title: "asdasd",
+                                    author: "author!"
+                                }, {
+                                    img: "Asd",
+                                    title: "asdasd",
+                                    author: "author!"
+                                }, {
+                                    img: "Asd",
+                                    title: "asdasd",
+                                    author: "author!"
+                                }].map((tile) => (
+                                    <GridListTile cols={2} key={tile.img}>
+                                        <img src={tile.img} alt={tile.title} />
+                                        <GridListTileBar
+                                        title={tile.title}
+                                        subtitle={<span>text here!</span>}
+                                        actionIcon={
+                                            <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
+                                            <InfoIcon />
+                                            </IconButton>
+                                        }
+                                        />
+                                    </GridListTile>
+                                ))}
+                            </GridList>
+                        </div>
                     </main>
                 </BrowserRouter>
             </div>
