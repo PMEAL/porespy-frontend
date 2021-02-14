@@ -80,10 +80,13 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column'
     }, 
     gridList: {
-        minHeight: '95%',
+        display: 'flex',
+        flexDirection: 'column',
         maxWidth: 125,
+        minHeight: '95%',
         position: 'absolute',
-        right: 3
+        right: 3,
+        top: 64
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
@@ -184,6 +187,7 @@ const LandingPage = (props) => {
         ))
     )
 
+    const generatedImages = useSelector((state) => (state.blobs));
     const classes = useStyles();
     
     return (
@@ -271,35 +275,41 @@ const LandingPage = (props) => {
 
                         <GridList cellHeight={180} className={classes.gridList}>
                             {
-                                // instead of hardcoded array of objects, pass in array of objects with img property as the base64 string containing the generator.
-                                [{
-                                img: "Asd",
-                                title: "asdasd",
-                                author: "author!"
-                            }, {
-                                img: "Asd",
-                                title: "asdasd",
-                                author: "author!"
-                            }, {
-                                img: "Asd",
-                                title: "asdasd",
-                                author: "author!"
-                            }, {
-                                img: "Asd",
-                                title: "asdasd",
-                                author: "author!"
-                            }, {
-                                img: "Asd",
-                                title: "asdasd",
-                                author: "author!"
-                            }].map((tile) => (
+                            // instead of hardcoded array of objects, pass in array of objects with img property as the base64 string containing the generator.
+
+                            // [{
+                            //     img: "Asd",
+                            //     title: "asdasd",
+                            //     author: "author!"
+                            // }, {
+                            //     img: "Asd",
+                            //     title: "asdasd",
+                            //     author: "author!"
+                            // }, {
+                            //     img: "Asd",
+                            //     title: "asdasd",
+                            //     author: "author!"
+                            // }, {
+                            //     img: "Asd",
+                            //     title: "asdasd",
+                            //     author: "author!"
+                            // }, {
+                            //     img: "Asd",
+                            //     title: "asdasd",
+                            //     author: "author!"
+                            // }]
+
+                            generatedImages.map((tile, index) => (
                                 <GridListTile cols={2} key={tile.img}>
-                                    <img src={tile.img} alt={tile.title} />
+                                    <img 
+                                        src={`data:image/png;base64,${tile.img}`}
+                                        alt={index} 
+                                    />
                                     <GridListTileBar
-                                        title={tile.title}
+                                        title={`Image ${index}`}
                                         subtitle={<span>text here!</span>}
                                         actionIcon={
-                                            <IconButton aria-label={`info about ${tile.title}`} className={classes.icon}>
+                                            <IconButton aria-label={`info about ${index}`} className={classes.icon}>
                                             <InfoIcon />
                                             </IconButton>
                                         }

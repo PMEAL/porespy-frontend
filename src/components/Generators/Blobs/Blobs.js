@@ -12,9 +12,12 @@ import axios from 'axios';
 import Dropzone, { useDropzone } from 'react-dropzone';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import { windowDownload } from '../../../utils/fileManipulators';
+import { startSetBlobs } from '../../../actions/Generators/Blobs';
 import './Blobs.css';
 
-const Blobs = () => {
+let blobRedux = {};
+
+const Blobs = (props) => {
     // Data should be entered like this (Object of objects)
     // const fieldsInfo = {
     //     "xDimension": {
@@ -26,92 +29,6 @@ const Blobs = () => {
     //         required: true
     //     }
     // };
-
-
-
-
-
-    // TODO: Vertical panel of images Material UI GridList
-
-    // import React from 'react';
-    // import { makeStyles } from '@material-ui/core/styles';
-    // import GridList from '@material-ui/core/GridList';
-    // import GridListTile from '@material-ui/core/GridListTile';
-    // import tileData from './tileData';
-
-    // const useStyles = makeStyles((theme) => ({
-    // root: {
-    //     display: 'flex',
-    //     flexWrap: 'wrap',
-    //     justifyContent: 'space-around',
-    //     overflow: 'hidden',
-    //     backgroundColor: theme.palette.background.paper,
-    // },
-    // gridList: {
-    //     width: 500,
-    //     height: 450,
-    // },
-    // }));
-
-    // /**
-    //  * The example data is structured as follows:
-    //  *
-    //  * import image from 'path/to/image.jpg';
-    //  * [etc...]
-    //  *
-    //  * const tileData = [
-    //  *   {
-    //  *     img: image,
-    //  *     title: 'Image',
-    //  *     author: 'author',
-    //  *     cols: 2,
-    //  *   },
-    //  *   {
-    //  *     [etc...]
-    //  *   },
-    //  * ];
-    //  */
-    // export default function ImageGridList() {
-    // const classes = useStyles();
-
-    // return (
-    //     <div className={classes.root}>
-    //     <GridList cellHeight={160} className={classes.gridList} cols={3}>
-    //         {tileData.map((tile) => (
-    //         <GridListTile key={tile.img} cols={tile.cols || 1}>
-    //             <img src={tile.img} alt={tile.title} />
-
-            // <Button 
-            //     variant="contained" 
-            //     color="primary"
-            //     style={{ minWidth: '170px', minHeight: '16px'}}
-            // >
-            //     Load
-            // </Button>
-
-            // <Button 
-            //     variant="contained" 
-            //     color="primary"
-            //     style={{ minWidth: '170px', minHeight: '16px'}}
-            // >
-            //     Download
-            // </Button>
-
-    //         </GridListTile>
-    //         ))}
-    //     </GridList>
-    //     </div>
-    // );
-    // }
-
-
-
-
-
-
-
-
-
 
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
@@ -193,6 +110,13 @@ const Blobs = () => {
                 dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
             }).then(({ data: { generated_image } }) => {
                 setBlob(generated_image);
+
+                blobRedux = {
+                    img: generated_image
+                };
+
+                props.startSetBlobs(generated_image);
+
                 setLoading(false);
             }).catch((e) => {
                 setBlob("");
@@ -200,7 +124,7 @@ const Blobs = () => {
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
             });
-        }, 1000);
+        }, 1500);
     }
 
     const downloadBlob = () => {
@@ -316,7 +240,8 @@ const Blobs = () => {
                 <div className="blobImageWrapper">
                     <img 
                         className="blobImage" 
-                        src={`data:image/png;base64,${blob}`} 
+                        src={`data:image/png;base64,${blob}`}
+                        alt={blob}
                     />
                 </div>
                 :
@@ -347,4 +272,8 @@ const Blobs = () => {
     )
 }
 
-export default connect(undefined, undefined)(Blobs);
+const mapDispatchToProps = (dispatch) => ({
+    startSetBlobs: () => dispatch(startSetBlobs(blobRedux))
+})
+
+export default connect(undefined, mapDispatchToProps)(Blobs);

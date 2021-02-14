@@ -16,8 +16,7 @@ const BundleOfTubes = () => {
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.bundle_of_tubes : {};
-    console.log(fieldsInfo);
-
+    
     if (fieldsInfo.hasOwnProperty('kwargs')) {
         // remove kwargs from this function. As a result, no kwargs entry in the component will be generated.
         delete fieldsInfo['kwargs'];
