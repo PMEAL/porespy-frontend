@@ -10,6 +10,7 @@ For more information on PoreSpy, please visit the following repo: https://github
 - Load Image button -> translate it to the GridList component (panel of images).
 - Continue mapping out remaining generators/filters/metrics.
 - Have a panel on the right displaying images (Material UI Cards).
+- Make panel on the right collapsable, style it correctly.
 - Use altair python package to display images in js.
 
 

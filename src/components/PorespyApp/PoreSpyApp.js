@@ -23,8 +23,10 @@ const PoreSpyApp = (props) => {
             props.startSetPorespyFuncs(porespy_funcs);
             props.startSetBackendEndpoint(backendRootEndpoint);
         }).catch((e) => {
+
             // TODO: find a better error catching method?
             console.log(e);
+            
         });
     }, []);
 

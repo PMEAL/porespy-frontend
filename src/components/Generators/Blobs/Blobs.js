@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect, createRef, useCallback } from 'react';
+import React, { useState, createRef, useCallback } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,10 +12,10 @@ import axios from 'axios';
 import Dropzone, { useDropzone } from 'react-dropzone';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import { windowDownload } from '../../../utils/fileManipulators';
-import { startSetBlobs } from '../../../actions/Generators/Blobs';
+import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './Blobs.css';
 
-let blobRedux = {};
+let genImagesRedux = {};
 
 const Blobs = (props) => {
     // Data should be entered like this (Object of objects)
@@ -35,7 +35,6 @@ const Blobs = (props) => {
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.blobs : {};
 
     if (fieldsInfo.hasOwnProperty('kwargs')) {
-        // remove kwargs from this function. As a result, no kwargs entry in the component will be generated.
         delete fieldsInfo['kwargs'];
     }
 
@@ -111,12 +110,11 @@ const Blobs = (props) => {
             }).then(({ data: { generated_image } }) => {
                 setBlob(generated_image);
 
-                blobRedux = {
+                genImagesRedux = {
                     img: generated_image
                 };
 
-                props.startSetBlobs(generated_image);
-
+                props.startSetImages(generated_image);
                 setLoading(false);
             }).catch((e) => {
                 setBlob("");
@@ -273,7 +271,7 @@ const Blobs = (props) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    startSetBlobs: () => dispatch(startSetBlobs(blobRedux))
+    startSetImages: () => dispatch(startSetImages(genImagesRedux))
 })
 
 export default connect(undefined, mapDispatchToProps)(Blobs);

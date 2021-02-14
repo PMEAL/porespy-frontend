@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { connect, useSelector } from 'react-redux';
+import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,8 +18,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import { Switch, Route, Link, BrowserRouter } from 'react-router-dom';
-
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
@@ -31,7 +30,6 @@ import RenderGenerator from '../RenderGenerator/RenderGenerator';
 import RenderFilter from '../RenderFilter/RenderFilter';
 import RenderMetric from '../RenderMetric/RenderMetric';
 import { parseName } from '../../utils/parseModuleNames';
-
 import './LandingPage.css';
 
 // Width of menu in pixels
@@ -82,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     gridList: {
         display: 'flex',
         flexDirection: 'column',
-        maxWidth: 125,
+        maxWidth: 160,
         minHeight: '95%',
         position: 'absolute',
         right: 3,
@@ -187,7 +185,7 @@ const LandingPage = (props) => {
         ))
     )
 
-    const generatedImages = useSelector((state) => (state.blobs));
+    const generatedImages = useSelector((state) => (state.generatedImages));
     const classes = useStyles();
     
     return (
@@ -275,47 +273,24 @@ const LandingPage = (props) => {
 
                         <GridList cellHeight={180} className={classes.gridList}>
                             {
-                            // instead of hardcoded array of objects, pass in array of objects with img property as the base64 string containing the generator.
-
-                            // [{
-                            //     img: "Asd",
-                            //     title: "asdasd",
-                            //     author: "author!"
-                            // }, {
-                            //     img: "Asd",
-                            //     title: "asdasd",
-                            //     author: "author!"
-                            // }, {
-                            //     img: "Asd",
-                            //     title: "asdasd",
-                            //     author: "author!"
-                            // }, {
-                            //     img: "Asd",
-                            //     title: "asdasd",
-                            //     author: "author!"
-                            // }, {
-                            //     img: "Asd",
-                            //     title: "asdasd",
-                            //     author: "author!"
-                            // }]
-
-                            generatedImages.map((tile, index) => (
-                                <GridListTile cols={2} key={tile.img}>
-                                    <img 
-                                        src={`data:image/png;base64,${tile.img}`}
-                                        alt={index} 
-                                    />
-                                    <GridListTileBar
-                                        title={`Image ${index}`}
-                                        subtitle={<span>text here!</span>}
-                                        actionIcon={
-                                            <IconButton aria-label={`info about ${index}`} className={classes.icon}>
-                                            <InfoIcon />
-                                            </IconButton>
-                                        }
-                                    />
-                                </GridListTile>
-                            ))}
+                                generatedImages.map((tile, index) => (
+                                    <GridListTile cols={2} key={tile.img}>
+                                        <img 
+                                            src={`data:image/png;base64,${tile.img}`}
+                                            alt={index} 
+                                        />
+                                        <GridListTileBar
+                                            title={`Image ${index}`}
+                                            subtitle={<span>text here!</span>}
+                                            actionIcon={
+                                                <IconButton aria-label={`info about ${index}`} className={classes.icon}>
+                                                <InfoIcon />
+                                                </IconButton>
+                                            }
+                                        />
+                                    </GridListTile>
+                                ))
+                            }
                         </GridList>
                     </main>
                 </BrowserRouter>
