@@ -49,13 +49,13 @@ const Blobs = (props) => {
 
         switch (entry) {
             case "shape[0]":
-                fieldsInfo[entry]["label"] = "Voxels in x Dimension";
+                fieldsInfo[entry]["label"] = "X Direction Voxels";
                 break;
             case "shape[1]":
-                fieldsInfo[entry]["label"] = "Voxels in y Dimension";
+                fieldsInfo[entry]["label"] = "Y Direction Voxels";
                 break;
             case "shape[2]":
-                fieldsInfo[entry]["label"] = "Voxels in z Dimension";
+                fieldsInfo[entry]["label"] = "Z Direction Voxels";
                 break;
             case "blobiness":
                 fieldsInfo[entry]["label"] = "Blobiness";
@@ -183,7 +183,6 @@ const Blobs = (props) => {
                     )
                 }
             </div>
-
             <div className="blobButtons">
                 <div className="blobButton">
                     <Dropzone ref={dropzoneRef} noClick noKeyboard>
@@ -247,9 +246,7 @@ const Blobs = (props) => {
                     loading
                     ?
                     <div className="spinner">
-                        <div>
-                            <CircularProgress />
-                        </div>
+                        <CircularProgress />
                         <div>
                             Generating your image...
                         </div>

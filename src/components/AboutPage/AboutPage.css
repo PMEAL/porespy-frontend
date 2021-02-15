@@ -1,0 +1,7 @@
+.aboutPageWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 95px 0px 95px;
+}

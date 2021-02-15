@@ -8,7 +8,7 @@ import './ContactPage.css';
 
 const ContactPage = () => {
     return (
-        <div>
+        <div className="contactPageWrapper">
             <div>
                 The contact page is currently under construction...
             </div>

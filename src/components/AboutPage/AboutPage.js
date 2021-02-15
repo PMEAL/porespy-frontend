@@ -5,60 +5,15 @@
 
 import React from 'react';
 import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
 import './AboutPage.css';
-
-// Width of menu in pixels
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    drawerContainer: {
-        overflow: 'auto',
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        paddingLeft: 240,
-        width: '100%',
-    },
-    root: {
-        width: '100%',
-    },
-    nested: {
-        paddingLeft: theme.spacing(4),
-        // color: 'darkGrey',
-        // fontSize: '10',
-    },
-    collapseMenu: {
-        display: 'flex',
-        flexDirection: 'column'
-    }
-}));
 
 const AboutPage = () => {
     const preventDefault = (e) => {
         e.preventDefault();
     }
 
-    const classes = useStyles();
-
     return (
-        <div>
+        <div className="aboutPageWrapper">
             <br />
 
             <div>
