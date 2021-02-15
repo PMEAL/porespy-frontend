@@ -12,10 +12,17 @@ import axios from 'axios';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import './BundleOfTubes.css';
 
+
+// TODO: Add bundle of tubes images to the redux store, and the right panel.
+
+
+
+
 const BundleOfTubes = () => {    
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.bundle_of_tubes : {};
+    fieldsInfo["spacing"]["value"] = 10;
     
     if (fieldsInfo.hasOwnProperty('kwargs')) {
         // remove kwargs from this function. As a result, no kwargs entry in the component will be generated.
@@ -43,6 +50,8 @@ const BundleOfTubes = () => {
                 break;
             case "spacing":
                 fieldsInfo[entry]["label"] = "Spacing";
+                // NOTE: In Porespy documentation, there is no mention that the spacing parameter must be specified. In the code it is required as it is used in calculations.
+                fieldsInfo[entry]["required"] = true
                 break;
             default:
                 break;
@@ -52,25 +61,54 @@ const BundleOfTubes = () => {
     const [params, setParams] = useState(fieldsInfo);
     const [validatedParams, setValidatedParams] = useState(false);
     const [bundleOfTubes, setBundleOfTubes] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const generateBundleOfTubes = () => {
-        console.log("hello from generateBundleOfTubes()");
+        setLoading(true);
+        setBundleOfTubes("");
+        setTimeout(() => {
+            axios.put(`${backendEndpoint}generators/bundleoftubes/1/`, {
+                dimension_x: 500,
+                dimension_y: 500,
+                dimension_z: 0,
+                spacing: 15
+            }).then(({ data: { generated_image } }) => {
+                setBundleOfTubes(generated_image);
+                console.log(generated_image);
+            }).catch((e) => {
+                setBundleOfTubes("");
+                setLoading(false);
+                setError(true);
+                setErrorMessage(`Something is wrong... ${e.message}`);
+            })
+        }, 1500)
+        
+        // TODO: as of feb 15, 2021, bundle of tubes can be generated. Will wire up the front end axios put request soon.
     }
 
     const downloadBundleOfTubes = () => {
         console.log("hello from downloadBundleOfTubes()");
     }
 
-    const validateParams = () => {
-        const requiredBundleOfTubesParameters = [];
+    const parseEnteredValues = (e, property) => {
+        const tempParams = params;
 
-        for (const p in params) {
-            if (params[p].required) {
-                requiredBundleOfTubesParameters.push(params[p].value);
-            }
+        switch (tempParams[property].type) {
+            case "int":
+                tempParams[property].value = integerOnlyField(e);
+                break;
+            case "float":
+                tempParams[property].value =  floatOnlyBetweenOneAndZeroField(e);
+                break;
+            default:
+                break;
         }
 
-        return requiredBundleOfTubesParameters.includes("");
+        // TODO: maybe split this function to make it more scalable?
+        setParams(tempParams);
+        setValidatedParams(validateParams(params));
     }
 
     return (
@@ -94,7 +132,7 @@ const BundleOfTubes = () => {
                                 defaultValue={params[p].value}
                                 helperText={params[p].helperText}
                                 variant={"outlined"}
-                                // onInput={(e) => parseEnteredValues(e, p)}
+                                onInput={(e) => parseEnteredValues(e, p)}
                             />
                         </div>
                         
@@ -107,14 +145,47 @@ const BundleOfTubes = () => {
                     variant="contained" 
                     color="primary"
                     onClick={() => generateBundleOfTubes()}
-                    disabled={validateParams()}
+                    disabled={validatedParams}
                     style={{ minWidth: '170px', minHeight: '16px'}}
                 >
                     Generate Image
                 </Button>
             </div>
+
+            {
+                // TODO: maybe asbtract this? This is similar in Blobs.js component
+                bundleOfTubes !== ""
+                ?
+                <div className="bundleOfTubesImageWrapper">
+                    <img
+                        className="bundleOfTubesImage"
+                        src={`data:image/png;base64,${bundleOfTubes}`}
+                    />
+                </div>
+                :
+                (
+                    loading
+                    ?
+                    <div className="spinner">
+                        <CircularProgress />
+                        <div>
+                            Generating your image...
+                        </div>
+                    </div>
+                    :
+                    <div>
+                        {
+                            error
+                            &&
+                            <div className="bundleOfTubesImageWrapper">
+                                {errorMessage}
+                            </div>
+                        }
+                    </div>
+                )
+            }
         </div>
     )
 }
 
-export default BundleOfTubes;
+export default connect(undefined, undefined)(BundleOfTubes);

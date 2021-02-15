@@ -1,3 +1,18 @@
+/* TODO: add sass to make css scalable and reusable */
+
+.bundleOfTubesImageWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 20px;
+}
+
+.bundleOfTubesImage {
+    height: 200px;
+    width: 200px;
+}
+
 .bundleOfTubesTitle {
     font-size: 32px;
     font-weight: 700;
@@ -26,4 +41,11 @@
     display: flex;
     justify-content: center;
     padding: 20px 0px 20px 0px;
+}
+
+.spinner {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
 }

@@ -99,7 +99,7 @@ const Blobs = (props) => {
     const generateBlob = () => {
         setLoading(true);
         setBlob("");
-        // currently image loading is very quick. setTimeout adds 1 sec of loading to show user that the image is loading.
+        // currently image loading is very quick. setTimeout adds 1.5s of loading to show user that the image is loading.
         setTimeout(() => {
             axios.put(`${backendEndpoint}generators/blobs/1/`, {
                 porosity: params["porosity"].value,
@@ -149,6 +149,7 @@ const Blobs = (props) => {
                 break;
         }
 
+        // TODO: maybe split this function to make it more scalable?
         setParams(tempParams);
         setValidatedParams(validateParams(params));
     }
