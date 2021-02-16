@@ -16,6 +16,6 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO:
 
-- Change GUI to make it look like mock gui design. (in progress)
+- Change GUI to make it look like mock gui design. (in progress).
 - Get a Favicon.ico.
 - CSS Stylings for About Page, LandingPage components.

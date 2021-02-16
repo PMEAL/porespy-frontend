@@ -1,7 +1,12 @@
-.aboutPageWrapper {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px 95px 0px 95px;
+.aboutPageParagraph {
+    padding: 10px 95px;
+}
+
+.aboutPageSectionTitle {
+    font-weight: 700;
+    padding: 20px 95px 10px 95px;
+}
+
+.aboutPageParagraphWithLinks {
+    padding: 10px 95px;
 }
