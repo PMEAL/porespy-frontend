@@ -109,11 +109,9 @@ const Blobs = (props) => {
                 dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
             }).then(({ data: { generated_image } }) => {
                 setBlob(generated_image);
-
                 genImagesRedux = {
                     img: generated_image
                 };
-
                 props.startSetImages(generated_image);
                 setLoading(false);
             }).catch((e) => {
@@ -122,7 +120,7 @@ const Blobs = (props) => {
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
             });
-        }, 1500);
+        }, 1000);
     }
 
     const downloadBlob = () => {

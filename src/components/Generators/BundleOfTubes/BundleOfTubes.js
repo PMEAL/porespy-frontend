@@ -10,19 +10,18 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
+import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './BundleOfTubes.css';
 
 
 // TODO: Add bundle of tubes images to the redux store, and the right panel.
+let genImagesRedux = {};
 
-
-
-
-const BundleOfTubes = () => {    
+const BundleOfTubes = (props) => {    
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.bundle_of_tubes : {};
-    fieldsInfo["spacing"]["value"] = 10;
+    
     
     if (fieldsInfo.hasOwnProperty('kwargs')) {
         // remove kwargs from this function. As a result, no kwargs entry in the component will be generated.
@@ -59,7 +58,7 @@ const BundleOfTubes = () => {
     }
 
     const [params, setParams] = useState(fieldsInfo);
-    const [validatedParams, setValidatedParams] = useState(false);
+    const [validatedParams, setValidatedParams] = useState(true);
     const [bundleOfTubes, setBundleOfTubes] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -70,22 +69,24 @@ const BundleOfTubes = () => {
         setBundleOfTubes("");
         setTimeout(() => {
             axios.put(`${backendEndpoint}generators/bundleoftubes/1/`, {
-                dimension_x: 500,
-                dimension_y: 500,
-                dimension_z: 0,
-                spacing: 15
+                dimension_x: params["shape[0]"].value,
+                dimension_y: params["shape[1]"].value,
+                dimension_z: params["shape[2]"].value !== "" ? params["shape[2]"].value : 0,
+                spacing: parseInt(params["spacing"].value, 10)
             }).then(({ data: { generated_image } }) => {
                 setBundleOfTubes(generated_image);
-                console.log(generated_image);
+                genImagesRedux = {
+                    img: generated_image
+                }
+                props.startSetImages(generated_image);
+                setLoading(false);
             }).catch((e) => {
                 setBundleOfTubes("");
                 setLoading(false);
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
             })
-        }, 1500)
-        
-        // TODO: as of feb 15, 2021, bundle of tubes can be generated. Will wire up the front end axios put request soon.
+        }, 1000);
     }
 
     const downloadBundleOfTubes = () => {
@@ -106,7 +107,7 @@ const BundleOfTubes = () => {
                 break;
         }
 
-        // TODO: maybe split this function to make it more scalable?
+        // TODO: maybe split this function to make it more scalable? ^^^
         setParams(tempParams);
         setValidatedParams(validateParams(params));
     }
@@ -134,12 +135,10 @@ const BundleOfTubes = () => {
                                 variant={"outlined"}
                                 onInput={(e) => parseEnteredValues(e, p)}
                             />
-                        </div>
-                        
+                        </div>                        
                     ))
                 }
             </div>
-
             <div className="bundleOfTubesButton">
                 <Button 
                     variant="contained" 
@@ -188,4 +187,8 @@ const BundleOfTubes = () => {
     )
 }
 
-export default connect(undefined, undefined)(BundleOfTubes);
+const mapDispatchToProps = (dispatch) => ({
+    startSetImages: () => dispatch(startSetImages(genImagesRedux))
+})
+
+export default connect(undefined, mapDispatchToProps)(BundleOfTubes);
