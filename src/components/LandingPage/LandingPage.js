@@ -277,13 +277,13 @@ const LandingPage = (props) => {
                                     <GridListTile cols={2} key={tile.img}>
                                         <img 
                                             src={`data:image/png;base64,${tile.img}`}
-                                            alt={index} 
+                                            alt={index+1}
                                         />
                                         <GridListTileBar
-                                            title={`Image ${index}`}
+                                            title={`Image ${index+1}`}
                                             subtitle={<span>text here!</span>}
                                             actionIcon={
-                                                <IconButton aria-label={`info about ${index}`} className={classes.icon}>
+                                                <IconButton aria-label={`info about ${index+1}`} className={classes.icon}>
                                                 <InfoIcon />
                                                 </IconButton>
                                             }
