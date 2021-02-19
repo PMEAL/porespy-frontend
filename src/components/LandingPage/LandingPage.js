@@ -120,8 +120,6 @@ const LandingPage = (props) => {
         ))
     )
 
-    const generatedImages = useSelector((state) => (state.generatedImages));
-
     // // TODO: add this object to redux to clean this file up?
     const useStyles = makeStyles((theme) => ({
         root: {

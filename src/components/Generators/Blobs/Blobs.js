@@ -62,27 +62,6 @@ const Blobs = (props) => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const dropzoneRef = createRef();    
-    const loadBlob = () => {
-        if (dropzoneRef.current) {
-            dropzoneRef.current.open();
-        }
-    }
-
-    const onDrop = useCallback((acceptedFiles) => {
-        acceptedFiles.forEach((file) => {
-            const reader = new FileReader();
-            reader.onabort = () => console.log("File reading was aborted");
-            reader.onerror = () => console.log("File reading has failed");
-            reader.onload = () => {
-                const binaryStr = reader.result;
-                console.log(binaryStr);
-            }
-
-            reader.readAsArrayBuffer(file);
-        })
-    }, []);
-
     const generateBlob = () => {
         setLoading(true);
         setBlob("");
@@ -128,8 +107,36 @@ const Blobs = (props) => {
         setParams(tempParams);
         setValidatedParams(validateParams(params));
     }
+    
 
-    const {getRootProps, getInputProps} = useDropzone({onDrop})
+    
+    // TODO: move this image uploading to the UploadImage component in ../UploadImage
+    const dropzoneRef = createRef();    
+    const loadBlob = () => {
+        if (dropzoneRef.current) {
+            dropzoneRef.current.open();
+        }
+    }
+
+    const onDrop = useCallback((acceptedFiles) => {
+        acceptedFiles.forEach((file) => {
+            const reader = new FileReader();
+            reader.onabort = () => console.log("File reading was aborted");
+            reader.onerror = () => console.log("File reading has failed");
+            reader.onload = () => {
+                const binaryStr = reader.result;
+                console.log(binaryStr);
+            }
+
+            reader.readAsArrayBuffer(file);
+        })
+    }, []);
+
+    const {getRootProps, getInputProps} = useDropzone({onDrop});
+    // TODO: move this image uploading to the UploadImage component in ../UploadImage
+
+
+
 
     return (
         <div>

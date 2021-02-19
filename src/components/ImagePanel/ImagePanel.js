@@ -32,13 +32,13 @@ const ImagePanel = ({ classes }) => {
                             title={`Img${index+1}`}
                             actionIcon={
                                 <div className={classes.imageBarButtons}>
-                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon}>
+                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon} title="Load image">
                                         <ArrowUpwardIcon onClick={() => console.log("load image here!")}/>
                                     </IconButton>
-                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon}>
+                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon} title="Download image">
                                         <ArrowDownwardIcon onClick={() => windowDownload(tile.img)}/>
                                     </IconButton>
-                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon}>
+                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon} title="Delete image">
                                         <DeleteIcon />
                                     </IconButton>
                                 </div>
