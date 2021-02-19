@@ -11,7 +11,7 @@ For more information on PoreSpy, please visit the following repo: https://github
 - Continue mapping out remaining generators/filters/metrics.
 - Have a panel on the right displaying images (Material UI Cards).
 - Make panel on the right collapsable, style it correctly.
-- Right panel should have a download button for each generated image, and a "Use Image" button as well.
+- Right panel should include: a download button, a remove button, and a load button.
 - Fill out UploadImage component in ./Generators/ (pass in the already existing button and logic)
 - In the each filters component, have a dropdown to choose which images to apply the filters on.
 - For the Thin NonPercolating Paths filter, 2 images must be passed (have 2 dropdowns?)

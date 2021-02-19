@@ -14,21 +14,27 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 let porespyFuncs = {};
 let backendRootEndpoint = "http://localhost:8000/";
+let backendInterval;
 
-const PoreSpyApp = (props) => {    
+const PoreSpyApp = (props) => {
     useEffect(() => {
-        axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
-        .then(({ data: { porespy_funcs } }) => {
-            porespyFuncs = porespy_funcs;
-            props.startSetPorespyFuncs(porespy_funcs);
-            props.startSetBackendEndpoint(backendRootEndpoint);
-        }).catch((e) => {
+        backendInterval = setInterval(() => {
+            if (Object.keys(porespyFuncs).length === 0 && porespyFuncs.constructor === Object) {
+                getPoreSpyFuncs();
+            }            
+        }, 1000) 
+    });
 
-            // TODO: find a better error catching method?
-            console.log(e);
-            
-        });
-    }, []);
+    const getPoreSpyFuncs = () => {
+        axios.get(`${backendRootEndpoint}porespyfuncs/1/`)
+            .then(({ data: { porespy_funcs } }) => {
+                porespyFuncs = porespy_funcs;
+                props.startSetPorespyFuncs(porespy_funcs);
+                props.startSetBackendEndpoint(backendRootEndpoint);
+            }).catch(() => {
+                getPoreSpyFuncs();
+            });
+    }
 
     return (
         <div>

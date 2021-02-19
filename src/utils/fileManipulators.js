@@ -23,4 +23,6 @@ const windowDownload = (blob) => {
     link.click();
 }
 
-export { windowDownload };
+export { 
+    windowDownload 
+};

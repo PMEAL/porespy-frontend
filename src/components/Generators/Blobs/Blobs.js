@@ -11,7 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import Dropzone, { useDropzone } from 'react-dropzone';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
-import { windowDownload } from '../../../utils/fileManipulators';
+// import { windowDownload } from '../../../utils/fileManipulators';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './Blobs.css';
 
@@ -123,15 +123,15 @@ const Blobs = (props) => {
         }, 1000);
     }
 
-    const downloadBlob = () => {
-        if (blob === "") {
-            setError(true);
-            setErrorMessage("You need to generate a Blob before downloading it!");
-            return;
-        }
+    // const downloadBlob = () => {
+    //     if (blob === "") {
+    //         setError(true);
+    //         setErrorMessage("You need to generate a Blob before downloading it!");
+    //         return;
+    //     }
 
-        windowDownload(blob);
-    }
+    //     windowDownload(blob);
+    // }
 
     const parseEnteredValues = (e, property) => {
         const tempParams = params;
@@ -212,6 +212,7 @@ const Blobs = (props) => {
                         Generate Image
                     </Button>
                 </div>
+                {/*
                 <div className="blobButton">
                     <Button 
                         variant="contained" 
@@ -223,6 +224,7 @@ const Blobs = (props) => {
                         Download Image
                     </Button>
                 </div>
+                */}
             </div>
 
             {

@@ -18,24 +18,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+import ImagePanel from '../ImagePanel/ImagePanel';
 
 import AboutPage from '../AboutPage/AboutPage';
 import ContactPage from '../ContactPage/ContactPage';
 import RenderGenerator from '../RenderGenerator/RenderGenerator';
 import RenderFilter from '../RenderFilter/RenderFilter';
 import RenderMetric from '../RenderMetric/RenderMetric';
-import { parseName } from '../../utils/parseModuleNames';
+import { parseName } from '../../utils/moduleNames';
 import './LandingPage.css';
 
-// Width of menu in pixels
-const drawerWidth = 240;
 
-// TODO: abstract this object into another file to clean up this component?
+// TODO: add this object to redux to clean this file up.
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -44,11 +38,11 @@ const useStyles = makeStyles((theme) => ({
         zIndex: theme.zIndex.drawer + 1,
     },
     drawer: {
-        width: drawerWidth,
+        width: 240,
         flexShrink: 0,
     },
     drawerPaper: {
-        width: drawerWidth,
+        width: 240
     },
     drawerContainer: {
         overflow: 'auto',
@@ -80,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     gridList: {
         display: 'flex',
         flexDirection: 'column',
-        maxWidth: 160,
+        maxWidth: 175,
         minHeight: '95%',
         position: 'absolute',
         right: 3,
@@ -88,6 +82,10 @@ const useStyles = makeStyles((theme) => ({
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
+    },
+    imageBarButtons: {
+        display: 'flex',
+        flexDirection: 'row'
     },
 }));
 
@@ -113,7 +111,6 @@ const LandingPage = (props) => {
     const generatorsNamesParsed = generatorsNamesStore.map((name) => parseName(name)).sort();
     const filtersNamesParsed = filtersNamesStore.map((name) => parseName(name)).sort();
     const metricsNamesParsed = metricsNamesStore.map((name) => parseName(name)).sort();
-
     generatorsNamesParsed.unshift("Upload Image");
 
     const handleClick = (text) => {        
@@ -142,7 +139,6 @@ const LandingPage = (props) => {
                 break;
         }
         
-        // chosenModule state records which module (generators, filters, etc.) is chosen by the user.
         if (text) {
             setChosenModule(text);
         }
@@ -251,6 +247,7 @@ const LandingPage = (props) => {
                     </Drawer>
 
                     <main className={classes.contentOuter}>
+                        {/* TODO: Abstract this to another file/component */}
                         <div className={classes.content}>
                             <Toolbar />
                             <div className="title">
@@ -271,27 +268,7 @@ const LandingPage = (props) => {
                             </Switch>    
                         </div>
 
-                        <GridList cellHeight={180} className={classes.gridList}>
-                            {
-                                generatedImages.map((tile, index) => (
-                                    <GridListTile cols={2} key={tile.img}>
-                                        <img 
-                                            src={`data:image/png;base64,${tile.img}`}
-                                            alt={index+1}
-                                        />
-                                        <GridListTileBar
-                                            title={`Image ${index+1}`}
-                                            subtitle={<span>text here!</span>}
-                                            actionIcon={
-                                                <IconButton aria-label={`info about ${index+1}`} className={classes.icon}>
-                                                <InfoIcon />
-                                                </IconButton>
-                                            }
-                                        />
-                                    </GridListTile>
-                                ))
-                            }
-                        </GridList>
+                        <ImagePanel />
                     </main>
                 </BrowserRouter>
             </div>
