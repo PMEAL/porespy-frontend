@@ -28,67 +28,6 @@ import RenderMetric from '../RenderMetric/RenderMetric';
 import { parseName } from '../../utils/moduleNames';
 import './LandingPage.css';
 
-
-// TODO: add this object to redux to clean this file up.
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-    },
-    drawer: {
-        width: 240,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: 240
-    },
-    drawerContainer: {
-        overflow: 'auto',
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        flexGrow: 1,
-        width: '100%',
-    },
-    contentOuter: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        paddingLeft: 240,
-        width: '100%',
-    },
-    root: {
-        width: '100%',
-    },
-    nested: {
-        paddingLeft: theme.spacing(4)
-    },
-    collapseMenu: {
-        display: 'flex',
-        flexDirection: 'column'
-    }, 
-    gridList: {
-        display: 'flex',
-        flexDirection: 'column',
-        maxWidth: 175,
-        minHeight: '95%',
-        position: 'absolute',
-        right: 3,
-        top: 64
-    },
-    icon: {
-        color: 'rgba(255, 255, 255, 0.54)',
-    },
-    imageBarButtons: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-}));
-
 const LandingPage = (props) => {
     const [openGenerators, setOpenGenerators] = useState(false);
     const [openFilters, setOpenFilters] = useState(false);
@@ -182,8 +121,69 @@ const LandingPage = (props) => {
     )
 
     const generatedImages = useSelector((state) => (state.generatedImages));
-    const classes = useStyles();
+
+    // // TODO: add this object to redux to clean this file up?
+    const useStyles = makeStyles((theme) => ({
+        root: {
+            display: 'flex',
+        },
+        appBar: {
+            zIndex: theme.zIndex.drawer + 1,
+        },
+        drawer: {
+            width: 240,
+            flexShrink: 0,
+        },
+        drawerPaper: {
+            width: 240
+        },
+        drawerContainer: {
+            overflow: 'auto',
+        },
+        content: {
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            width: '100%',
+        },
+        contentOuter: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexGrow: 1,
+            padding: theme.spacing(3),
+            paddingLeft: 240,
+            width: '100%',
+        },
+        root: {
+            width: '100%',
+        },
+        nested: {
+            paddingLeft: theme.spacing(4)
+        },
+        collapseMenu: {
+            display: 'flex',
+            flexDirection: 'column'
+        }, 
+        gridList: {
+            display: 'flex',
+            flexDirection: 'column',
+            maxWidth: 175,
+            minHeight: '95%',
+            position: 'absolute',
+            right: 3,
+            top: 64
+        },
+        icon: {
+            color: 'rgba(255, 255, 255, 0.54)',
+        },
+        imageBarButtons: {
+            display: 'flex',
+            flexDirection: 'row'
+        },
+    }));
     
+    const classes = useStyles();
+
     return (
         <div>
             <div className={classes.root}>
@@ -247,7 +247,6 @@ const LandingPage = (props) => {
                     </Drawer>
 
                     <main className={classes.contentOuter}>
-                        {/* TODO: Abstract this to another file/component */}
                         <div className={classes.content}>
                             <Toolbar />
                             <div className="title">
@@ -256,9 +255,6 @@ const LandingPage = (props) => {
                             <div className="description">
                                 Porous Media Image Analysis in Python
                             </div>
-
-                            {/* The following 3 conditional render statements and the <switch></switch> element display the components based on which boolean is true */}
-                            {/* Rendering of the <AboutPage /> and <ContactPage /> is in the <switch></switch> element to preserve the routing ("/about", "/contact") */}
                             { chosenModule === "Generators" && renderPage === "" && <RenderGenerator chosenFunction={chosenGenerator} />}
                             { chosenModule === "Filters" && renderPage === "" && <RenderFilter chosenFunction={chosenFilter} /> }
                             { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }                        
@@ -267,8 +263,7 @@ const LandingPage = (props) => {
                                 <Route path="/contact" render={() => <ContactPage />} />
                             </Switch>    
                         </div>
-
-                        <ImagePanel />
+                        <ImagePanel classes={classes}/>
                     </main>
                 </BrowserRouter>
             </div>

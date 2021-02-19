@@ -9,14 +9,19 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { startSetPorespyFuncs } from '../../actions/porespyfuncs';
 import { startSetBackendEndpoint } from '../../actions/backend';
+// import { startSetStyles } from '../../actions/styles';
+// import { classes } from '../../utils/styles';
 import LandingPage from '../LandingPage/LandingPage';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 let porespyFuncs = {};
 let backendRootEndpoint = "http://localhost:8000/";
 let backendInterval;
+// let classesRedux = classes;
 
 const PoreSpyApp = (props) => {
+    // props.startSetStyles(classes);
+
     useEffect(() => {
         backendInterval = setInterval(() => {
             if (Object.keys(porespyFuncs).length === 0 && porespyFuncs.constructor === Object) {
@@ -61,6 +66,7 @@ const PoreSpyApp = (props) => {
 const mapDispatchToProps = (dispatch) => ({
     startSetPorespyFuncs: () => dispatch(startSetPorespyFuncs(porespyFuncs)),
     startSetBackendEndpoint: () => dispatch(startSetBackendEndpoint(backendRootEndpoint))
+    // startSetStyles: () => dispatch(startSetStyles(classes))
 })
 
 export default connect(undefined, mapDispatchToProps)(PoreSpyApp);

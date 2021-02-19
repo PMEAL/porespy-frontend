@@ -11,25 +11,12 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import Dropzone, { useDropzone } from 'react-dropzone';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
-// import { windowDownload } from '../../../utils/fileManipulators';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './Blobs.css';
 
 let genImagesRedux = {};
 
 const Blobs = (props) => {
-    // Data should be entered like this (Object of objects)
-    // const fieldsInfo = {
-    //     "xDimension": {
-    //         helperText: "Integer values only.",
-    //         id: "xDimensionInput",
-    //         label: "Voxels in x-direction",
-    //         default: "500",
-    //         type: "int",
-    //         required: true
-    //     }
-    // };
-
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.blobs : {};
@@ -99,7 +86,7 @@ const Blobs = (props) => {
     const generateBlob = () => {
         setLoading(true);
         setBlob("");
-        // currently image loading is very quick. setTimeout adds 1.5s of loading to show user that the image is loading.
+        // currently image loading is very quick. setTimeout adds 1s of loading to show user that the image is loading.
         setTimeout(() => {
             axios.put(`${backendEndpoint}generators/blobs/1/`, {
                 porosity: params["porosity"].value,
@@ -122,16 +109,6 @@ const Blobs = (props) => {
             });
         }, 1000);
     }
-
-    // const downloadBlob = () => {
-    //     if (blob === "") {
-    //         setError(true);
-    //         setErrorMessage("You need to generate a Blob before downloading it!");
-    //         return;
-    //     }
-
-    //     windowDownload(blob);
-    // }
 
     const parseEnteredValues = (e, property) => {
         const tempParams = params;
@@ -212,19 +189,6 @@ const Blobs = (props) => {
                         Generate Image
                     </Button>
                 </div>
-                {/*
-                <div className="blobButton">
-                    <Button 
-                        variant="contained" 
-                        color="primary"
-                        onClick={() => downloadBlob()}
-                        disabled={validatedParams}
-                        style={{ minWidth: '170px', minHeight: '16px'}}
-                    >
-                        Download Image
-                    </Button>
-                </div>
-                */}
             </div>
 
             {
