@@ -14,13 +14,21 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { windowDownload } from '../../utils/fileManipulators';
 import './ImagePanel.css';
+import { startDeleteImages } from '../../actions/Generators/GeneratedImages';
 
-const ImagePanel = ({ classes }) => {
+let indexToDelete = 0;
+
+const ImagePanel = (props) => {
     const generatedImages = useSelector((state) => (state.generatedImages));
+
+    const deleteImage = (index) => {
+        indexToDelete = index;
+        props.startDeleteImages(index);
+    }
     
     return (
         <div>
-            <GridList cellHeight={180} className={classes.gridList}>
+            <GridList cellHeight={180} className={props.classes.gridList}>
             {
                 generatedImages.map((tile, index) => (
                     <GridListTile cols={2} key={tile.img}>
@@ -29,27 +37,31 @@ const ImagePanel = ({ classes }) => {
                             alt={index+1}
                         />
                         <GridListTileBar
-                            title={`Img${index+1}`}
+                            title={`${index+1}`}
                             actionIcon={
-                                <div className={classes.imageBarButtons}>
-                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon} title="Load image">
+                                <div className={props.classes.imageBarButtons}>
+                                    <IconButton aria-label={`info about ${index+1}`} className={props.classes.icon} title="Load image">
                                         <ArrowUpwardIcon onClick={() => console.log("load image here!")}/>
                                     </IconButton>
-                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon} title="Download image">
+                                    <IconButton aria-label={`info about ${index+1}`} className={props.classes.icon} title="Download image">
                                         <ArrowDownwardIcon onClick={() => windowDownload(tile.img)}/>
                                     </IconButton>
-                                    <IconButton aria-label={`info about ${index+1}`} className={classes.icon} title="Delete image">
-                                        <DeleteIcon />
+                                    <IconButton aria-label={`info about ${index+1}`} className={props.classes.icon} title="Delete image">
+                                        <DeleteIcon onClick={() => deleteImage(index)} />
                                     </IconButton>
                                 </div>
                             }
                         />
                     </GridListTile>
-                ))
-            }
-        </GridList>
+                    ))
+                }
+            </GridList>
         </div>
     )
 }
 
-export default connect(undefined, undefined)(ImagePanel);
+const mapDispatchToProps = (dispatch) => ({
+    startDeleteImages: () => dispatch(startDeleteImages(indexToDelete))
+})
+
+export default connect(undefined, mapDispatchToProps)(ImagePanel);

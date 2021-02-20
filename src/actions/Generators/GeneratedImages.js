@@ -3,18 +3,26 @@
 //  porespy-frontend
 //
 
-const setImages = (images) => ({
+// SET_IMAGES
+export const setImages = (images) => ({
     type: 'SET_IMAGES',
     images
 })
 
-const startSetImages = (genImages = []) => {
+export const startSetImages = (genImages = []) => {
     return (dispatch) => {
         return dispatch(setImages(genImages));
     };
 }
 
-export {
-    setImages,
-    startSetImages
-};
+// DELETE_IMAGE
+export const deleteImages = (index = 0) => ({
+    type: 'DELETE_IMAGE',
+    index
+})
+
+export const startDeleteImages = (index) => {
+    return (dispatch) => {
+        return dispatch(deleteImages(index));
+    }
+}

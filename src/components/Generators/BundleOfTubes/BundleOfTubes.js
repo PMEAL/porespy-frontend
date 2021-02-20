@@ -98,6 +98,9 @@ const BundleOfTubes = (props) => {
 
         switch (tempParams[property].type) {
             case "int":
+
+                // TODO: to integerOnlyField(), maybe add min/max parameters?
+
                 tempParams[property].value = integerOnlyField(e);
                 break;
             case "float":

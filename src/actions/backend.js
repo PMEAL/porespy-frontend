@@ -3,18 +3,13 @@
 //  porespy-frontend
 //
 
-const setBackendEndpoint = (backendEndpoint) => ({
+export const setBackendEndpoint = (backendEndpoint) => ({
     type: 'SET_BACKEND_ENDPOINT',
     backendEndpoint
 })
 
-const startSetBackendEndpoint = (backendEndpoint = {}) => {
+export const startSetBackendEndpoint = (backendEndpoint = {}) => {
     return (dispatch) => {
         return dispatch(setBackendEndpoint(backendEndpoint));
     };
 }
-
-export {
-    setBackendEndpoint,
-    startSetBackendEndpoint
-};
