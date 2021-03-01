@@ -76,9 +76,11 @@ const Blobs = (props) => {
             }).then(({ data: { generated_image } }) => {
                 setBlob(generated_image);
                 genImagesRedux = {
-                    img: generated_image
+                    img: generated_image,
+                    genType: "Blob"
                 };
-                props.startSetImages(generated_image);
+                // props.startSetImages(generated_image);
+                props.startSetImages(genImagesRedux);
                 setLoading(false);
             }).catch((e) => {
                 setBlob("");
@@ -109,7 +111,6 @@ const Blobs = (props) => {
     }
     
 
-    
     // TODO: move this image uploading to the UploadImage component in ../UploadImage
     const dropzoneRef = createRef();    
     const loadBlob = () => {
@@ -204,6 +205,9 @@ const Blobs = (props) => {
                 // If blob is an empty string, check whether generateBlob() has been called which will change whether loading is true or false.
                 // If loading, display the spinner to the user. If not and there is an error, display error message to the user.
                 // Upon loading, nothing will appear in this <div></div> as no conditions are satisfied.
+
+                
+                // TODO: maybe abstract this? This is similar in Blobs.js component
                 blob !== ""
                 ?
                 <div className="blobImageWrapper">

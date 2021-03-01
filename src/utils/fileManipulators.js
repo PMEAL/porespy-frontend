@@ -5,7 +5,7 @@
 
 import moment from 'moment';
 
-const windowDownload = (blob) => {
+const windowDownload = (blob, genType) => {
     const byteCharacters = atob(blob);
     const byteNumbers = new Array(byteCharacters.length);
     const currentTime = moment().format("Y-MM-DD_HH-mm-ss");
@@ -18,7 +18,7 @@ const windowDownload = (blob) => {
     const url = window.URL.createObjectURL(new Blob([byteArray, { type: 'image/tif' }]));
     const link = document.createElement("a");
     link.href = url;
-    link.setAttribute("download", `myBlob_${currentTime}.tif`);
+    link.setAttribute("download", `my${genType}_${currentTime}.tif`);
     document.body.appendChild(link);
     link.click();
 }

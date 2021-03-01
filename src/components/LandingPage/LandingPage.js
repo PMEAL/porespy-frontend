@@ -32,24 +32,40 @@ const LandingPage = (props) => {
     const [openGenerators, setOpenGenerators] = useState(false);
     const [openFilters, setOpenFilters] = useState(false);
     const [openMetrics, setOpenMetrics] = useState(false);
+    
+    const [openIO, setOpenIO] = useState(false);
+    const [openNetworks, setOpenNetworks] = useState(false);
 
     const [chosenModule, setChosenModule] = useState("Generators");
     const [chosenGenerator, setChosenGenerator] = useState("");
     const [chosenFilter, setChosenFilter] = useState("Apply Chords");
     const [chosenMetric, setChosenMetric] = useState("Chord Counts");
-    // const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
+
+    const [chosenIO, setChosenIO] = useState("");
+    const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
+
     const [renderPage, setRenderPage] = useState(props.page);
     
     // porespyModules contains the menu names that are then called with .map() to create on the UI.
-    const porespyModules = ['Generators', 'Filters', 'Metrics', 'About', 'Contact'];
+    const porespyModules = ['Generators', 'Filters', 'Metrics', 'Networks', 'IO', 'About', 'Contact'];
     const funcs = useSelector((state) => (state));
     const generatorsNamesStore = funcs.porespyFuncs.hasOwnProperty('generators') ? Object.keys(funcs.porespyFuncs.generators) : [];
     const filtersNamesStore = funcs.porespyFuncs.hasOwnProperty('filters') ? Object.keys(funcs.porespyFuncs.filters) : [];
     const metricsNamesStore = funcs.porespyFuncs.hasOwnProperty('metrics') ? Object.keys(funcs.porespyFuncs.metrics) : [];
+    const ioNamesStore = funcs.porespyFuncs.hasOwnProperty('io') ? Object.keys(funcs.porespyFuncs.io) : [];
 
-    const generatorsNamesParsed = generatorsNamesStore.map((name) => parseName(name)).sort();
-    const filtersNamesParsed = filtersNamesStore.map((name) => parseName(name)).sort();
-    const metricsNamesParsed = metricsNamesStore.map((name) => parseName(name)).sort();
+
+    // const networksNamesStore = funcs.porespyFuncs.hasOwnProperty('io') ? Object.keys(funcs.porespyFuncs.io) : [];
+    const networksNamesStore = ["placeholder 1", "placeholder 2"]
+
+
+
+    const generatorsNamesParsed = generatorsNamesStore.map((n) => parseName(n)).sort();
+    const filtersNamesParsed = filtersNamesStore.map((n) => parseName(n)).sort();
+    const metricsNamesParsed = metricsNamesStore.map((n) => parseName(n)).sort();
+    const ioNamesParsed = ioNamesStore.map((n) => parseName(n)).sort();
+    const networksNamesParsed = networksNamesStore.map((n) => parseName(n)).sort();
+
     generatorsNamesParsed.unshift("Upload Image");
 
     const handleClick = (text) => {        
@@ -66,6 +82,14 @@ const LandingPage = (props) => {
                 break; 
             case "Metrics":
                 setOpenMetrics(!openMetrics);
+                setRenderPage("");
+                break;
+            case "IO":
+                setOpenIO(!openIO);
+                setRenderPage("");
+                break;
+            case "Networks":
+                setOpenNetworks(!openNetworks);
                 setRenderPage("");
                 break;
             case "About":
@@ -97,6 +121,14 @@ const LandingPage = (props) => {
                 setChosenMetric(chosenFunc);
                 setRenderPage("");
                 break;
+            case "IO":
+                setChosenIO(chosenFunc);
+                setRenderPage("");
+                break;
+            case "Networks":
+                setChosenNetwork(chosenFunc);
+                setRenderPage("");
+                break;
             default:
                 break;
         }
@@ -106,8 +138,9 @@ const LandingPage = (props) => {
         }
     }
 
-    const renderSubMenus = (text, modules) => (
-        modules.map((g) => (
+    const renderSubMenus = (text, modules) => {
+        console.log(text, modules);
+        return modules.map((g) => (
             <ListItem 
                 button
                 className={classes.nested} 
@@ -118,7 +151,7 @@ const LandingPage = (props) => {
                 <ListItemText primary={g} />
             </ListItem>
         ))
-    )
+        }
 
     // // TODO: add this object to redux to clean this file up?
     const useStyles = makeStyles((theme) => ({
@@ -165,10 +198,11 @@ const LandingPage = (props) => {
         gridList: {
             display: 'flex',
             flexDirection: 'column',
-            maxWidth: 175,
+            maxWidth: 160,
             minHeight: '95%',
+            minWidth: 200,
             position: 'absolute',
-            right: 3,
+            right: 2,
             top: 64
         },
         icon: {
@@ -176,7 +210,7 @@ const LandingPage = (props) => {
         },
         imageBarButtons: {
             display: 'flex',
-            flexDirection: 'row'
+            flexDirection: 'row',
         },
     }));
     
@@ -226,7 +260,13 @@ const LandingPage = (props) => {
                                                 {(text !== "About" && text !== "Contact") && <KeyboardArrowDownIcon />}
                                             </ListItem>
                                             <Collapse 
-                                                in={((text === "Generators" && openGenerators) || (text === "Filters" && openFilters) || (text === "Metrics" && openMetrics))} 
+                                                in={(
+                                                    (text === "Generators" && openGenerators) 
+                                                    || (text === "Filters" && openFilters) 
+                                                    || (text === "Metrics" && openMetrics) 
+                                                    || (text === "IO" && openIO)
+                                                    || (text === "Networks" && openNetworks)
+                                                )} 
                                                 timeout="auto" 
                                                 unmountOnExit
                                             >
@@ -234,6 +274,8 @@ const LandingPage = (props) => {
                                                     {(text === "Generators") && renderSubMenus(text, generatorsNamesParsed)}
                                                     {(text === "Filters") && renderSubMenus(text, filtersNamesParsed)}
                                                     {(text === "Metrics") && renderSubMenus(text, metricsNamesParsed)}
+                                                    {(text === "IO") && renderSubMenus(text, ioNamesParsed)}
+                                                    {(text === "Networks") && renderSubMenus(text, networksNamesParsed)}
                                                 </List>
                                             </Collapse>
                                         </div>
@@ -255,7 +297,21 @@ const LandingPage = (props) => {
                             </div>
                             { chosenModule === "Generators" && renderPage === "" && <RenderGenerator chosenFunction={chosenGenerator} />}
                             { chosenModule === "Filters" && renderPage === "" && <RenderFilter chosenFunction={chosenFilter} /> }
-                            { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }                        
+                            { chosenModule === "Metrics" && renderPage === "" && <RenderMetric chosenFunction={chosenMetric} /> }
+
+
+                            {/* 
+
+                                // TODO: Ask if we need to render any of the IO's???                            
+                                chosenModule === "IO" && renderPage === "" && <RenderMetric chosenFunction={chosenIO} /> 
+                        
+                            */}
+
+
+                            {/*
+                                // TODO: Create a RenderNetwork component in the same vein as RenderGenerator
+                                chosenModule === "Networks" && renderPage === "" && <RenderMetric chosenFunction={chosenNetwork} /> 
+                            */}
                             <Switch>
                                 <Route path="/about" render={() => <AboutPage />} />
                                 <Route path="/contact" render={() => <ContactPage />} />

@@ -7,6 +7,9 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO From Meetings (Updated Feb 16, 2021):
 
+- Wire Filters up (like Local thickness, Apply Chords).
+- Wire Metrics up (like Chord Length Distribution, Pore Size Distribution).
+- Networks can't be wired up, ask Jeff to help get the networks setup in the .py file he sent previously.
 - Load Image button -> translate it to the GridList component (panel of images).
 - Continue mapping out remaining generators/filters/metrics.
 - Have a panel on the right displaying images (Material UI Cards).

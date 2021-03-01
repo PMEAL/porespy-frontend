@@ -13,15 +13,12 @@ import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } fro
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './BundleOfTubes.css';
 
-
-// TODO: Add bundle of tubes images to the redux store, and the right panel.
 let genImagesRedux = {};
 
 const BundleOfTubes = (props) => {    
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.bundle_of_tubes : {};
-    
     
     if (fieldsInfo.hasOwnProperty('kwargs')) {
         // remove kwargs from this function. As a result, no kwargs entry in the component will be generated.
@@ -76,9 +73,11 @@ const BundleOfTubes = (props) => {
             }).then(({ data: { generated_image } }) => {
                 setBundleOfTubes(generated_image);
                 genImagesRedux = {
-                    img: generated_image
+                    img: generated_image,
+                    genType: "Bundle_of_Tubes"
                 }
-                props.startSetImages(generated_image);
+                // props.startSetImages(generated_image);
+                props.startSetImages(genImagesRedux);
                 setLoading(false);
             }).catch((e) => {
                 setBundleOfTubes("");
@@ -87,10 +86,6 @@ const BundleOfTubes = (props) => {
                 setErrorMessage(`Something is wrong... ${e.message}`);
             })
         }, 1000);
-    }
-
-    const downloadBundleOfTubes = () => {
-        console.log("hello from downloadBundleOfTubes()");
     }
 
     const parseEnteredValues = (e, property) => {
@@ -155,7 +150,8 @@ const BundleOfTubes = (props) => {
             </div>
 
             {
-                // TODO: maybe asbtract this? This is similar in Blobs.js component
+                // TODO: maybe abstract this? This is similar in Blobs.js component
+
                 bundleOfTubes !== ""
                 ?
                 <div className="bundleOfTubesImageWrapper">
