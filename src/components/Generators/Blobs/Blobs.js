@@ -79,7 +79,6 @@ const Blobs = (props) => {
                     img: generated_image,
                     genType: "Blob"
                 };
-                // props.startSetImages(generated_image);
                 props.startSetImages(genImagesRedux);
                 setLoading(false);
             }).catch((e) => {

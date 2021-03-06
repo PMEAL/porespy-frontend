@@ -22,10 +22,14 @@ const LocalThickness = () => {
         }).then(({ data: { generator_image_filtered } }) => {
             console.log(generator_image_filtered);
         }).catch((e) => {
-            // TODO: proper error handler
+            // TODO: proper error handling
+
+
             console.log(e);
         })
     }
+
+
 
     // TODO: should have a component that tells the user to choose an image by clicking on the sideways arrow.
 
@@ -67,6 +71,8 @@ const LocalThickness = () => {
 
             <div>
                 Filtered image:
+            </div>
+            <div>
             </div>
         </div>
     )
