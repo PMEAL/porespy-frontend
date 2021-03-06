@@ -1,5 +1,5 @@
 //
-//  Blobs.js
+//  GeneratedImages.js
 //  porespy-frontend
 //
 

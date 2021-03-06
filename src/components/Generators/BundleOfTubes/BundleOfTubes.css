@@ -16,13 +16,13 @@
 .bundleOfTubesTitle {
     font-size: 32px;
     font-weight: 700;
-    padding: 48px 95px 0px 95px;
+    padding: 48px 180px 0px 180px;
 }
 
 .bundleOfTubesDescription {
     display: flex;
     font-size: 16px;
-    padding: 8px 95px 16px 95px;
+    padding: 8px 180px 16px 180px;
 }
 
 .bundleOfTubesTextFields {

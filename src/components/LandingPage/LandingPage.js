@@ -139,7 +139,7 @@ const LandingPage = (props) => {
     }
 
     const renderSubMenus = (text, modules) => {
-        console.log(text, modules);
+        // console.log(text, modules);
         return modules.map((g) => (
             <ListItem 
                 button

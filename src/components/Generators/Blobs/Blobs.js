@@ -191,7 +191,7 @@ const Blobs = (props) => {
                         variant="contained" 
                         color="primary"
                         onClick={() => generateBlob()}
-                        disabled={validatedParams}                        
+                        disabled={validatedParams}
                         style={{ minWidth: '170px', minHeight: '16px'}}
                     >
                         Generate Image

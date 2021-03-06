@@ -1,5 +1,5 @@
 //
-//  Blobs.js
+//  Filters.js
 //  porespy-frontend
 //
 
