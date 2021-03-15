@@ -56,12 +56,12 @@ const LocalThickness = () => {
                 For each voxel, this function calculates the radius of the largest sphere that both engulfs the voxel and fits entirely within the foreground. 
                 This is not the same as a simple distance transform, which finds the largest sphere that could be "centered" on each voxel.
             </div>
-            <div>
+            <div className="localThicknessMsg">
                 Image chosen to apply filter on:
             </div>
             <div className="selectedImageWrapper">
                 {
-                    chosenImage["img"] !== "" && chosenImage !== undefined
+                    chosenImage !== undefined && chosenImage["img"] !== ""
                     &&
                     <img
                         className="selectedImage"
@@ -70,21 +70,19 @@ const LocalThickness = () => {
                     />
                 }
             </div>
-
-            <div>
+            <div className="localThicknessButton">
                 <Button
                     variant="contained" 
                     color="primary"
                     onClick={() => applyLocalThickness()}
-                    disabled={chosenImage["img"] === ""}
+                    disabled={(chosenImage === undefined || chosenImage["img"] === "")}
                     style={{ minWidth: '170px', minHeight: '16px'}}
                 >
                     Apply Filter
                 </Button>
             </div>
-
             <div>
-                <div>
+                <div className="localThicknessMsg">
                     Filtered Image:
                 </div>
                 <RenderImage 

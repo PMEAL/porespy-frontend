@@ -1,3 +1,21 @@
+.localThicknessTitle {
+    font-size: 32px;
+    font-weight: 700;
+    padding: 20px 180px 0px 180px;
+}
+
+.localThicknessDescription {
+    display: flex;
+    font-size: 16px;
+    padding: 8px 180px 16px 180px;
+}
+
+.localThicknessMsg {
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+}
+
 .selectedImageWrapper {
     align-items: center;
     display: flex;
@@ -7,18 +25,13 @@
 }
 
 .selectedImage {
-    height: 200px;
-    width: 200px;
+    height: 400px;
+    width: 520px;
 }
 
-.localThicknessTitle {
-    font-size: 32px;
-    font-weight: 700;
-    padding: 48px 180px 0px 180px;
-}
-
-.localThicknessDescription {
+.localThicknessButton {
+    align-items: center;
     display: flex;
-    font-size: 16px;
-    padding: 8px 180px 16px 180px;
+    justify-content: center;
+    padding: 20px 20px 20px 20px;
 }

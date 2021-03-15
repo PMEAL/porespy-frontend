@@ -66,7 +66,7 @@ const Blobs = (props) => {
     const generateBlob = () => {
         setLoading(true);
         setBlob("");
-        // currently image loading is very quick. setTimeout adds 1s of loading to show user that the image is loading.
+        // currently image loading is very fast. setTimeout adds 1s of loading to show user that the image is loading.
         setTimeout(() => {
             axios.put(`${backendEndpoint}generators/blobs/1/`, {
                 porosity: params["porosity"].value,
@@ -138,8 +138,6 @@ const Blobs = (props) => {
     // TODO: move this image uploading to the UploadImage component in ../UploadImage
 
 
-
-
     return (
         <div>
             <div className="blobTitle">
@@ -201,13 +199,6 @@ const Blobs = (props) => {
             </div>
 
             <div>
-                {
-                    // Conditional rendering:
-                    // If blob is not an empty string, the blob has been generated and will be displayed in the <img /> tag.
-                    // If blob is an empty string, check whether generateBlob() has been called which will change whether loading is true or false.
-                    // If loading, display the spinner to the user. If not and there is an error, display error message to the user.
-                    // Upon loading, nothing will appear in this <div></div> as no conditions are satisfied.
-                }
                 <RenderImage 
                     imgString={blob}
                     loading={loading}

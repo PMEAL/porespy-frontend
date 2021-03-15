@@ -59,7 +59,6 @@ const LandingPage = (props) => {
     const networksNamesStore = ["placeholder 1", "placeholder 2"]
 
 
-
     const generatorsNamesParsed = generatorsNamesStore.map((n) => parseName(n)).sort();
     const filtersNamesParsed = filtersNamesStore.map((n) => parseName(n)).sort();
     const metricsNamesParsed = metricsNamesStore.map((n) => parseName(n)).sort();
@@ -141,7 +140,7 @@ const LandingPage = (props) => {
     const renderSubMenus = (text, modules) => {
         // console.log(text, modules);
         return modules.map((g) => (
-            <ListItem 
+            <ListItem
                 button
                 className={classes.nested} 
                 onClick={() => handleFunctionClick(text, g)} 
