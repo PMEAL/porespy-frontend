@@ -57,7 +57,7 @@ const Blobs = (props) => {
 
     const [params, setParams] = useState(fieldsInfo);
     const [validatedParams, setValidatedParams] = useState(false);
-    const [blob, setBlob] = useState('');
+    const [blob, setBlob] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -74,9 +74,11 @@ const Blobs = (props) => {
                 dimension_y: params["shape[1]"].value,
                 dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
             }).then(({ data: { generated_image } }) => {
-                setBlob(generated_image);
+                console.log(generated_image);
+                setBlob(generated_image["base_64"]);
                 genImagesRedux = {
-                    img: generated_image,
+                    img: generated_image["base_64"],
+                    img_array: generated_image["np_array"],
                     genType: "Blob"
                 };
                 props.startSetImages(genImagesRedux);

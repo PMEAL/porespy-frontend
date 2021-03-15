@@ -71,12 +71,12 @@ const BundleOfTubes = (props) => {
                 dimension_z: params["shape[2]"].value !== "" ? params["shape[2]"].value : 0,
                 spacing: parseInt(params["spacing"].value, 10)
             }).then(({ data: { generated_image } }) => {
-                setBundleOfTubes(generated_image);
+                setBundleOfTubes(generated_image["base_64"]);
                 genImagesRedux = {
-                    img: generated_image,
+                    img: generated_image["base_64"],
+                    img_array: generated_image["np_array"],
                     genType: "Bundle_of_Tubes"
                 }
-                // props.startSetImages(generated_image);
                 props.startSetImages(genImagesRedux);
                 setLoading(false);
             }).catch((e) => {
