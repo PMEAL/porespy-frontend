@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import Dropzone, { useDropzone } from 'react-dropzone';
+import RenderImage from '../../RenderImage/RenderImage';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './Blobs.css';
@@ -199,46 +200,21 @@ const Blobs = (props) => {
                 </div>
             </div>
 
-            {
-                // Conditional rendering:
-                // If blob is not an empty string, the blob has been generated and will be displayed in the <img /> tag.
-                // If blob is an empty string, check whether generateBlob() has been called which will change whether loading is true or false.
-                // If loading, display the spinner to the user. If not and there is an error, display error message to the user.
-                // Upon loading, nothing will appear in this <div></div> as no conditions are satisfied.
-
-                
-                // TODO: maybe abstract this? This is similar in Blobs.js component
-                blob !== ""
-                ?
-                <div className="blobImageWrapper">
-                    <img 
-                        className="blobImage" 
-                        src={`data:image/png;base64,${blob}`}
-                        alt={blob}
-                    />
-                </div>
-                :
-                (
-                    loading
-                    ?
-                    <div className="spinner">
-                        <CircularProgress />
-                        <div>
-                            Generating your image...
-                        </div>
-                    </div>
-                    :
-                    <div>
-                        {
-                            error 
-                            && 
-                            <div className="blobImageWrapper">
-                                {errorMessage}
-                            </div>
-                        }
-                    </div>
-                )                              
-            }
+            <div>
+                {
+                    // Conditional rendering:
+                    // If blob is not an empty string, the blob has been generated and will be displayed in the <img /> tag.
+                    // If blob is an empty string, check whether generateBlob() has been called which will change whether loading is true or false.
+                    // If loading, display the spinner to the user. If not and there is an error, display error message to the user.
+                    // Upon loading, nothing will appear in this <div></div> as no conditions are satisfied.
+                }
+                <RenderImage 
+                    imgString={blob}
+                    loading={loading}
+                    error={error}
+                    errorMessage={errorMessage}
+                />
+            </div>
         </div>
     )
 }

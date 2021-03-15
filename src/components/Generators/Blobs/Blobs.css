@@ -1,17 +1,4 @@
-/* TODO: add sass to make css scalable and reusable */
-
-/* .blobImageWrapper {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px 20px;
-} */
-
-/* .blobImage {
-    height: 200px;
-    width: 200px;
-} */
+/* TODO: add sass to make css scalable and reusable? */
 
 .blobTitle {
     font-size: 32px;
@@ -49,10 +36,3 @@
     justify-content: center;
     padding: 20px 20px 20px 20px;
 }
-
-/* .spinner {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-} */

@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
+import RenderImage from '../../RenderImage/RenderImage';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './BundleOfTubes.css';
@@ -149,39 +150,14 @@ const BundleOfTubes = (props) => {
                 </Button>
             </div>
 
-            {
-                // TODO: maybe abstract this? This is similar in Blobs.js component
-
-                bundleOfTubes !== ""
-                ?
-                <div className="bundleOfTubesImageWrapper">
-                    <img
-                        className="bundleOfTubesImage"
-                        src={`data:image/png;base64,${bundleOfTubes}`}
-                    />
-                </div>
-                :
-                (
-                    loading
-                    ?
-                    <div className="spinner">
-                        <CircularProgress />
-                        <div>
-                            Generating your image...
-                        </div>
-                    </div>
-                    :
-                    <div>
-                        {
-                            error
-                            &&
-                            <div className="bundleOfTubesImageWrapper">
-                                {errorMessage}
-                            </div>
-                        }
-                    </div>
-                )
-            }
+            <div>
+                <RenderImage 
+                    imgString={bundleOfTubes}
+                    loading={loading}
+                    error={error}
+                    errorMessage={errorMessage}
+                />
+            </div>
         </div>
     )
 }
