@@ -8,9 +8,8 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect, useSelector } from 'react-redux';
+import RenderImage from '../../RenderImage/RenderImage';
 import './LocalThickness.css';
-import { EcoTwoTone } from '@material-ui/icons';
-
 
 const LocalThickness = () => {
     const backendEndpoint = useSelector((state) => state.backend);
@@ -26,7 +25,6 @@ const LocalThickness = () => {
     const applyLocalThickness = () => {
         setLoading(true);
         setFilteredImage("");
-
         const imgArrayJSON = JSON.stringify(chosenImage["img_array"]);
 
         setTimeout(() => {
@@ -44,9 +42,7 @@ const LocalThickness = () => {
                 setErrorMessage(`Something is wrong... ${e.message}`);
                 console.log(e);
             });
-        }, 500);
-
-        
+        }, 500);        
     }
 
 
@@ -89,56 +85,16 @@ const LocalThickness = () => {
             </div>
 
             <div>
-                Filtered image:
-            </div>
-            {
-                filteredImage !== ""
-                ?
                 <div>
-                    <img 
-                        // className=""
-                        src={`data:image/png;base64,${filteredImage}`}
-                        alt={filteredImage}
-                    />
+                    Filtered Image:
                 </div>
-                :
-                (
-                    loading
-                    ?
-                    <div>
-                        <CircularProgress />
-                        <div>
-                            Generating your filtered image...
-                        </div>
-                    </div>
-                    :
-                    <div>
-                        {
-                            error
-                            &&
-                            <div>
-                                {errorMessage}
-                            </div>
-                        }
-                    </div>
-                )
-                // // Apply stylings to the frontend for the local thickness
-                // filteredImage !== ""
-                // ?
-                // <div>
-                //     <img 
-                //         // className=""
-                //         src={`data:image/png;base64,${filteredImage}`}
-                //         alt={filteredImage}
-                //     />
-                // </div>
-                // :
-                // <div>
-                //     NO Filtered image
-                // </div>
-            }
-
-
+                <RenderImage 
+                    imgString={filteredImage}
+                    loading={loading}
+                    error={error}
+                    errorMessage={errorMessage}
+                />
+            </div>
         </div>
     )
 }

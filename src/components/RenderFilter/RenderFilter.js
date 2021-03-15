@@ -11,6 +11,7 @@ const RenderFilter = ({ chosenFunction }) => {
     return (
         <div>
             {
+                // TODO: create components for remaining filter functions
                 chosenFunction === "Local Thickness" && <LocalThickness />
             }
         </div>
