@@ -74,7 +74,6 @@ const Blobs = (props) => {
                 dimension_y: params["shape[1]"].value,
                 dimension_z: params["shape[2]"].value === "" ? 0 : params["shape[2]"].value
             }).then(({ data: { generated_image } }) => {
-                console.log(generated_image);
                 setBlob(generated_image["base_64"]);
                 genImagesRedux = {
                     img: generated_image["base_64"],

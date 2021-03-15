@@ -18,19 +18,15 @@ const LocalThickness = () => {
 
     const [filteredImage, setFilteredImage] = useState("");
 
-    // console.log(chosenImage);
-
     const applyLocalThickness = () => {
         const imgArrayJSON = JSON.stringify(chosenImage["img_array"]);
+
         axios.put(`${backendEndpoint}filters/localthickness/1/`, {
-            generator_image: imgArrayJSON
+            local_thickness_image: imgArrayJSON
         }).then(({ data: { local_thickness_image_filtered } }) => {
-            console.log(local_thickness_image_filtered);
-            setFilteredImage(local_thickness_image_filtered);
-            // setFilteredImage(generator_image_filtered["base64"]);
+            setFilteredImage(local_thickness_image_filtered["base_64"]);
         }).catch((e) => {
             // TODO: proper error handling
-
 
             console.log(e);
         })
@@ -81,6 +77,7 @@ const LocalThickness = () => {
                 Filtered image:
             </div>
             {
+                // Apply stylings to the frontend for the local thickness
                 filteredImage !== ""
                 ?
                 <div>
