@@ -6,7 +6,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect, useSelector } from 'react-redux';
 import RenderImage from '../../RenderImage/RenderImage';
 import './LocalThickness.css';

@@ -1,17 +1,17 @@
 /* TODO: add sass to make css scalable and reusable */
 
-.blobImageWrapper {
+/* .blobImageWrapper {
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 20px 20px;
-}
+} */
 
-.blobImage {
+/* .blobImage {
     height: 200px;
     width: 200px;
-}
+} */
 
 .blobTitle {
     font-size: 32px;
@@ -50,9 +50,9 @@
     padding: 20px 20px 20px 20px;
 }
 
-.spinner {
+/* .spinner {
     align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
+} */

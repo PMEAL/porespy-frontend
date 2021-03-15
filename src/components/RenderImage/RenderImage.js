@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { CircularProgress } from '@material-ui/core';
+import './RenderImage.css';
 
 const RenderImage = ({ imgString, loading, error, errorMessage }) => {
     return (
@@ -12,17 +13,18 @@ const RenderImage = ({ imgString, loading, error, errorMessage }) => {
             {
                 imgString !== ""
                 ?
-                <div>
+                <div className="renderedImageWrapper">
                     <img 
-                        // className=""
+                        className="renderedImage"
                         src={`data:image/png;base64,${imgString}`}
+                        alt={imgString}
                     />
                 </div>
                 :
                 (
                     loading
                     ?
-                    <div>
+                    <div className="spinner">
                         <CircularProgress />
                         <div>
                             Generating your image...
@@ -33,7 +35,7 @@ const RenderImage = ({ imgString, loading, error, errorMessage }) => {
                         {
                             error
                             &&
-                            <div>
+                            <div className="renderedImageWrapper">
                                 {errorMessage}
                             </div>
                         }

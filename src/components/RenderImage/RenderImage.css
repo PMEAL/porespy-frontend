@@ -1,0 +1,19 @@
+.renderedImageWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 20px;
+}
+
+.renderedImage {
+    height: 500px;
+    width: 700px;
+}
+
+.spinner {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
