@@ -84,8 +84,8 @@ const BundleOfTubes = (props) => {
                 setLoading(false);
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
-            })
-        }, 1000);
+            });
+        }, 500);
     }
 
     const parseEnteredValues = (e, property) => {

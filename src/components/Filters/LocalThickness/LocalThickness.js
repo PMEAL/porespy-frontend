@@ -6,8 +6,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect, useSelector } from 'react-redux';
 import './LocalThickness.css';
+import { EcoTwoTone } from '@material-ui/icons';
 
 
 const LocalThickness = () => {
@@ -17,19 +19,34 @@ const LocalThickness = () => {
     const chosenImage = chosenImageIndex !== "" ? availableImages[chosenImageIndex] : { img: "" };
 
     const [filteredImage, setFilteredImage] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const applyLocalThickness = () => {
+        setLoading(true);
+        setFilteredImage("");
+
         const imgArrayJSON = JSON.stringify(chosenImage["img_array"]);
 
-        axios.put(`${backendEndpoint}filters/localthickness/1/`, {
-            local_thickness_image: imgArrayJSON
-        }).then(({ data: { local_thickness_image_filtered } }) => {
-            setFilteredImage(local_thickness_image_filtered["base_64"]);
-        }).catch((e) => {
-            // TODO: proper error handling
+        setTimeout(() => {
+            axios.put(`${backendEndpoint}filters/localthickness/1/`, {
+                local_thickness_image: imgArrayJSON
+            }).then(({ data: { local_thickness_image_filtered } }) => {
+                setFilteredImage(local_thickness_image_filtered["base_64"]);
+                setLoading(false);
+            }).catch((e) => {
+                // TODO: proper error handling?
+    
+                setFilteredImage("");
+                setLoading(false);
+                setError(true);
+                setErrorMessage(`Something is wrong... ${e.message}`);
+                console.log(e);
+            });
+        }, 500);
 
-            console.log(e);
-        })
+        
     }
 
 
@@ -71,13 +88,10 @@ const LocalThickness = () => {
                 </Button>
             </div>
 
-
-
             <div>
                 Filtered image:
             </div>
             {
-                // Apply stylings to the frontend for the local thickness
                 filteredImage !== ""
                 ?
                 <div>
@@ -88,9 +102,40 @@ const LocalThickness = () => {
                     />
                 </div>
                 :
-                <div>
-                    NO Filtered image
-                </div>
+                (
+                    loading
+                    ?
+                    <div>
+                        <CircularProgress />
+                        <div>
+                            Generating your filtered image...
+                        </div>
+                    </div>
+                    :
+                    <div>
+                        {
+                            error
+                            &&
+                            <div>
+                                {errorMessage}
+                            </div>
+                        }
+                    </div>
+                )
+                // // Apply stylings to the frontend for the local thickness
+                // filteredImage !== ""
+                // ?
+                // <div>
+                //     <img 
+                //         // className=""
+                //         src={`data:image/png;base64,${filteredImage}`}
+                //         alt={filteredImage}
+                //     />
+                // </div>
+                // :
+                // <div>
+                //     NO Filtered image
+                // </div>
             }
 
 

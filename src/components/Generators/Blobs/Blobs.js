@@ -88,7 +88,7 @@ const Blobs = (props) => {
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
             });
-        }, 1000);
+        }, 500);
     }
 
     const parseEnteredValues = (e, property) => {
