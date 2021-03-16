@@ -10,6 +10,7 @@ import './RenderMetric.css';
 const RenderMetric = ({ chosenFunction }) => {
     return (
         <div>
+            {/* Conditionally renders the Filter chosen by the user.*/}
             {
                 chosenFunction === "Pore Size Distribution" && <PoreSizeDistribution />
                 

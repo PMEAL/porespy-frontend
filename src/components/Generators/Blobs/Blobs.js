@@ -7,7 +7,6 @@ import React, { useState, createRef, useCallback } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 import Dropzone, { useDropzone } from 'react-dropzone';
 import RenderImage from '../../RenderImage/RenderImage';

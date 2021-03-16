@@ -4,7 +4,6 @@
 //
 
 import React from 'react';
-import { connect } from 'react-redux';
 import Blobs from '../Generators/Blobs/Blobs';
 import BundleOfTubes from '../Generators/BundleOfTubes/BundleOfTubes';
 import Cylinders from '../Generators/Cylinders/Cylinders';
@@ -41,4 +40,4 @@ const RenderGenerator = ({ chosenFunction }) => {
     )
 }
 
-export default connect(undefined, undefined)(RenderGenerator);
+export default RenderGenerator;
