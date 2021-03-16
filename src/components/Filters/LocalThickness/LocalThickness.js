@@ -8,17 +8,13 @@ import { connect, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-
-
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
-
-
+import { integerOnlyField } from '../../../utils/fieldValidators';
 import RenderImage from '../../RenderImage/RenderImage';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './LocalThickness.css';
@@ -33,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 let filtersLtImagesRedux = {};
 
 const LocalThickness = (props) => {
@@ -42,7 +37,7 @@ const LocalThickness = (props) => {
     const chosenImageIndex = useSelector((state) => (state.imageToBeFiltered));
     const availableImages = useSelector((state) => state.generatedImages);
     const chosenImage = chosenImageIndex !== "" ? availableImages[chosenImageIndex] : { img: "" };
-    
+
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('filters') ? funcs.porespyFuncs.filters["local_thickness"] : {};
 
@@ -68,11 +63,11 @@ const LocalThickness = (props) => {
 
     const [params, setParams] = useState(fieldsInfo);
     const [mode, setMode] = useState("hybrid");
+    const [validatedParams, setValidatedParams] = useState(chosenImage !== "");
     const [filteredImage, setFilteredImage] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-
 
     const applyLocalThickness = () => {
         setLoading(true);
@@ -81,7 +76,9 @@ const LocalThickness = (props) => {
 
         setTimeout(() => {
             axios.put(`${backendEndpoint}filters/localthickness/1/`, {
-                local_thickness_image: imgArrayJSON
+                local_thickness_image: imgArrayJSON,
+                sizes: params["sizes"].value,
+                mode
             }).then(({ data: { local_thickness_image_filtered } }) => {
                 setFilteredImage(local_thickness_image_filtered["base_64"]);
                 filtersLtImagesRedux = {
@@ -91,9 +88,7 @@ const LocalThickness = (props) => {
                 };
                 props.startSetImages(filtersLtImagesRedux);
                 setLoading(false);
-            }).catch((e) => {
-                // TODO: proper error handling?
-    
+            }).catch((e) => {    
                 setFilteredImage("");
                 setLoading(false);
                 setError(true);
@@ -107,7 +102,21 @@ const LocalThickness = (props) => {
         setMode(e.target.value);
     }
 
-
+    const parseEnteredValues = (e, property) => {
+        if (
+            chosenImage !== undefined
+            && chosenImage["img"] !== ""
+            && e.target.value !== ""
+        ) {
+            setValidatedParams(true);
+            const tempParams = params;
+            tempParams[property].value = integerOnlyField(e);
+            setParams(tempParams);
+        } else {
+            setValidatedParams(false);
+        }
+    }
+    
     // TODO: should have a component that tells the user to choose an image by clicking on the sideways arrow.
 
     return (
@@ -135,10 +144,9 @@ const LocalThickness = (props) => {
             </div>
 
 
-
             <div>
                 {
-                    // Style inputs correctly with CSS
+                    // TODO: Style inputs correctly with CSS
                     Object.keys(params).map((p) => (
                         <div>
                             <TextField 
@@ -148,6 +156,7 @@ const LocalThickness = (props) => {
                                 defaultValue={params[p].value}
                                 helperText={params[p].helperText}
                                 variant={"outlined"}
+                                onInput={(e) => parseEnteredValues(e, p)}
                             />
                         </div>
                     ))
@@ -180,24 +189,13 @@ const LocalThickness = (props) => {
                 </FormControl>
             </div>
 
-
-
-
-
             <div className="localThicknessButton">
                 <Button
                     variant="contained" 
                     color="primary"
                     onClick={() => applyLocalThickness()}
-
-
-
-
-
-                    // this should be a function that runs that checks multiple things:
-                    // chosenImage === undefined, chosenImage["img"] === ""
-                    // if there is no entry to the sizes input
-                    disabled={(chosenImage === undefined || chosenImage["img"] === "")}
+                    // disabled={(!validatedParams && (chosenImage === undefined || chosenImage["img"] === ""))}
+                    disabled={(!validatedParams || chosenImage === undefined || chosenImage["img"] === "")}
                     style={{ minWidth: '170px', minHeight: '16px'}}
                 >
                     Apply Filter
