@@ -9,7 +9,13 @@ import './PoreSizeDistribution.css';
 const PoreSizeDistribution = () => {
     return (
         <div>
-            Pore Size Distribution component
+            <div>
+                Pore Size Distribution
+            </div>
+            <div>
+                Calculate a pore-size distribution based on the image produced by the
+                ``porosimetry`` or ``local_thickness`` functions.
+            </div>
         </div>
     )
 }

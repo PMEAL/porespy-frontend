@@ -148,21 +148,20 @@ const Blobs = (props) => {
             <div className="blobTextFields">
                 {
                     Object.keys(params).map((p) => (
-                            p
-                            &&
-                            <div className="blobTextField">
-                                <TextField 
-                                    required={params[p].required}
-                                    id={params[p].id}
-                                    label={params[p].label}
-                                    defaultValue={params[p].value}
-                                    helperText={params[p].helperText}
-                                    variant={"outlined"}
-                                    onInput={(e) => parseEnteredValues(e, p)}
-                                />
-                            </div>
-                        )
-                    )
+                        p
+                        &&
+                        <div className="blobTextField">
+                            <TextField 
+                                required={params[p].required}
+                                id={params[p].id}
+                                label={params[p].label}
+                                defaultValue={params[p].value}
+                                helperText={params[p].helperText}
+                                variant={"outlined"}
+                                onInput={(e) => parseEnteredValues(e, p)}
+                            />
+                        </div>
+                    ))
                 }
             </div>
             <div className="blobButtons">
