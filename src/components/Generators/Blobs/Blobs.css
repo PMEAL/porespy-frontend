@@ -1,20 +1,20 @@
 .blobTitle {
     font-size: 32px;
     font-weight: 700;
-    padding: 20px 180px 0px 180px;
+    padding: 40px 100px 20px 100px;
 }
 
 .blobDescription {
     display: flex;
     font-size: 16px;
-    padding: 8px 180px 16px 180px;
+    padding: 20px 100px 20px 100px;
 }
 
 .blobTextFields {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 0px 180px 0px 180px;
+    padding: 0px 280px 0px 100px;
 }
 
 .blobTextField {
@@ -26,6 +26,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding: 0px 280px 0px 100px;
 }
 
 .blobButton {

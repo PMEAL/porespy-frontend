@@ -25,8 +25,7 @@ const RenderMetric = ({ chosenFunction }) => {
             {}
             {}
             {}
-            {
-                
+            {                
                 /* 
                 chosenFunction === "Chord Counts" && <ChordCounts />
                 chosenFunction === "Chord Length Distribution" && <ChordLengthDistribution />

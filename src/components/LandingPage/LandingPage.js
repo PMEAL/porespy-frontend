@@ -199,7 +199,7 @@ const LandingPage = (props) => {
             flexDirection: 'column',
             maxWidth: 160,
             minHeight: '95%',
-            minWidth: 200,
+            minWidth: 240,
             position: 'absolute',
             right: 2,
             top: 64
