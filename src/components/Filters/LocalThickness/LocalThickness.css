@@ -24,6 +24,17 @@
     padding: 20px 20px;
 }
 
+.localThicknessInputs {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.localThicknessInput {
+    padding: 20px 12px 20px 12px;
+}
+
 .selectedImage {
     height: 400px;
     width: 520px;

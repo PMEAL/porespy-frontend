@@ -22,7 +22,7 @@ import './LocalThickness.css';
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 120,
+      minWidth: 210,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -37,13 +37,10 @@ const LocalThickness = (props) => {
     const chosenImageIndex = useSelector((state) => (state.imageToBeFiltered));
     const availableImages = useSelector((state) => state.generatedImages);
     const chosenImage = chosenImageIndex !== "" ? availableImages[chosenImageIndex] : { img: "" };
-
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('filters') ? funcs.porespyFuncs.filters["local_thickness"] : {};
 
-    if (fieldsInfo.hasOwnProperty('kwargs') 
-        || fieldsInfo.hasOwnProperty('im') 
-        || fieldsInfo.hasOwnProperty('mode')) {
+    if (fieldsInfo.hasOwnProperty('kwargs') || fieldsInfo.hasOwnProperty('im') || fieldsInfo.hasOwnProperty('mode')) {
         delete fieldsInfo['kwargs'];
         delete fieldsInfo['im'];
         delete fieldsInfo['mode'];
@@ -117,8 +114,6 @@ const LocalThickness = (props) => {
         }
     }
     
-    // TODO: should have a component that tells the user to choose an image by clicking on the sideways arrow.
-
     return (
         <div>
             <div className="localThicknessTitle">
@@ -127,6 +122,10 @@ const LocalThickness = (props) => {
             <div className="localThicknessDescription">
                 For each voxel, this function calculates the radius of the largest sphere that both engulfs the voxel and fits entirely within the foreground. 
                 This is not the same as a simple distance transform, which finds the largest sphere that could be "centered" on each voxel.
+            </div>
+            <div className="localThicknessDescription">
+                To apply a filter on an image, first click the left arrow on the image you want to load in from the right side panel.
+                Then, enter the desired Size and Mode values.
             </div>
             <div className="localThicknessMsg">
                 Image chosen to apply filter on:
@@ -142,13 +141,10 @@ const LocalThickness = (props) => {
                     />
                 }
             </div>
-
-
-            <div>
+            <div className="localThicknessInputs">
                 {
-                    // TODO: Style inputs correctly with CSS
                     Object.keys(params).map((p) => (
-                        <div>
+                        <div className="localThicknessInput">
                             <TextField 
                                 required={params[p].required}                                
                                 id={params[p].id}
@@ -161,32 +157,34 @@ const LocalThickness = (props) => {
                         </div>
                     ))
                 }
-                <FormControl className={classes.formControl}>
-                    <InputLabel shrink id="demo-simple-select-placeholder-label-label">
-                        Mode
-                    </InputLabel>
-                    <Select
-                        labelId="demo-simple-select-placeholder-label-label"
-                        id="demo-simple-select-placeholder-label"
-                        value={mode}
-                        onChange={(e) => handleSelectChange(e)}
-                        displayEmpty
-                        className={classes.selectEmpty}
-                    >
-                        <MenuItem value="hybrid">
-                            hybrid
-                        </MenuItem>
-                        <MenuItem value="dt">
-                            dt
-                        </MenuItem>
-                        <MenuItem value="mio">
-                            mio
-                        </MenuItem>
-                    </Select>
-                    <FormHelperText>
-                        Computational result method
-                    </FormHelperText>
-                </FormControl>
+                <div className="localThicknessInput">                
+                    <FormControl className={classes.formControl}>
+                        <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+                            Computational result method
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-placeholder-label-label"
+                            id="demo-simple-select-placeholder-label"
+                            value={mode}
+                            onChange={(e) => handleSelectChange(e)}
+                            displayEmpty
+                            className={classes.selectEmpty}
+                        >
+                            <MenuItem value="hybrid">
+                                hybrid
+                            </MenuItem>
+                            <MenuItem value="dt">
+                                dt
+                            </MenuItem>
+                            <MenuItem value="mio">
+                                mio
+                            </MenuItem>
+                        </Select>
+                        <FormHelperText>
+                            Mode
+                        </FormHelperText>
+                    </FormControl>
+                </div>
             </div>
 
             <div className="localThicknessButton">
@@ -194,7 +192,6 @@ const LocalThickness = (props) => {
                     variant="contained" 
                     color="primary"
                     onClick={() => applyLocalThickness()}
-                    // disabled={(!validatedParams && (chosenImage === undefined || chosenImage["img"] === ""))}
                     disabled={(!validatedParams || chosenImage === undefined || chosenImage["img"] === "")}
                     style={{ minWidth: '170px', minHeight: '16px'}}
                 >
