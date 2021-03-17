@@ -4,10 +4,16 @@
 //
 
 import React from 'react';
+import DefaultPage from '../DefaultPage/DefaultPage';
 import PoreSizeDistribution from '../Metrics/PoreSizeDistribution/PoreSizeDistribution';
 import './RenderMetric.css';
 
 const RenderMetric = ({ chosenFunction }) => {
+    const title = `Metrics`;
+    const description = `These are functions that determin key metrics about an image.
+    Typically these are applied to an image after applying a filter, but a few metrics functions
+    can be applied directly to the binary image,`;
+
     return (
         <div>
             {/* Conditionally renders the Metric chosen by the user.*/}
@@ -25,6 +31,7 @@ const RenderMetric = ({ chosenFunction }) => {
             {}
             {}
             {}
+            { chosenFunction === "" && <DefaultPage title={title} description={description}/> }
             {                
                 /* 
                 chosenFunction === "Chord Counts" && <ChordCounts />

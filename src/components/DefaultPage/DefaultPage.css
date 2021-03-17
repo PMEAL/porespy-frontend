@@ -10,12 +10,12 @@
 .defaultPageTitle {
     font-size: 24px;
     font-weight: 700;
-    padding: 60px 0px 20px 0px;
+    padding: 60px 280px 20px 100px;
 }
 
 .defaultPageDescription {
     font-size: 16px;
     margin: 0px auto;
-    max-width: 520px;    
+    padding: 0px 280px 0px 100px;  
     text-align: center;
 }

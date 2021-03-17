@@ -6,16 +6,14 @@
 import React from 'react';
 import './DefaultPage.css';
 
-const DefaultPage = () => {
+const DefaultPage = ({ title, description }) => {
     return (
         <div className="defaultPageWrapper">
             <div className="defaultPageTitle">
-                Choose a generator to get started!
+                {title}
             </div>
             <div className="defaultPageDescription">
-                Generators are a variety of functions for generating artificial images
-                of porous materials, generally for testing, validation, debugging, and
-                illustration purposes.
+                {description}
             </div>
         </div>
     )

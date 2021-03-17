@@ -4,10 +4,10 @@
 //
 
 import React from 'react';
+import DefaultPage from '../DefaultPage/DefaultPage';
 import Blobs from '../Generators/Blobs/Blobs';
 import BundleOfTubes from '../Generators/BundleOfTubes/BundleOfTubes';
 import Cylinders from '../Generators/Cylinders/Cylinders';
-import DefaultPage from '../Generators/DefaultPage/DefaultPage';
 import InsertShape from '../Generators/InsertShape/InsertShape';
 import LatticeSpheres from '../Generators/LatticeSpheres/LatticeSpheres';
 import LineSegment from '../Generators/LineSegment/LineSegment';
@@ -20,6 +20,10 @@ import VoronoiEdges from '../Generators/VoronoiEdges/VoronoiEdges';
 import './RenderGenerator.css';
 
 const RenderGenerator = ({ chosenFunction }) => {
+    const title = `Choose a generator to get started!`;
+    const description = `Generators are a variety of functions for generating artificial images
+    of porous materials, generally for testing, validation, debugging, and
+    illustration purposes.`
     return (
         <div>
             {/* Conditionally renders the Generator chosen by the user.*/}
@@ -35,7 +39,7 @@ const RenderGenerator = ({ chosenFunction }) => {
             { chosenFunction === "Polydisperse Spheres" && <PolydisperseSpheres /> }
             { chosenFunction === "RSA" && <RSA /> }
             { chosenFunction === "Voronoi Edges" && <VoronoiEdges /> }
-            { chosenFunction === "" && <DefaultPage /> }
+            { chosenFunction === "" && <DefaultPage title={title} description={description}/> }
         </div>
     )
 }

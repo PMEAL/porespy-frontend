@@ -38,8 +38,10 @@ const LandingPage = (props) => {
 
     const [chosenModule, setChosenModule] = useState("Generators");
     const [chosenGenerator, setChosenGenerator] = useState("");
-    const [chosenFilter, setChosenFilter] = useState("Apply Chords");
-    const [chosenMetric, setChosenMetric] = useState("Chord Counts");
+    // const [chosenFilter, setChosenFilter] = useState("Apply Chords");
+    // const [chosenMetric, setChosenMetric] = useState("Chord Counts");
+    const [chosenFilter, setChosenFilter] = useState("");
+    const [chosenMetric, setChosenMetric] = useState("");
 
     const [chosenIO, setChosenIO] = useState("");
     const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.

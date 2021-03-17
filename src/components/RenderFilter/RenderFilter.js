@@ -4,6 +4,7 @@
 //
 
 import React from 'react';
+import DefaultPage from '../DefaultPage/DefaultPage';
 import ApplyChords from '../Filters/ApplyChords/ApplyChords';
 import ApplyChords3D from '../Filters/ApplyChords3D/ApplyChords3D';
 import ApplyPadded from '../Filters/ApplyPadded/ApplyPadded';
@@ -35,6 +36,11 @@ import TrimSmallClusters from '../Filters/TrimSmallClusters/TrimSmallClusters';
 import './RenderFilter.css';
 
 const RenderFilter = ({ chosenFunction }) => {
+    const title = `Filters`;
+    const description = `Filters are functions that alter images based on the structural characteristics,
+    such as pore sizes. A definition of a filter is a function that returns an image the shapes as the original image,
+    but width altered values.`;
+
     return (
         <div>
             {/* Conditionally renders the Filter chosen by the user.*/}
@@ -66,6 +72,7 @@ const RenderFilter = ({ chosenFunction }) => {
             { chosenFunction === "Trim Nonpercolating Paths" && <TrimNonpercolatingPaths /> }
             { chosenFunction === "Trim Saddle Points" && <TrimSaddlePoints /> }
             { chosenFunction === "Trim Small Clusters" && <TrimSmallClusters /> }
+            { chosenFunction === "" && <DefaultPage title={title} description={description}/> }
         </div>
     )
 }
