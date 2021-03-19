@@ -8,10 +8,30 @@ import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import RenderImage from '../../RenderImage/RenderImage';
 import './PoreSizeDistribution.css';
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 210,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+}));
+
+let metricsPSDImagesRedux = {};
+
 const PoreSizeDistribution = (props) => {
+    const classes = useStyles();
     const backendEndpoint = useSelector((state) => state.backend);
     const chosenImageIndex = useSelector((state) => state.imageToBeFiltered);
     const availableImages = useSelector((state) => state.generatedImages);
@@ -19,7 +39,58 @@ const PoreSizeDistribution = (props) => {
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('metrics') ? funcs.porespyFuncs.metrics["pore_size_distribution"] : {};
 
+    if (fieldsInfo.hasOwnProperty("im")) {
+        delete fieldsInfo["im"];
+    }
+
+    if (fieldsInfo.hasOwnProperty("log")) {
+        delete fieldsInfo["log"];
+    }
+    
+    fieldsInfo["x_axis_label"] = {
+        id: "x_axis_labelinput",
+        required: true,
+        type: "null",
+        value: "Y Axis"
+    };
+    
+    fieldsInfo["y_axis_label"] = {
+        id: "y_axis_labelinput",
+        required: true,
+        type: "null",
+        value: "X Axis"
+    };
+
+    for (const entry in fieldsInfo) {
+        fieldsInfo[entry]["id"] = entry + "input";
+
+        switch (entry) {
+            case "bins":
+                fieldsInfo[entry]["label"] = "Number of bins";
+                fieldsInfo[entry]["helperText"] = "Integer values only";
+                break;
+            case "voxel_size":
+                fieldsInfo[entry]["label"] = "Size of a voxel side";
+                fieldsInfo[entry]["helperText"] = "Integer values only";
+                break;
+            case "x_axis_label":
+                fieldsInfo[entry]["label"] = "X axis label";
+                fieldsInfo[entry]["helperText"] = "X axis label";
+                break;
+            case "y_axis_label":
+                fieldsInfo[entry]["label"] = "Y axis label";
+                fieldsInfo[entry]["helperText"] = "Y axis label";
+                break;
+            default:
+                break;
+        }
+    }
+
     const [params, setParams] = useState(fieldsInfo);
+    const [log, setLog] = useState(true);
+    const [xAxisLabel, setXAxisLabel] = useState("X Axis");
+    const [yAxisLabel, setYAxisLabel] = useState("Y Axis");
+    const [validatedParams, setValidatedParams] = useState(chosenImage === "");
     const [metricImage, setMetricImage] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
@@ -30,25 +101,25 @@ const PoreSizeDistribution = (props) => {
         setMetricImage("");
         const imgArrayJSON = JSON.stringify(chosenImage["img_array"]);
 
-
-
-
-
-        // TODO: add textfields for the labels for the users -> like xlabel, ylabel
-
-
-
-
-
-
         setTimeout(() => {
             axios.put(`${backendEndpoint}metrics/poresizedistribution/1/`, {
                 psd_im: imgArrayJSON,
-                bins: 10,
-                log: true,
-                voxel_size: 3
+
+                bins: params["bins"].value,
+                log,
+                voxel_size: params["voxel_size"].value,
+                x_axis_label: xAxisLabel,
+                y_axis_label: yAxisLabel
             }).then(({ data: { psd_im_metric } }) => {
-                console.log(psd_im_metric["base_64"]);
+
+
+
+
+                
+                // TODO: add created metric image into redux
+
+
+
                 setMetricImage(psd_im_metric["base_64"]);
                 // props.startSetImages();
 
@@ -59,7 +130,28 @@ const PoreSizeDistribution = (props) => {
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
             });
-        }, 500);        
+        }, 500);
+    }
+
+    const handleSelectChange = (e) => {
+        setLog(e.target.value === "true");
+    }
+
+    const parseEnteredValues = (e, property) => {
+        const tempParams = params;
+
+        if (property !== "x_axis_label" && property !== "y_axis_label") {
+            tempParams[property].value = integerOnlyField(e);
+        } else if (property === "x_axis_label") {
+            tempParams[property].value = e.target.value;
+            setXAxisLabel(e.target.value);
+        } else if (property === "y_axis_label") {
+            tempParams[property].value = e.target.value;
+            setYAxisLabel(e.target.value);
+        }
+
+        setParams(tempParams);
+        setValidatedParams(validateParams(params));
     }
 
     return (
@@ -68,8 +160,7 @@ const PoreSizeDistribution = (props) => {
                 Pore Size Distribution
             </div>
             <div>
-                Calculate a pore-size distribution based on the image produced by the
-                ``porosimetry`` or ``local_thickness`` functions.
+                Calculate a pore-size distribution based on the image produced by the porosimetry or local_thickness functions.
             </div>
             <div>
                 Image chosen to apply filter on:
@@ -79,7 +170,7 @@ const PoreSizeDistribution = (props) => {
                     chosenImage !== undefined && chosenImage["img"] !== ""
                     &&
                     <img
-                        // className="selectedImage"
+                        // className=""
                         src={`data:image/png;base64,${chosenImage["img"]}`}
                         alt={chosenImage["img"]}
                     />
@@ -87,13 +178,55 @@ const PoreSizeDistribution = (props) => {
             </div>
 
             <div>
+                {
+                    Object.keys(params).map((p) => (
+                        <div>
+                            <TextField  
+                                required={params[p].required}
+                                id={params[p].id}
+                                label={params[p].label}
+                                defaultValue={params[p].value}
+                                helperText={params[p].helperText}
+                                variant={"outlined"}
+                                onInput={(e) => parseEnteredValues(e, p)}
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+
+            <div>
+                <FormControl className={classes.formControl}>
+                    <InputLabel shrink id="demo-simple-select-placeholder-label-label">
+                        Logarithmic data?
+                    </InputLabel>
+                    <Select
+                        labelId="demo-simple-select-placeholder-label-label"
+                        id="demo-simple-select-placeholder-label"
+                        value={log}
+                        onChange={(e) => handleSelectChange(e)}
+                        displayEmpty
+                        className={classes.selectEmpty}
+                    >
+                        <MenuItem value="true">
+                            True
+                        </MenuItem>
+                        <MenuItem value="false">
+                            False
+                        </MenuItem>
+                    </Select>
+                    <FormHelperText>
+                        Logarithmic data?
+                    </FormHelperText>
+                </FormControl>
+            </div>
+
+            <div>
                 <Button
                     variant="contained"
                     color="primary"
                     onClick={() => generatePoreSizeDistribution()}
-
-                    disabled={false}
-
+                    disabled={(validatedParams || chosenImage === undefined || chosenImage["img"] === "")}
                     style={{ minWidth: '170px', minHeight: '16px'}}
                 >
                     Create metric
@@ -118,6 +251,5 @@ const PoreSizeDistribution = (props) => {
 // const mapDispatchToProps = (dispatch) => ({
 //     startSetImages: () => dispatch(startSetImages(metricsPSDImagesRedux))
 // })
-
 
 export default connect(undefined, undefined)(PoreSizeDistribution);

@@ -146,7 +146,7 @@ const LocalThickness = (props) => {
                     Object.keys(params).map((p) => (
                         <div className="localThicknessInput">
                             <TextField 
-                                required={params[p].required}                                
+                                required={params[p].required}
                                 id={params[p].id}
                                 label={params[p].label}
                                 defaultValue={params[p].value}
@@ -157,7 +157,7 @@ const LocalThickness = (props) => {
                         </div>
                     ))
                 }
-                <div className="localThicknessInput">                
+                <div className="localThicknessInput">
                     <FormControl className={classes.formControl}>
                         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
                             Computational result method

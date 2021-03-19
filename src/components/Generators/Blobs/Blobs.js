@@ -99,7 +99,7 @@ const Blobs = (props) => {
                 tempParams[property].value = integerOnlyField(e);
                 break;
             case "float":
-                tempParams[property].value =  floatOnlyBetweenOneAndZeroField(e);
+                tempParams[property].value = floatOnlyBetweenOneAndZeroField(e);
                 break;
             default:
                 break;
