@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -19,6 +19,7 @@ import RenderImage from '../../RenderImage/RenderImage';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './LocalThickness.css';
 
+// TODO: abstract this/the styles object into Redux?
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -40,9 +41,15 @@ const LocalThickness = (props) => {
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('filters') ? funcs.porespyFuncs.filters["local_thickness"] : {};
 
-    if (fieldsInfo.hasOwnProperty('kwargs') || fieldsInfo.hasOwnProperty('im') || fieldsInfo.hasOwnProperty('mode')) {
+    if (fieldsInfo.hasOwnProperty('kwargs')) {
         delete fieldsInfo['kwargs'];
+    }
+    
+    if (fieldsInfo.hasOwnProperty('im')) {
         delete fieldsInfo['im'];
+    }
+
+    if (fieldsInfo.hasOwnProperty('mode')) {
         delete fieldsInfo['mode'];
     }
 
@@ -65,6 +72,7 @@ const LocalThickness = (props) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const imageRef = useRef(null);
 
     const applyLocalThickness = () => {
         setLoading(true);
@@ -91,6 +99,8 @@ const LocalThickness = (props) => {
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
                 console.log(e);
+            }).finally(() => {
+                imageRef.current.scrollIntoView();
             });
         }, 500);        
     }
@@ -157,7 +167,7 @@ const LocalThickness = (props) => {
                         </div>
                     ))
                 }
-                <div className="localThicknessInput">
+                <div className="localThicknessInput" ref={imageRef}>
                     <FormControl className={classes.formControl}>
                         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
                             Computational result method

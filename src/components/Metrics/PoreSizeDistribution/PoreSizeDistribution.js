@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -14,11 +14,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
+import { integerOnlyField, validateParams } from '../../../utils/fieldValidators';
 import RenderImage from '../../RenderImage/RenderImage';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './PoreSizeDistribution.css';
 
+// TODO: abstract this into Redux?
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -95,7 +96,8 @@ const PoreSizeDistribution = (props) => {
     const [metricImage, setMetricImage] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+    const imageRef = useRef(null);
 
     const generatePoreSizeDistribution = () => {
         setLoading(true);
@@ -105,15 +107,12 @@ const PoreSizeDistribution = (props) => {
         setTimeout(() => {
             axios.put(`${backendEndpoint}metrics/poresizedistribution/1/`, {
                 psd_im: imgArrayJSON,
-
                 bins: params["bins"].value,
                 log,
                 voxel_size: params["voxel_size"].value,
                 x_axis_label: xAxisLabel,
                 y_axis_label: yAxisLabel
             }).then(({ data: { psd_im_metric } }) => {
-                // TODO: add CSS stylings to all components
-
                 setMetricImage(psd_im_metric["base_64"]);
                 metricsPSDImagesRedux = {
                     img: psd_im_metric["base_64"],
@@ -127,6 +126,8 @@ const PoreSizeDistribution = (props) => {
                 setLoading(false);
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
+            }).finally(() => {
+                imageRef.current.scrollIntoView();
             });
         }, 500);
     }
@@ -196,9 +197,8 @@ const PoreSizeDistribution = (props) => {
                     ))
                 }
             </div>
-
             
-            <div className="poreSizeDistributionDropdown">
+            <div className="poreSizeDistributionDropdown" ref={imageRef}>
                 <FormControl className={classes.formControl}>
                     <InputLabel shrink id="demo-simple-select-placeholder-label-label">
                         Logarithmic data?
@@ -240,12 +240,14 @@ const PoreSizeDistribution = (props) => {
                 <div className="poreSizeDistributionMsg">
                     Created Pore Size Distribution Metric:
                 </div>
-                <RenderImage 
-                    imgString={metricImage}
-                    loading={loading}
-                    error={error}
-                    erroMessage={errorMessage}
-                />
+                <div>
+                    <RenderImage 
+                        imgString={metricImage}
+                        loading={loading}
+                        error={error}
+                        erroMessage={errorMessage}
+                    />
+                </div>
             </div>
         </div>
     )

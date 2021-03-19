@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -60,6 +60,7 @@ const BundleOfTubes = (props) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const imageRef = useRef(null);
 
     const generateBundleOfTubes = () => {
         setLoading(true);
@@ -84,6 +85,8 @@ const BundleOfTubes = (props) => {
                 setLoading(false);
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
+            }).finally(() => {
+                imageRef.current.scrollIntoView();
             });
         }, 500);
     }
@@ -93,9 +96,7 @@ const BundleOfTubes = (props) => {
 
         switch (tempParams[property].type) {
             case "int":
-
                 // TODO: to integerOnlyField(), maybe add min/max parameters?
-
                 tempParams[property].value = integerOnlyField(e);
                 break;
             case "float":
@@ -119,7 +120,7 @@ const BundleOfTubes = (props) => {
                 Creates a 3D image of a bundle of tubes, in the form of a rectangular plate with randomly sized holes through it.
             </div>
 
-            <div className="bundleOfTubesTextFields">
+            <div className="bundleOfTubesTextFields" ref={imageRef}>
                 {
                     // Dynamically creates <TextFields /> based on entries in the params object
                     Object.keys(params).map((p) => (

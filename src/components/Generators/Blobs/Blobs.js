@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState, createRef, useCallback } from 'react';
+import React, { useState, createRef, useCallback, useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -61,6 +61,7 @@ const Blobs = (props) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const imageRef = useRef(null);
 
     const generateBlob = () => {
         setLoading(true);
@@ -87,6 +88,8 @@ const Blobs = (props) => {
                 setLoading(false);
                 setError(true);
                 setErrorMessage(`Something is wrong... ${e.message}`);
+            }).finally(() => {
+                imageRef.current.scrollIntoView();
             });
         }, 500);
     }
@@ -142,7 +145,7 @@ const Blobs = (props) => {
             <div className="blobDescription">
                 Generates an image containing amorphous blobs.
             </div>
-            <div className="blobTextFields">
+            <div className="blobTextFields" ref={imageRef}>
                 {
                     Object.keys(params).map((p) => (
                         p
