@@ -1,5 +1,5 @@
 //
-//  Filters.js
+//  ImageToBeFiltered.js
 //  porespy-frontend
 //
 

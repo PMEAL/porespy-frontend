@@ -10,7 +10,7 @@ import './RenderMetric.css';
 
 const RenderMetric = ({ chosenFunction }) => {
     const title = `Metrics`;
-    const description = `These are functions that determin key metrics about an image.
+    const description = `These are functions that determine key metrics about an image.
     Typically these are applied to an image after applying a filter, but a few metrics functions
     can be applied directly to the binary image,`;
 
@@ -39,6 +39,7 @@ const RenderMetric = ({ chosenFunction }) => {
                 chosenFunction === "Linear Density" && <LinearDensity />
                 chosenFunction === "Mesh Surface Area" && <MeshSurfaceArea />
                 chosenFunction === "Phase Fraction" && <PhaseFraction />
+                
                 
                 chosenFunction === "Porosity" && <Porosity />
                 chosenFunction === "Porosity Profile" && <PorosityProfile />

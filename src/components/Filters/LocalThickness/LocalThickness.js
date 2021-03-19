@@ -34,7 +34,7 @@ let filtersLtImagesRedux = {};
 const LocalThickness = (props) => {
     const classes = useStyles();
     const backendEndpoint = useSelector((state) => state.backend);
-    const chosenImageIndex = useSelector((state) => (state.imageToBeFiltered));
+    const chosenImageIndex = useSelector((state) => state.imageToBeFiltered);
     const availableImages = useSelector((state) => state.generatedImages);
     const chosenImage = chosenImageIndex !== "" ? availableImages[chosenImageIndex] : { img: "" };
     const funcs = useSelector((state) => (state));
@@ -64,7 +64,7 @@ const LocalThickness = (props) => {
     const [filteredImage, setFilteredImage] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState("");
 
     const applyLocalThickness = () => {
         setLoading(true);

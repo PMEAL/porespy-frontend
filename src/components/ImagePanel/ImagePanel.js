@@ -73,7 +73,7 @@ const ImagePanel = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     startDeleteImages: () => dispatch(startDeleteImages(indexToDelete)),
-    startSetChosenImage: () => dispatch(startSetChosenImage(chosenImage))
+    startSetChosenImage: () => dispatch(startSetChosenImage(chosenImage)),
 })
 
 export default connect(undefined, mapDispatchToProps)(ImagePanel);

@@ -18,7 +18,7 @@ const configureStore = () => {
             porespyFuncs: porespyFuncsReducer,
             backend: backendReducer,
             generatedImages: generatedImagesReducer,
-            imageToBeFiltered: filtersReducer
+            imageToBeFiltered: filtersReducer,
         }),
         composeEnhancers(applyMiddleware(thunk))
     );
