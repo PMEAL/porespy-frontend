@@ -154,28 +154,32 @@ const PoreSizeDistribution = (props) => {
 
     return (
         <div>
-            <div>
+            <div className="poreSizeDistributionTitle">
                 Pore Size Distribution
             </div>
-            <div>
+            <div className="poreSizeDistributionDescription">
                 Calculate a pore-size distribution based on the image produced by the porosimetry or local_thickness functions.
             </div>
-            <div>
+            <div className="poreSizeDistributionDescription">
+                To apply a filter on an image, first click the left arrow on the image you want to load in from the right side panel.
+                Then, enter the desired Size and Mode values.
+            </div>
+            <div className="poreSizeDistributionMsg">
                 Image chosen to apply filter on:
             </div>
-            <div>
+            <div className="selectedImageWrapper">
                 {
                     chosenImage !== undefined && chosenImage["img"] !== ""
                     &&
                     <img
-                        // className=""
+                        className="selectedImage"
                         src={`data:image/png;base64,${chosenImage["img"]}`}
                         alt={chosenImage["img"]}
                     />
                 }
             </div>
 
-            <div>
+            <div className="poreSizeDistributionInputs">
                 {
                     Object.keys(params).map((p) => (
                         <div>
@@ -193,7 +197,8 @@ const PoreSizeDistribution = (props) => {
                 }
             </div>
 
-            <div>
+            
+            <div className="poreSizeDistributionDropdown">
                 <FormControl className={classes.formControl}>
                     <InputLabel shrink id="demo-simple-select-placeholder-label-label">
                         Logarithmic data?
@@ -219,7 +224,7 @@ const PoreSizeDistribution = (props) => {
                 </FormControl>
             </div>
 
-            <div>
+            <div className="poreSizeDistributionButton">
                 <Button
                     variant="contained"
                     color="primary"
@@ -232,8 +237,8 @@ const PoreSizeDistribution = (props) => {
             </div>
 
             <div>
-                <div>
-                    Pore Size Distribution Metric:
+                <div className="poreSizeDistributionMsg">
+                    Created Pore Size Distribution Metric:
                 </div>
                 <RenderImage 
                     imgString={metricImage}

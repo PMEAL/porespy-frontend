@@ -105,12 +105,10 @@ const Blobs = (props) => {
                 break;
         }
 
-        // TODO: maybe split this function to make it more scalable?
         setParams(tempParams);
         setValidatedParams(validateParams(params));
     }
     
-
     // TODO: move this image uploading to the UploadImage component in ../UploadImage
     const dropzoneRef = createRef();    
     const loadBlob = () => {
@@ -135,7 +133,6 @@ const Blobs = (props) => {
 
     const {getRootProps, getInputProps} = useDropzone({onDrop});
     // TODO: move this image uploading to the UploadImage component in ../UploadImage
-
 
     return (
         <div>

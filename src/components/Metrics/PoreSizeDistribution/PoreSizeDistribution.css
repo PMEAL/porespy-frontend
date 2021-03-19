@@ -1,0 +1,52 @@
+.poreSizeDistributionTitle {
+    font-size: 32px;
+    font-weight: 700;
+    padding: 40px 100px 20px 100px;
+}
+
+.poreSizeDistributionDescription {
+    display: flex;
+    font-size: 16px;    
+    padding: 10px 280px 10px 100px;
+}
+
+.poreSizeDistributionMsg {
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    padding: 20px 280px 20px 100px;
+}
+
+.selectedImageWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 280px 0px 100px;
+}
+
+.selectedImage {
+    height: 400px;
+    width: 520px;
+}
+
+.poreSizeDistributionInputs {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 20px 280px 20px 100px;
+}
+
+.poreSizeDistributionDropdown {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 20px 280px 20px 100px;
+}
+
+.poreSizeDistributionButton {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0px 280px 0px 100px;
+}
