@@ -117,6 +117,7 @@ const PoreSizeDistribution = (props) => {
 
                 
                 // TODO: add created metric image into redux
+                // TODO: add CSS stylings to all components
 
 
 
