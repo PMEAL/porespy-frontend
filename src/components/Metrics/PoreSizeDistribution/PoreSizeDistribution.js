@@ -16,6 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
 import RenderImage from '../../RenderImage/RenderImage';
+import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './PoreSizeDistribution.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -111,19 +112,15 @@ const PoreSizeDistribution = (props) => {
                 x_axis_label: xAxisLabel,
                 y_axis_label: yAxisLabel
             }).then(({ data: { psd_im_metric } }) => {
-
-
-
-
-                
-                // TODO: add created metric image into redux
                 // TODO: add CSS stylings to all components
 
-
-
                 setMetricImage(psd_im_metric["base_64"]);
-                // props.startSetImages();
-
+                metricsPSDImagesRedux = {
+                    img: psd_im_metric["base_64"],
+                    img_array: psd_im_metric["np_array"],
+                    genType: "PoreSizeDistribution"
+                };
+                props.startSetImages(metricsPSDImagesRedux);
                 setLoading(false);            
             }).catch((e) => {
                 setMetricImage("");
@@ -249,8 +246,8 @@ const PoreSizeDistribution = (props) => {
     )
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//     startSetImages: () => dispatch(startSetImages(metricsPSDImagesRedux))
-// })
+const mapDispatchToProps = (dispatch) => ({
+    startSetImages: () => dispatch(startSetImages(metricsPSDImagesRedux))
+})
 
-export default connect(undefined, undefined)(PoreSizeDistribution);
+export default connect(undefined, mapDispatchToProps)(PoreSizeDistribution);
