@@ -19,7 +19,7 @@ import RenderImage from '../../RenderImage/RenderImage';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './PoreSizeDistribution.css';
 
-// TODO: abstract this into Redux?
+// TODO: abstract this/the styles object into Redux?
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
