@@ -1,2 +1,3 @@
 # ImagePanel Component
 
+ImagePanel displays the images stored in the generated images stored in Redux using the GridListTile and GridListTileBar components from Material UI. The user can click on leftward pointing arrow to load that image into the UI. They can also click on the downward pointing arrow to download the selected image on their machine. The user can also click on the trash can to delete that image from the image panel.
