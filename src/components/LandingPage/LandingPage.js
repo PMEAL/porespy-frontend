@@ -19,7 +19,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import ImagePanel from '../ImagePanel/ImagePanel';
-
 import AboutPage from '../AboutPage/AboutPage';
 import ContactPage from '../ContactPage/ContactPage';
 import RenderGenerator from '../RenderGenerator/RenderGenerator';
@@ -38,8 +37,6 @@ const LandingPage = (props) => {
 
     const [chosenModule, setChosenModule] = useState("Generators");
     const [chosenGenerator, setChosenGenerator] = useState("");
-    // const [chosenFilter, setChosenFilter] = useState("Apply Chords");
-    // const [chosenMetric, setChosenMetric] = useState("Chord Counts");
     const [chosenFilter, setChosenFilter] = useState("");
     const [chosenMetric, setChosenMetric] = useState("");
 
