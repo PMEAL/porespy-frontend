@@ -218,31 +218,30 @@ const PoreSizeDistribution = () => {
                     </FormHelperText>
                 </FormControl>
             </div>
-
-            <div className="poreSizeDistributionButton">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => generatePoreSizeDistribution()}
-                    disabled={(validatedParams || chosenImage === undefined || chosenImage["img"] === "")}
-                    style={{ minWidth: '170px', minHeight: '16px'}}
-                >
-                    Create metric
-                </Button>
+            <div className="poreSizeDistributionButtons">
+                <div className="poreSizeDistributionButton">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => generatePoreSizeDistribution()}
+                        disabled={(validatedParams || chosenImage === undefined || chosenImage["img"] === "")}
+                        style={{ minWidth: '170px', minHeight: '16px'}}
+                    >
+                        Create metric
+                    </Button>
+                </div>
+                <div className="poreSizeDistributionButton">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => windowDownload(metricCSV, "PoreSizeDistribution", "csv")}
+                        disabled={(validatedParams || chosenImage === undefined || chosenImage["img"] === "" || metricCSV === "")}
+                        style={{ minWidth: '170px', minHeight: '16px'}}
+                    >
+                        Download Data
+                    </Button>
+                </div>
             </div>
-
-            <div className="poreSizeDistributionButton">
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => windowDownload(metricCSV, "PoreSizeDistribution", "csv")}
-                    disabled={(validatedParams || chosenImage === undefined || chosenImage["img"] === "" || metricCSV === "")}
-                    style={{ minWidth: '170px', minHeight: '16px'}}
-                >
-                    Download Raw Data .CSV
-                </Button>
-            </div>
-
             <div>
                 <div className="poreSizeDistributionMsg">
                     Created Pore Size Distribution Metric:
