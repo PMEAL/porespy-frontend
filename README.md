@@ -22,6 +22,12 @@ For more information on PoreSpy, please visit the following repo: https://github
 - Change GUI to make it look like mock gui design. (in progress).
 - Get a Favicon.ico.
 
+
+## Instructions:
+
+When you pull the repo, first run `npm install` in the terminal at the root directory to load all in the required npm modules. Once that command has finished, run `npm start` in the terminal at the root directory to run the front-end locally on your machine. You can view the front-end at `http://localhost:3000/`.
+
+
 ## Contact:
 
 Jeff Gostick (jgostick@uwaterloo.ca)

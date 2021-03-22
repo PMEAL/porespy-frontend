@@ -15,8 +15,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { integerOnlyField, validateParams } from '../../../utils/fieldValidators';
+import { windowDownload } from '../../../utils/fileManipulators';
 import RenderImage from '../../RenderImage/RenderImage';
-import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './PoreSizeDistribution.css';
 
 // TODO: abstract this/the styles object into Redux?
@@ -30,9 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-let metricsPSDImagesRedux = {};
-
-const PoreSizeDistribution = (props) => {
+const PoreSizeDistribution = () => {
     const classes = useStyles();
     const backendEndpoint = useSelector((state) => state.backend);
     const chosenImageIndex = useSelector((state) => state.imageToBeFiltered);
@@ -94,6 +92,7 @@ const PoreSizeDistribution = (props) => {
     const [yAxisLabel, setYAxisLabel] = useState("Y Axis");
     const [validatedParams, setValidatedParams] = useState(chosenImage === "");
     const [metricImage, setMetricImage] = useState("");
+    const [metricCSV, setMetricCSV] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -102,6 +101,7 @@ const PoreSizeDistribution = (props) => {
     const generatePoreSizeDistribution = () => {
         setLoading(true);
         setMetricImage("");
+        setMetricCSV("");
         const imgArrayJSON = JSON.stringify(chosenImage["img_array"]);
 
         setTimeout(() => {
@@ -114,12 +114,7 @@ const PoreSizeDistribution = (props) => {
                 y_axis_label: yAxisLabel
             }).then(({ data: { psd_im_metric } }) => {
                 setMetricImage(psd_im_metric["base_64"]);
-                metricsPSDImagesRedux = {
-                    img: psd_im_metric["base_64"],
-                    img_array: psd_im_metric["np_array"],
-                    genType: "PoreSizeDistribution"
-                };
-                props.startSetImages(metricsPSDImagesRedux);
+                setMetricCSV(psd_im_metric["csv_string"]);
                 setLoading(false);            
             }).catch((e) => {
                 setMetricImage("");
@@ -236,6 +231,18 @@ const PoreSizeDistribution = (props) => {
                 </Button>
             </div>
 
+            <div className="poreSizeDistributionButton">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => windowDownload(metricCSV, "PoreSizeDistribution", "csv")}
+                    disabled={(validatedParams || chosenImage === undefined || chosenImage["img"] === "" || metricCSV === "")}
+                    style={{ minWidth: '170px', minHeight: '16px'}}
+                >
+                    Download Raw Data .CSV
+                </Button>
+            </div>
+
             <div>
                 <div className="poreSizeDistributionMsg">
                     Created Pore Size Distribution Metric:
@@ -253,8 +260,4 @@ const PoreSizeDistribution = (props) => {
     )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    startSetImages: () => dispatch(startSetImages(metricsPSDImagesRedux))
-})
-
-export default connect(undefined, mapDispatchToProps)(PoreSizeDistribution);
+export default connect(undefined, undefined)(PoreSizeDistribution);

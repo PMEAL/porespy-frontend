@@ -55,7 +55,7 @@ const ImagePanel = (props) => {
                                             <ArrowBackIcon onClick={() => imageToBeFiltered(index)}/>
                                         </IconButton>
                                         <IconButton aria-label={`info about ${index+1}`} className={props.classes.icon} title="Download image">
-                                            <ArrowDownwardIcon onClick={() => windowDownload(tile.img, tile.genType)}/>
+                                            <ArrowDownwardIcon onClick={() => windowDownload(tile.img, tile.genType, "image")}/>
                                         </IconButton>
                                         <IconButton aria-label={`info about ${index+1}`} className={props.classes.icon} title="Delete image">
                                             <DeleteIcon onClick={() => deleteImage(index)} />
