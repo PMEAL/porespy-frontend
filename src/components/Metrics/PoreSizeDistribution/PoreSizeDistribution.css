@@ -37,6 +37,10 @@
     padding: 20px 280px 20px 100px;
 }
 
+.poreSizeDistributionInput {
+    padding: 20px 12px 20px 12px;
+}
+
 .poreSizeDistributionDropdown {
     align-items: center;
     display: flex;

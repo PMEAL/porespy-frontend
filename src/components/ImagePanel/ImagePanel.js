@@ -23,12 +23,14 @@ let chosenImage = "";
 const ImagePanel = (props) => {
     const generatedImages = useSelector((state) => (state.generatedImages));
 
+    // deletes image from the right side panel
     const deleteImage = (index) => {
         indexToDelete = index;
         props.startDeleteImages(index);
     }
 
-    const imageToBeFiltered = (imgIndex) => {
+    // sets image chosen by the user on the right side panel
+    const imageChosen = (imgIndex) => {
         // console.log("load image here!");
         chosenImage = imgIndex;
         props.startSetChosenImage(chosenImage);
@@ -52,7 +54,7 @@ const ImagePanel = (props) => {
                                 actionIcon={
                                     <div className={props.classes.imageBarButtons}>
                                         <IconButton aria-label={`info about ${index+1}`} className={props.classes.icon} title="Load image">
-                                            <ArrowBackIcon onClick={() => imageToBeFiltered(index)}/>
+                                            <ArrowBackIcon onClick={() => imageChosen(index)}/>
                                         </IconButton>
                                         <IconButton aria-label={`info about ${index+1}`} className={props.classes.icon} title="Download image">
                                             <ArrowDownwardIcon onClick={() => windowDownload(tile.img, tile.genType, "image")}/>
@@ -71,6 +73,7 @@ const ImagePanel = (props) => {
     )
 }
 
+// updates deleted/chosen image to the redux store (globalized state), which is where all created images are stored.
 const mapDispatchToProps = (dispatch) => ({
     startDeleteImages: () => dispatch(startDeleteImages(indexToDelete)),
     startSetChosenImage: () => dispatch(startSetChosenImage(chosenImage)),

@@ -28,21 +28,22 @@ import { parseName } from '../../utils/moduleNames';
 import './LandingPage.css';
 
 const LandingPage = (props) => {
+    // pieces of state that track which modules on the left side panel are open/closed. (ex: generators, filters...)
     const [openGenerators, setOpenGenerators] = useState(false);
     const [openFilters, setOpenFilters] = useState(false);
-    const [openMetrics, setOpenMetrics] = useState(false);
-    
+    const [openMetrics, setOpenMetrics] = useState(false);    
     const [openIO, setOpenIO] = useState(false);
     const [openNetworks, setOpenNetworks] = useState(false);
 
+    // pieces of state that track which specific module on the left side panel are chosen (ex: Blobs, Local Thickness...)
     const [chosenModule, setChosenModule] = useState("Generators");
     const [chosenGenerator, setChosenGenerator] = useState("");
     const [chosenFilter, setChosenFilter] = useState("");
     const [chosenMetric, setChosenMetric] = useState("");
-
     const [chosenIO, setChosenIO] = useState("");
     const [chosenNetwork, setChosenNetwork] = useState(""); // should a default to the chosenNetwork state variable.
 
+    // state that tracks the corresponding URL endpoint hit by the user (ex: "/", "/about", "contact")
     const [renderPage, setRenderPage] = useState(props.page);
     
     // porespyModules contains the menu names that are then called with .map() to create on the UI.
@@ -54,10 +55,13 @@ const LandingPage = (props) => {
     const ioNamesStore = funcs.porespyFuncs.hasOwnProperty('io') ? Object.keys(funcs.porespyFuncs.io) : [];
 
 
+    // TODO: currently networks are not successfully being dynamically read from porespy on the backend. 
+    // Will need to look into this more.
     // const networksNamesStore = funcs.porespyFuncs.hasOwnProperty('io') ? Object.keys(funcs.porespyFuncs.io) : [];
     const networksNamesStore = ["placeholder 1", "placeholder 2"]
 
 
+    // pull dynamica porespy modules from the redux store, then sort them to display them on the left side panel.
     const generatorsNamesParsed = generatorsNamesStore.map((n) => parseName(n)).sort();
     const filtersNamesParsed = filtersNamesStore.map((n) => parseName(n)).sort();
     const metricsNamesParsed = metricsNamesStore.map((n) => parseName(n)).sort();
@@ -105,6 +109,7 @@ const LandingPage = (props) => {
         }
     };
 
+    // sets which function was chosen in state, then passes that value into the render_____ Components below in the jsx.
     const handleFunctionClick = (text, chosenFunc) => {
         switch (text) {
             case "Generators":
@@ -136,8 +141,8 @@ const LandingPage = (props) => {
         }
     }
 
+    // render submenus on the left side panel using the ListItem component from MaterialUI
     const renderSubMenus = (text, modules) => {
-        // console.log(text, modules);
         return modules.map((g) => (
             <ListItem
                 button
@@ -151,7 +156,8 @@ const LandingPage = (props) => {
         ))
         }
 
-    // // TODO: add this object to redux to clean this file up?
+    // TODO: add this object to redux to clean this file up? might not be possible as useStyles is a hook.
+    // This object contains inline CSS stylings for MaterialUI components.
     const useStyles = makeStyles((theme) => ({
         root: {
             display: 'flex',

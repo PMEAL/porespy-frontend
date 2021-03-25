@@ -109,6 +109,7 @@ const LocalThickness = (props) => {
         setMode(e.target.value);
     }
 
+    // parse entered values and determine whether the data is valid to be sent to the backend.
     const parseEnteredValues = (e, property) => {
         if (
             chosenImage !== undefined

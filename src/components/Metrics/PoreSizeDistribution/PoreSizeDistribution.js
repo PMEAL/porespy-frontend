@@ -20,6 +20,7 @@ import RenderImage from '../../RenderImage/RenderImage';
 import './PoreSizeDistribution.css';
 
 // TODO: abstract this/the styles object into Redux?
+// This object contains inline CSS stylings for MaterialUI components.
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -39,6 +40,8 @@ const PoreSizeDistribution = () => {
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('metrics') ? funcs.porespyFuncs.metrics["pore_size_distribution"] : {};
 
+    // delete the im/log properties on the fieldsInfo object, so they do *not* get their own TextField element on the UI.
+
     if (fieldsInfo.hasOwnProperty("im")) {
         delete fieldsInfo["im"];
     }
@@ -47,6 +50,7 @@ const PoreSizeDistribution = () => {
         delete fieldsInfo["log"];
     }
     
+    // set x_axis_label and y_axis_label properties on fieldsInfo in order to have their own TextField elements on the UI.    
     fieldsInfo["x_axis_label"] = {
         id: "x_axis_labelinput",
         required: true,
@@ -61,6 +65,7 @@ const PoreSizeDistribution = () => {
         value: "X Axis"
     };
 
+    // Add corresponding label and helperText props to the TextField element.
     for (const entry in fieldsInfo) {
         fieldsInfo[entry]["id"] = entry + "input";
 
@@ -98,6 +103,7 @@ const PoreSizeDistribution = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const imageRef = useRef(null);
 
+    // Generate pore size distribution metric. Render the returned image on the UI, and define metricCSV state.
     const generatePoreSizeDistribution = () => {
         setLoading(true);
         setMetricImage("");
@@ -131,6 +137,7 @@ const PoreSizeDistribution = () => {
         setLog(e.target.value === "true");
     }
 
+    // parse entered values and determine whether the data is valid to be sent to the backend.
     const parseEnteredValues = (e, property) => {
         const tempParams = params;
 
@@ -178,7 +185,7 @@ const PoreSizeDistribution = () => {
             <div className="poreSizeDistributionInputs">
                 {
                     Object.keys(params).map((p) => (
-                        <div>
+                        <div className="poreSizeDistributionInput">
                             <TextField  
                                 required={params[p].required}
                                 id={params[p].id}
