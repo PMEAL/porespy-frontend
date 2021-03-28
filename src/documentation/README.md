@@ -17,12 +17,14 @@ Once the repo has been pulled and the `npm install` command has been run, the fo
 - `public`
 - `src`
 
+In the project root directory, there is a `README.md` file. This file contains a brief description of the project, and 2 TODO lists. The `TODO From Meetings` list contains all the tasks discussed in previous meetings that are meant to be completed. The `TODO (Lower priority)` list contains tasks that are of lower priority and have not been discussed in previous meetings, but they may be of interest in the future.
+
 
 ## node_modules
 
-The `node_modules` folder contains all the necessary node modules for the frontend run. Notable packages include axios (for making http requests to the backend (the RESTful API)), react-redux (for maintaining globalized state variables), and electron (useful for deployment into a desktop app using electron.js). The `node_modules` folder contains all default and installed packages. A more concise list of all the installed packages can be found in `package.json` in the `"dependencies"` property. 
+The `node_modules` folder contains all the necessary node modules for the frontend run. Notable packages include axios (for making http requests to the backend (the RESTful API)), react-redux (for maintaining globalized state variables), and electron (useful for deployment into a desktop app using electron.js). The `node_modules` folder contains all default and installed packages. A more concise list of all the installed packages can be found in the `package.json` file (found in the project root directory), on the `"dependencies"` property. 
 
-**NOTE:** Please be wary of any changes made tot he `package.json` and `package-lock.json` files, as invalid changes can cause compilation errors for the frontend.
+**NOTE:** Please be wary of any changes made to the `package.json` and `package-lock.json` files found in the project root directory, as invalid changes can cause compilation errors for the frontend.
 
 
 ## public
@@ -76,6 +78,17 @@ The `components` folder contains all the React components that are rendered by t
 
 Each component has its own folder, and inside that folder it has `.js` and `.css` files with the same name.
 
-The `AboutPage`, `ContactPage`, `NotFoundPage` components all concerned with rendering the correct page, depending on what URL the user has entered.
+The `AboutPage`, `ContactPage`, `LandingPage`, `NotFoundPage` components all concerned with rendering the correct page, depending on what URL the user has entered.
 
+- When the user reaches the `/` url, the `LandingPage` component is rendered. 
+- When the user reaches the `/contact` url, the `ContactPage` component is rendered.
+- When the user reaches the `/about` url, the `AboutPage` component is rendered.
+- When the user reaches any url that does not end with `/`, `/contact`, `/about`, then the `NotFoundPage` component is rendered. An example of this would be is if the user reaches ending a url with `/test`.
 
+The `Filters`, `Generators`, and `Metrics` folders contain all the PoreSpy functions that can be displayed to the user. Currently, the `Blobs`, `BundleOfTubes`, `LocalThickness`, and `PoreSizeDistribution` functions are functional. Any documentation and developer best practices are included inside those files, and most user inputs are elements from Material UI.
+
+The `ImagePanel` component is concerned with displaying the Image Panel on the right side of the screen. The elements here are from Material UI, and this component interacts frequently with the Redux store.
+
+The `PorespyApp` component is the application entrypoint. It is the first component shown to the user, and contains the overall layout as implemented by the <Drawer></Drawer> and the <List></List> components from Material UI. This is where the porespy functions are dynamically extracted, and that state is passed into the Redux store.
+
+The `RenderFilter`, `RenderGenerator`, and `RenderMetric` are components that take in a prop (`chosenFunction`) and display the porespy function chosen by the user. This design pattern was chosen to abstract each rendered component, to keep the code organized, and to maintain the React.js files short and reusable.

@@ -31,7 +31,6 @@ const ImagePanel = (props) => {
 
     // sets image chosen by the user on the right side panel
     const imageChosen = (imgIndex) => {
-        // console.log("load image here!");
         chosenImage = imgIndex;
         props.startSetChosenImage(chosenImage);
     }

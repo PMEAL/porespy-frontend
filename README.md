@@ -5,7 +5,7 @@ This repo contains the front end of PoreSpy, the web app of a python library of 
 For more information on PoreSpy, please visit the following repo: https://github.com/PMEAL/porespy
 
 
-## TODO From Meetings (Updated Mar 24, 2021):
+## TODO From Meetings:
 
 - Wire Generators up (the remaining ones)
 - Wire Filters up (the remaining ones)
@@ -18,7 +18,6 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO (Lower priority):
 
-- Change GUI to make it look like mock gui design. (in progress).
 - Get a Favicon.ico?
 
 

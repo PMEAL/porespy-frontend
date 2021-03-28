@@ -1,0 +1,17 @@
+.notFoundPageTitleWrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.notFoundPageTitle {
+    font-size: 36px;
+    font-weight: 700;
+    padding: 20px;
+}
+
+.notFoundPageDescription {
+    font-size: 20px;
+    padding: 20px;
+}
