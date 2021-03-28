@@ -40,6 +40,42 @@ This icon be changed, but make sure that the image has the .ico extension for it
 
 ## src
 
-The `src` folder contains the source code for the frontend. Most changes that will be displayed directly on the frontend will be to files inside this folder.
+The `src` folder contains the source code for the frontend. Most changes that will be displayed directly on the frontend will be to files inside this folder, as these files contain jsx and css. Inside the `src` folder, the following folder structure can be seen.
+
+- `actions`
+- `components`
+- `documentation`
+- `reducers`
+- `store`
+- `utils`
+
+The `actions`, `reducers`, and `store` folders all contain files that interact with Redux. Redux is a library that helps with managing globalized state, and is especially useful when needing to pass state from child components to parent components. React by itself cannot do this.
+
+The `actions` folder contains actions, which are functions that perform actions on state. As an example, the `porespyfuncs.js` file contains two functions: `setPorespyFuncs`, `startSetPorespyFuncs`. The React component that needs to perform the action of setting the porespy functions will call the `startSetPorespyFuncs`, which then calls `setPorespyFuncs`. This is done so that the `setPoreSpyFuncs` function can be dispatched with the `dispatch` function, and so that asynchronous actions can be performed. All other actions in this folder and subfolder follow this same pattern.
+
+The `reducers` folder contains reducers, which are functions that handle and decide how the state is set in the Redux store based on the state and action values passed in from the action method that pertains to it. The state and action values are passed into the reducer as arguments, and each reducer must be registed in the Redux store (found in `store/configureStore.js`) so that the globalized state can be managed and recognized using Redux.
+
+The `store` folder contains `configureStore.js`, which configures the Redux store. The store holds the whole state tree of the application, and state can be changed by calling `dispatch` on an action. Middleware like thunk (which is useful for asynchronous function calls) can be added on to the Redux store. Lastly, the Redux store gets imported by `index.js` in the `src` folder, where it is the wrapper component for the PoreSpyApp component (`<PoreSpyApp />`). This is done so that Redux can be applied to the entire application.
+
+The `components` folder contains all the React components that are rendered by the jsx. The file structure is as follows:
+
+- `AboutPage`
+- `ContactPage`
+- `DefaultPage`
+- `Filters`
+- `Generators`
+- `ImagePanel`
+- `LandingPage`
+- `Metrics`
+- `NotFoundPage`
+- `PorespyApp`
+- `RenderFilter`
+- `RenderGenerator`
+- `RenderImage`
+- `RenderMetric`
+
+Each component has its own folder, and inside that folder it has `.js` and `.css` files with the same name.
+
+The `AboutPage`, `ContactPage`, `NotFoundPage` components all concerned with rendering the correct page, depending on what URL the user has entered.
 
 
