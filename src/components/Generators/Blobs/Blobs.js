@@ -17,14 +17,19 @@ import './Blobs.css';
 let genImagesRedux = {};
 
 const Blobs = (props) => {
+    // Variables that pull variables from the Redux store, like backendEndpoint and the input fields for the chosen porespy function
     const backendEndpoint = useSelector((state) => state.backend);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators.blobs : {};
 
+    // Filter out if the function requires "kwargs", and implement them manually.
+    // This was done since javascript doesn't understand kwargs like Python.
+    // But if someone in the future finds a better way of doing this, feel free to implement it.
     if (fieldsInfo.hasOwnProperty('kwargs')) {
         delete fieldsInfo['kwargs'];
     }
 
+    // Set labels, helperText and other necessary props for the <TextField /> Material UI component
     for (const entry in fieldsInfo) {
         if (fieldsInfo[entry].type === "int") {
             fieldsInfo[entry]["helperText"] = "Integer Values only";

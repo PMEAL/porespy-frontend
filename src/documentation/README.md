@@ -89,6 +89,11 @@ The `Filters`, `Generators`, and `Metrics` folders contain all the PoreSpy funct
 
 The `ImagePanel` component is concerned with displaying the Image Panel on the right side of the screen. The elements here are from Material UI, and this component interacts frequently with the Redux store.
 
-The `PorespyApp` component is the application entrypoint. It is the first component shown to the user, and contains the overall layout as implemented by the <Drawer></Drawer> and the <List></List> components from Material UI. This is where the porespy functions are dynamically extracted, and that state is passed into the Redux store.
+The `PorespyApp` component is the application entrypoint. It is the first component shown to the user, and contains the overall layout as implemented by the `<Drawer></Drawer>` and the `<List></List>` components from Material UI. This is where the porespy functions are dynamically extracted, and that state is passed into the Redux store.
 
 The `RenderFilter`, `RenderGenerator`, and `RenderMetric` are components that take in a prop (`chosenFunction`) and display the porespy function chosen by the user. This design pattern was chosen to abstract each rendered component, to keep the code organized, and to maintain the React.js files short and reusable.
+
+
+## Contact: 
+
+Jeff Gostick (jgostick@uwaterloo.ca)
