@@ -7,6 +7,7 @@
 - Github
 - npm
 - create-react-app (this project was started with create-react-app since specific Babel and webpack configurations were deemed unnecessary. However if this changes in the future, the code in the `src` folder should still work. Babel is the javascript compiler that allows ES6 code to be backwards compatible with javascript, allowing it to be rendered by the browser. Webpackk is a javascript module bundler. Both Babel and webpack settings are abstracted using create-react-app).
+- Postman
 
 
 ## Folder Structure Explanation

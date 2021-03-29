@@ -23,7 +23,11 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## Instructions:
 
-When you pull the code from the repo, first run `npm install` in the terminal at the root directory to load all in the required npm modules. Once that command has finished, run `npm start` in the terminal at the root directory to run the front-end locally on your machine. You can view the front-end at `http://localhost:3000/`.
+Before pulling the code from the repo, make sure to have node.js installed. This can be installed from: https://nodejs.org/en/. The front-end was developed using node.js version 14.8.0. As of March 29, 2021, more recent versions of node are compatible with the code. Backwards compatability is currently unknown, but please make sure to run either the closest version (14.8.0) or the most recent (14.6.0). 
+
+**NOTE:** Since this project is using Create React App, you must have node.js >= 10.16 and npm >= 5.6 on your machine to run the code.
+
+When you pull the code from the repo, first run `npm install` in the terminal at the root directory to load all in the required npm modules. Once that command has finished, run `npm start` in the terminal at the root directory to run the front-end locally on your machine. You can view the front-end at `http://localhost:3000/`. If there are error messages in the terminal, make sure to resolve these first as the UI will not run until these errors have been resolved.
 
 
 ## Contact:
