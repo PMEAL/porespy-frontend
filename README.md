@@ -18,7 +18,7 @@ For more information on PoreSpy, please visit the following repo: https://github
 
 ## TODO (Lower priority):
 
-- Get a Favicon.ico?
+- Get a Favicon.ico.
 
 
 ## Instructions:
@@ -28,7 +28,16 @@ Before pulling the code from the repo, make sure to have node.js installed. This
 
 |npm module                     |Command to install                 |Version (as of April 2nd, 2021)    |
 |-------------------------------|-----------------------------------|-----------------------------------|
-|Materia UI                     |`npm i @material-ui/core`          |4.11.2                             |
+|Material UI Core               |`npm i @material-ui/core`          |4.11.2                             |
+|Materia UI Icons               |`npm i @material-ui/icons`         |4.11.2                             |
+|Axios                          |`npm i axios`                      |0.21.0                             |
+|Electron                       |`npm i electron`                   |11.2.3                             |
+|Moment.js                      |`npm i moment`                     |2.29.1                             |
+|node-sass                      |`npm i node-sass`                  |5.0.0                              |
+|React-Redux                    |`npm i react-redux`                |7.2.2                              |
+|Redux                          |`npm i redux`                      |4.0.5                              |
+|Redux-thunk                    |`npm i redux-thunk`                |2.3.0                              |
+|Sass-loader                    |`npm i sass-loader`                |11.0.1                             |
 
 
 **NOTE:** Since this project is using Create React App, you must have node.js >= 10.16 and npm >= 5.6 on your machine to run the code.
