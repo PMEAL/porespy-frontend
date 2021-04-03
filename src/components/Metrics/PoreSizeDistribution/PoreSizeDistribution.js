@@ -19,8 +19,6 @@ import { windowDownload } from '../../../utils/fileManipulators';
 import RenderImage from '../../RenderImage/RenderImage';
 import './PoreSizeDistribution.css';
 
-// TODO: abstract this/the styles object into Redux?
-// This object contains inline CSS stylings for MaterialUI components.
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -41,7 +39,6 @@ const PoreSizeDistribution = () => {
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('metrics') ? funcs.porespyFuncs.metrics["pore_size_distribution"] : {};
 
     // delete the im/log properties on the fieldsInfo object, so they do *not* get their own TextField element on the UI.
-
     if (fieldsInfo.hasOwnProperty("im")) {
         delete fieldsInfo["im"];
     }

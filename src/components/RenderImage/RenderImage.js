@@ -53,4 +53,4 @@ const RenderImage = ({ imgString, loading, error, errorMessage }) => {
     )
 }
 
-export default RenderImage
+export default RenderImage;

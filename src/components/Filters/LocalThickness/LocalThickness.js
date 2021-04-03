@@ -19,7 +19,6 @@ import RenderImage from '../../RenderImage/RenderImage';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './LocalThickness.css';
 
-// TODO: abstract this/the styles object into Redux?
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
@@ -78,7 +77,6 @@ const LocalThickness = (props) => {
         setLoading(true);
         setFilteredImage("");
         const imgArrayJSON = JSON.stringify(chosenImage["img_array"]);
-
         setTimeout(() => {
             axios.put(`${backendEndpoint}filters/localthickness/1/`, {
                 local_thickness_image: imgArrayJSON,

@@ -293,11 +293,12 @@ const LandingPage = (props) => {
                     <main className={classes.contentOuter}>
                         <div className={classes.content}>
                             <Toolbar />
-                            <div className="title">
+                            <div className="landingPageTitle">
                                 PoreSpy
                             </div>
-                            <div className="description">
-                                Porous Media Image Analysis in Python
+                            <div className="landingPageDescription">
+                                Characterizing and Analyzing 3D images of porous materials in Python
+                                {/*Porous Media Image Analysis in Python*/}
                             </div>
                             { chosenModule === "Generators" && renderPage === "" && <RenderGenerator chosenFunction={chosenGenerator} />}
                             { chosenModule === "Filters" && renderPage === "" && <RenderFilter chosenFunction={chosenFilter} /> }
@@ -313,7 +314,7 @@ const LandingPage = (props) => {
 
 
                             {/*
-                                // TODO: Create a RenderNetwork component in the same vein as RenderGenerator
+                                // TODO: Create a RenderNetwork component in the same vein as RenderGenerator/RenderFilter/RenderMetric
                                 chosenModule === "Networks" && renderPage === "" && <RenderMetric chosenFunction={chosenNetwork} /> 
                             */}
                             <Switch>
