@@ -1,0 +1,38 @@
+.latticeSpheresTitle {
+    font-size: 32px;
+    font-weight: 700;
+    padding: 40px 100px 20px 100px;
+}
+
+.latticeSpheresDescription {
+    display: flex;
+    font-size: 16px;    
+    padding: 10px 280px 10px 100px;
+}
+
+.latticeSpheresInputs {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px 280px 20px 100px;
+}
+
+.latticeSpheresInput {
+    padding: 20px 12px 20px 12px;   
+}
+
+.latticeSpheresDropdowns {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding: 20px 280px 20px 100px;
+}
+
+.localThicknessButton {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 0px 280px 0px 100px;
+}

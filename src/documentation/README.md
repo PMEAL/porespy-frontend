@@ -86,7 +86,7 @@ The `AboutPage`, `ContactPage`, `LandingPage`, `NotFoundPage` components all con
 - When the user reaches the `/about` url, the `AboutPage` component is rendered.
 - When the user reaches any url that does not end with `/`, `/contact`, `/about`, then the `NotFoundPage` component is rendered. An example of this would be is if the user reaches ending a url with `/test`.
 
-The `Filters`, `Generators`, and `Metrics` folders contain all the PoreSpy functions that can be displayed to the user. Currently, the `Blobs`, `BundleOfTubes`, `LocalThickness`, and `PoreSizeDistribution` functions are functional. Any documentation and developer best practices are included inside those files, and most user inputs are elements from Material UI.
+The `Filters`, `Generators`, and `Metrics` folders contain all the PoreSpy functions that can be displayed to the user. Currently, the `Blobs`, `BundleOfTubes`, ``, `LocalThickness`, and `PoreSizeDistribution` functions are functional. Any documentation and developer best practices are included inside those files, and most user inputs are elements from Material UI.
 
 The `ImagePanel` component is concerned with displaying the Image Panel on the right side of the screen. The elements here are from Material UI, and this component interacts frequently with the Redux store.
 

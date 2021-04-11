@@ -34,8 +34,6 @@ let generatorsLsImagesRedux = {};
 const LatticeSpheres = (props) => {
     const classes = useStyles();
     const backendEndpoint = useSelector((state) => state.backend);
-    const chosenImageIndex = useSelector((state) => state.imageToBeFiltered);
-    const availableImages = useSelector((state) => state.generatedImages);
     const funcs = useSelector((state) => (state));
     const fieldsInfo = funcs.porespyFuncs.hasOwnProperty('generators') ? funcs.porespyFuncs.generators["lattice_spheres"] : {};
 
@@ -153,18 +151,18 @@ const LatticeSpheres = (props) => {
 
     return (
         <div>
-            <div>
+            <div className="latticeSpheresTitle">
                 Lattice Spheres
             </div>
-            <div>
+            <div className="latticeSpheresDescription">
                 Generates a cubic packing of spheres in a specified lattice arrangement.
             </div>
-            <div>
+            <div className="latticeSpheresInputs">
                 {
                     Object.keys(params).map((p) => (
                         p
                         &&
-                        <div>
+                        <div className="latticeSpheresInput">
                             <TextField 
                                 required={params[p].required}
                                 id={params[p].id}
@@ -177,8 +175,9 @@ const LatticeSpheres = (props) => {
                         </div>
                     ))
                 }
-
-                <div className="" ref={imageRef}>
+            </div>
+            <div className="latticeSpheresDropdowns">
+                <div ref={imageRef}>
                     <FormControl className={classes.formControl}>
                         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
                             Type of Lattice
@@ -206,8 +205,7 @@ const LatticeSpheres = (props) => {
                         </FormHelperText>
                     </FormControl>
                 </div>
-
-                <div className="">
+                <div>
                     <FormControl className={classes.formControl}>
                         <InputLabel shrink id="demo-simple-select-placeholder-label-label">
                             Smooth spheres?
@@ -232,9 +230,7 @@ const LatticeSpheres = (props) => {
                         </FormHelperText>
                     </FormControl>
                 </div>
-
             </div>
-
             <div className="localThicknessButton">
                 <Button
                     variant="contained" 
