@@ -3,7 +3,7 @@
 //  porespy-frontend
 //
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -15,7 +15,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import RenderImage from '../../RenderImage/RenderImage';
-import { integerOnlyField, floatOnlyBetweenOneAndZeroField, validateParams } from '../../../utils/fieldValidators';
+import { integerOnlyField, validateParams } from '../../../utils/fieldValidators';
 import { startSetImages } from '../../../actions/Generators/GeneratedImages';
 import './LatticeSpheres.css';
 
@@ -242,7 +242,6 @@ const LatticeSpheres = (props) => {
                     Generate Image
                 </Button>
             </div>
-
             <div>
                 <RenderImage 
                     imgString={latticeSpheres}
@@ -259,5 +258,4 @@ const mapDispatchToProps = (dispatch) => ({
     startSetImages: () => dispatch(startSetImages(generatorsLsImagesRedux))
 })
 
-// export default LatticeSpheres;
 export default connect(undefined, mapDispatchToProps)(LatticeSpheres);

@@ -201,7 +201,6 @@ const Blobs = (props) => {
                     </Button>
                 </div>
             </div>
-
             <div>
                 <RenderImage 
                     imgString={blob}
