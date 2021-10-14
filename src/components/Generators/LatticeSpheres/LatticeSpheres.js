@@ -84,7 +84,7 @@ const LatticeSpheres = (props) => {
     const [params, setParams] = useState(fieldsInfo);
     const [lattice, setLattice] = useState("sc");
     const [smooth, setSmooth] = useState("true");
-    const [validatedParams, setValidatedParams] = useState(false);
+    const [validatedParams, setValidatedParams] = useState(true);
     const [latticeSpheres, setLatticeSpheres] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
